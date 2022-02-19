@@ -1,0 +1,80 @@
+.skill-share{
+  display: flex;
+  flex-wrap: wrap;
+  li{
+    width: 20%;
+    padding: 10px;
+    box-sizing: border-box;
+    .wrap{
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .text{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 62px;
+      background: linear-gradient(0deg, rgba(0,0,0,.4), 30%, transparent);
+      padding: 4px 8px;
+      box-sizing: border-box;
+      color: white;
+      text-shadow: 2px 2px 2px black;
+    }
+    p{
+      font-size: 12px;
+      color: #eee;
+    }
+  }
+}
+
+@media (max-width: 1600px) {
+  .skill-share{
+    li{
+      width: 25%;
+      .wrap{
+        height: 160px;
+      }
+    }
+  }
+}
+
+@media (max-width: 960px) {
+  .skill-share{
+    li{
+      padding: 8px;
+      width: calc(100% / 3);
+      .wrap{
+        height: 140px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .skill-share{
+    li{
+      width: 50%;
+      padding: 4px;
+    }
+  }
+}
+
+@media (max-width: 540px) {
+  .skill-share{
+    li{
+      width: 100%;
+      .wrap{
+        height: 160px;
+      }
+    }
+  }
+}

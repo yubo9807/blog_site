@@ -1,0 +1,28 @@
+.sub-tabs{
+  position: absolute;
+  top: 38px;
+  text-align: left;
+  width: 140px;
+  box-sizing: border-box;
+  background-color: white;
+  box-shadow: 0 10px 10px rgba(0,0,0,.04);
+  z-index: 1;
+  display: none;
+  > li{
+    text-indent: 1em;
+    .icon{
+      float: right;
+      margin-right: 10px;
+    }
+    &:hover{
+      background: #459fed50;
+      > ul{
+        display: block;
+        position: absolute;
+        top: 0;
+        transform: translateX(100%);
+        border-left: 1px solid #ccc;
+      }
+    }
+  }
+}

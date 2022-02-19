@@ -1,0 +1,31 @@
+.wrap{
+  float: right;
+  .ant-button{
+    background: transparent;
+    border-radius: 16px;
+    border-color: var(--main-link-color);
+    color: var(--main-link-color);
+  }
+  .user{
+    position: relative;
+    ul{
+      position: absolute;
+      right: 0;
+      top: 38px;
+      width: 100%;
+      text-align: center;
+      background-color: white;
+      box-shadow: 0 0 5px rgba(0,0,0,.1);
+      border-radius: 4px;
+      display: none;
+      z-index: 1;
+      li{
+        line-height: 2.4;
+        cursor: pointer;
+      }
+    }
+    &:hover ul{
+      display: block;
+    }
+  }
+}

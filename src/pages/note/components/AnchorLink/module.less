@@ -1,0 +1,35 @@
+.fixed{
+  position: fixed;
+  top: 40px;
+  width: 180px;
+  max-height: 70vh;
+  overflow: auto;
+}
+.link-list{
+  font-size: 13px;
+  padding: 4px 0;
+  box-sizing: border-box;
+  li{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    cursor: pointer;
+    line-height: 2;
+    &.title{
+      font-weight: bolder;
+      border-bottom: 1px solid #eee;
+    }
+  }
+}
+
+@media (max-width: 1146px) {
+  .fixed{
+    top: 80px;
+  }
+}
+
+@media (max-width: 960px) {
+  .fixed, .link-list{
+    display: none;
+  }
+}

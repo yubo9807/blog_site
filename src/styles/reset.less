@@ -1,0 +1,52 @@
+:root{
+  --main-header-height: 46px;
+  --main-footer-height: 80px;
+  --main-link-color: #459fed;
+  --main-line-color: #ccc;
+  --main-extra-padding: 72px;  // >= 1440
+  --main-large-padding: 32px;  // >= 1200
+  --main-medium-padding: 20px;  // >= 960
+  --main-small-padding: 10px;  // < 768
+}
+
+body, h1, h2, h3, h4, h5, h6, p{
+  margin: 0;
+}
+html{
+  text-size-adjust: 100%;
+}
+body{
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+}
+ul{
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+a{
+  text-decoration: none;
+  color: #404040;
+}
+input{
+  outline: none;
+}
+
+
+
+@media (max-width: 1024px) and (orientation:portrait) {
+  body{
+    font-family: Helvetica;
+  }
+
+  /* 移动端 a 标签点击时有默认阴影 */
+  a, input, button {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+  
+  /* 对有些移动端按钮默认为圆角做恢复 */
+  input, button {
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "cross-env APP_ENV=development umi dev",
+    "build": "cross-env APP_ENV=production HTML=none umi build",
+    "deploy": "npm run build && cd deploy && npm run start"
+  },
+  "dependencies": {
+    "@ant-design/pro-layout": "^6.5.0",
+    "antd": "^4.17.2",
+    "axios": "^0.24.0",
+    "axios-retry": "^3.2.4",
+    "cheerio": "^1.0.0-rc.10",
+    "highlight.js": "^11.3.1",
+    "markdown-it": "^12.2.0",
+    "react": "17.x",
+    "react-dom": "17.x",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
+    "socket.io-client": "^4.4.0",
+    "umi": "^3.5.20"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^12.2.3",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@umijs/preset-react": "1.x",
+    "compression-webpack-plugin": "^5.0.2",
+    "cross-env": "^7.0.3",
+    "typescript": "^4.1.2"
+  }
+}

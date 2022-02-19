@@ -1,0 +1,44 @@
+.nav{
+  border-top: 1px solid var(--main-line-color);
+  box-shadow: 0 20px 10px rgba(0,0,0,.06);
+  background-color: rgba(255,255,255,.8);
+  backdrop-filter: saturate(100%) blur(4px);
+  &.fixed{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+  }
+}
+
+.nav-list{
+  line-height: 40px;
+  > li{
+    float: left;
+    height: 38px;
+    text-indent: 1em;
+    padding-right: 1em;
+    box-sizing: border-box;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    position: relative;
+    &:hover{
+      border-color: var(--main-link-color);
+      > ul{
+        display: block;
+      }
+    }
+    .icon{
+      margin-left: 4px;
+    }
+    .active{
+      display: block;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .nav{
+    display: none;
+  }
+}

@@ -1,0 +1,46 @@
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
+.clearfix::after{
+  content: '';
+  display: block;
+  clear: both;
+}
+.leayer{
+  padding: 0 var(--main-extra-padding);
+  max-width: 1920px;
+}
+
+@media (max-width: 1200px) {
+  .leayer{
+    padding: 0 var(--main-large-padding);
+  }
+}
+@media (max-width: 960px) {
+  .leayer{
+    padding: 0 var(--main-medium-padding);
+  }
+}
+@media (max-width: 768px) {
+  .leayer{
+    padding: 0 var(--main-small-padding);
+  }
+}
+
+@font-face {
+  font-family: 'iconfont';  /* Project id 2770358 */
+  src: url('//at.alicdn.com/t/font_2770358_oiuo1itoe7.woff2?t=1638505602213') format('woff2'),
+       url('//at.alicdn.com/t/font_2770358_oiuo1itoe7.woff?t=1638505602213') format('woff'),
+       url('//at.alicdn.com/t/font_2770358_oiuo1itoe7.ttf?t=1638505602213') format('truetype');
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-display: wrap;
+}
