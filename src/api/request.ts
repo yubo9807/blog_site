@@ -1,22 +1,17 @@
 import axios, { AxiosStatic, AxiosRequestConfig } from 'axios';
-import axiosRetry from 'axios-retry';
+import axiosRetry from './axios-retry';
 import env from '~/config/env';
 import { message, notification } from 'antd';
 import { getCookie, isClient } from '@/utils/browser';
 
-const requsetTimeout = 2000;
 const config: AxiosRequestConfig = {
   baseURL: env.BASE_API,
-  timeout: requsetTimeout,
+  timeout: 2000,
   // withCredentials: true,  // 跨域
 };
 
 const instance = axios.create(config);
-axiosRetry(instance, {
-  retries: 2,
-  retryCondition: () => true,
-  retryDelay: () => 2000,
-});
+axiosRetry(instance, { retries: 2, retryDelay: 2000 });
 
 let retryNum = 0;  // 请求重试次数
 
@@ -44,22 +39,22 @@ instance.interceptors.response.use((response: any) => {
     message: '服务器连接错误',
     description: '错误原因：连接超时/网络断开/服务器忙没响应',
   })
-
+  
   // 返回统一数据格式，不会导致代码取不到 code 而报错
   return Promise.resolve({
     code: 500,
-    msg: error.message,
+    msg: error.message || 'network error',
   });
+
 });
 
 // 请求拦截器
 instance.interceptors.request.use(async(config) => {
   retryNum++;
-  console.log(`第 ${retryNum} 次请求`);
+  isClient() && console.log(`第 ${retryNum} 次请求`);
 
   // 请求重试
   if (retryNum > 1 && isClient()) {
-    config.timeout = requsetTimeout;  // axios-retry 请求重试 timeout 会变为 1, 需要重置
     message.info('网络可能在开小差，正在请求重试');
   }
   
