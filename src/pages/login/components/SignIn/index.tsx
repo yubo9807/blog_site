@@ -8,14 +8,14 @@ import { setCookie } from '@/utils/browser';
 import check from './check';
 import { useState } from 'react';
 
-export default () => {
-  const [ loading, setLoading ] = useState(false);
 
+export default () => {
   const signInInfo: SignIn = {
     username: '',
     password: '',
   };
-  
+  const [ loading, setLoading ] = useState(false);
+
   // 登入提交
   async function submit() {
     const errorArr = check(signInInfo);

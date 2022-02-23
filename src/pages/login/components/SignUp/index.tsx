@@ -7,9 +7,8 @@ import { removeUseLessKey } from '@/utils/object';
 import check from './check';
 import { useState } from 'react';
 
-export default () => {
 
-  const [ loading, setLoading ] = useState(false);
+export default () => {
   const signUpInfo = {
     username: '',
     password: '',
@@ -17,6 +16,8 @@ export default () => {
     mail: '',
     mailCode: '',
   };
+  
+  const [ loading, setLoading ] = useState(false);
 
   // 数据验证是否通过
   function verify() {

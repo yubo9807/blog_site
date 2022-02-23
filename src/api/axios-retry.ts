@@ -36,7 +36,7 @@ export default (axios: AxiosInstance, option: Option = defaultOption) => {
       setTimeout(async() => {
         if (config.retryCount >= option.retries) return reject(config);
         else {
-          option.retryTips();  // 再次请求时你可以给用户些提示
+          option.retryTips && option.retryTips();  // 再次请求时你可以给用户些提示
           return resolve(await axios(config));  // 再次请求
         }
       }, option.retryDelay)

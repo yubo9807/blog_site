@@ -5,6 +5,9 @@ import { history } from 'umi';
 import { useEffect, useState } from 'react';
 import style from './module.less';
 import { joinClass } from '@/utils/array';
+import { Provider } from 'react-redux';
+import store from '@/store';
+import NetworkError from '@/components/NetworkError';
 
 const LoginPage = () => {
   
@@ -22,13 +25,19 @@ const LoginPage = () => {
     }
   }, [loginType]);
 
-  return (<div className={style.login}>
-    {loginType === 'signIn' && <SignIn />}
-    {loginType === 'signUp' && <SignUp />}
-    <i className={joinClass('iconfont', style.close)} onClick={() => {
-      history.goBack();
-    }}>&#xeca0;</i>
-  </div>)
+  return (<Provider store={store}>
+
+    <div className={style.login}>
+      {loginType === 'signIn' && <SignIn />}
+      {loginType === 'signUp' && <SignUp />}
+      <i className={joinClass('iconfont', style.close)} onClick={() => {
+        history.goBack();
+      }}>&#xeca0;</i>
+    </div>
+
+    <NetworkError />
+
+  </Provider>)
 }
 
 export default LoginPage;

@@ -3,6 +3,8 @@ import axiosRetry from './axios-retry';
 import env from '~/config/env';
 import { message, notification } from 'antd';
 import { getCookie, isClient } from '@/utils/browser';
+import store from '@/store';
+import { actions } from '@/store/comp/networkerror';
 
 const config: AxiosRequestConfig = {
   baseURL: env.BASE_API,
@@ -11,14 +13,21 @@ const config: AxiosRequestConfig = {
 };
 
 const instance = axios.create(config);
-axiosRetry(instance, { retries: 2, retryDelay: 2000 });
-
-let retryNum = 0;  // 请求重试次数
+axiosRetry(instance, {
+  retries: 3,
+  retryDelay: 3000,
+  retryTips: () => {
+    if (!isClient()) return;
+    store.dispatch(actions.setVisibleAction(true));
+    setTimeout(() => {
+      store.dispatch(actions.setVisibleAction(false))
+    }, 1500)
+  }
+});
 
 // 响应拦截器
 instance.interceptors.response.use((response: any) => {
-  retryNum = 0;  // 请求成功后归零
-  
+
   if (response.status === 200) {
     const { data, config } = response;
 
@@ -36,8 +45,8 @@ instance.interceptors.response.use((response: any) => {
 }, error => {
   // 响应出现错误（连接超时/网络断开/服务器忙没响应）
   isClient() && notification.open({
-    message: '服务器连接错误',
-    description: '错误原因：连接超时/网络断开/服务器忙没响应',
+    message: '网络可能存在一些问题',
+    description: '错误原因：连接超时/网络断开/服务器忙，请尝试重新操作或刷新页面',
   })
   
   // 返回统一数据格式，不会导致代码取不到 code 而报错
@@ -50,14 +59,6 @@ instance.interceptors.response.use((response: any) => {
 
 // 请求拦截器
 instance.interceptors.request.use(async(config) => {
-  retryNum++;
-  isClient() && console.log(`第 ${retryNum} 次请求`);
-
-  // 请求重试
-  if (retryNum > 1 && isClient()) {
-    message.info('网络可能在开小差，正在请求重试');
-  }
-  
   // 有 token 的话将其放在 headers 中
   const authorization = isClient() && await getCookie('token');
   if (authorization) {

@@ -8,6 +8,7 @@ import store from '@/store';
 import { actions } from '@/store/scroll';
 import { throttle } from '@/utils/optimize';
 import '@/utils/optimize-watch';
+import NetworkError from '@/components/NetworkError';
 
 const Layouts = ({ children }) => {
 
@@ -28,6 +29,8 @@ const Layouts = ({ children }) => {
 
       {/* 版权 */}
       <Footer />
+
+      <NetworkError />
     </Provider>
   );
 };
