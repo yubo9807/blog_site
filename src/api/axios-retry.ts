@@ -1,8 +1,8 @@
 import { AxiosInstance } from 'axios';
 
 interface Option {
-  retries: number,
-  retryDelay: number,
+  retries?: number,
+  retryDelay?: number,
   retryTips?: Function
 }
 const defaultOption = {
@@ -16,7 +16,9 @@ const defaultOption = {
  * @param axios
  * @param option 配置项
  */
-export default (axios: AxiosInstance, option: Option = defaultOption) => {
+export default (axios: AxiosInstance, option: Option) => {
+
+  Object.assign(option, defaultOption);
 
   axios.interceptors.request.use((config) => {
     return config;
