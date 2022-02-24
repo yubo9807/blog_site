@@ -18,7 +18,7 @@ axiosRetry(instance, {
   retries: 3,
   retryDelay: 3000,
   retryTips: () => {
-    client && store.dispatch(actions.showMessageAction('网络错误，正在请求重试', ''));
+    client && store.dispatch(actions.showMessageAction('网络错误，正在尝试重新连接', ''));
   }
 });
 
