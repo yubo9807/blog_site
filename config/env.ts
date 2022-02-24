@@ -33,7 +33,7 @@ if (process.env.APP_ENV === 'development') {
 
 }
 
-env.BASE_API = 'http://127.0.0.1:20010/api';
+// env.BASE_API = 'http://127.0.0.1:20010/api';
 // env.BASE_API = 'http://192.168.164.145:20010/api';
 
 export default Object.freeze(env);

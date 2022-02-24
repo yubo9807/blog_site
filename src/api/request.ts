@@ -5,6 +5,7 @@ import { message, notification } from 'antd';
 import { getCookie, isClient } from '@/utils/browser';
 import store from '@/store';
 import { actions } from '@/store/comp/networkerror';
+const client = isClient();
 
 const config: AxiosRequestConfig = {
   baseURL: env.BASE_API,
@@ -17,11 +18,7 @@ axiosRetry(instance, {
   retries: 3,
   retryDelay: 3000,
   retryTips: () => {
-    if (!isClient()) return;
-    store.dispatch(actions.setVisibleAction(true));
-    setTimeout(() => {
-      store.dispatch(actions.setVisibleAction(false))
-    }, 1500)
+    client && store.dispatch(actions.showMessageAction('网络错误，正在请求重试', ''));
   }
 });
 
@@ -33,9 +30,9 @@ instance.interceptors.response.use((response: any) => {
 
     // 与后端协商 code 码
     if (data.code >= 400 && data.code < 500) {  // 错误报给前端开发者
-      isClient() && console.error(Object.assign(data, { url: config.url }));
+      client && console.error(Object.assign(data, { url: config.url }));
     } else if (data.code >= 500 && !config.noTips) {  // 报给用户的错
-      isClient() && message.error(data.msg);
+      client && message.error(data.msg);
     }
 
     return data;
@@ -44,9 +41,10 @@ instance.interceptors.response.use((response: any) => {
   }
 }, error => {
   // 响应出现错误（连接超时/网络断开/服务器忙没响应）
-  isClient() && notification.open({
+  client && notification.open({
     message: '网络可能存在一些问题',
-    description: '错误原因：连接超时/网络断开/服务器忙，请尝试重新操作或刷新页面',
+    description: '错误原因：网络断开/网络差/连接超时/服务器忙，请尝试重新操作或刷新页面',
+    duration: null,
   })
   
   // 返回统一数据格式，不会导致代码取不到 code 而报错
@@ -60,7 +58,7 @@ instance.interceptors.response.use((response: any) => {
 // 请求拦截器
 instance.interceptors.request.use(async(config) => {
   // 有 token 的话将其放在 headers 中
-  const authorization = isClient() && await getCookie('token');
+  const authorization = client && await getCookie('token');
   if (authorization) {
     config.headers.Authorization = authorization;
   }

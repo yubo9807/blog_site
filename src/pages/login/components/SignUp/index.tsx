@@ -5,23 +5,26 @@ import style from '../../module.less';
 import { api_getMailCode, api_userSignUp } from '@/api/login';
 import { removeUseLessKey } from '@/utils/object';
 import check from './check';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+const signUp = {
+  username: '',
+  password: '',
+  newPassword: '',
+  mail: '',
+  mailCode: '',
+};
 
 export default () => {
-  const signUpInfo = {
-    username: '',
-    password: '',
-    newPassword: '',
-    mail: '',
-    mailCode: '',
-  };
+  useEffect(() => {
+    for (const prop in signUp) signUp[prop] = '';
+  }, [])
   
   const [ loading, setLoading ] = useState(false);
 
   // 数据验证是否通过
   function verify() {
-    const errorArr = check(signUpInfo);
+    const errorArr = check(signUp);
     const error = errorArr[0];
     if (!error) return true;
     message.warning(error);
@@ -40,7 +43,7 @@ export default () => {
     if (!verify()) return;
     setLoading(true);
 
-    const { newPassword, ...args } = signUpInfo;
+    const { newPassword, ...args } = signUp;
     const params = removeUseLessKey(args);
     
     const response: any = await api_userSignUp(params);
@@ -54,13 +57,13 @@ export default () => {
 
   return (<>
     <h1>注册</h1>
-    <Input className={style.inputItem} description='用户名' gain={val => signUpInfo.username = val} />
-    <Input className={style.inputItem} type='password' description='密码' gain={val => signUpInfo.password = val} />
-    <Input className={style.inputItem} type='password' description='确认密码' gain={val => signUpInfo.newPassword = val} />
-    <Input className={style.inputItem} description='邮箱(选填)' gain={val => signUpInfo.mail = val} />
+    <Input className={style.inputItem} description='用户名' gain={val => signUp.username = val} />
+    <Input className={style.inputItem} type='password' description='密码' gain={val => signUp.password = val} />
+    <Input className={style.inputItem} type='password' description='确认密码' gain={val => signUp.newPassword = val} />
+    <Input className={style.inputItem} description='邮箱(选填)' gain={val => signUp.mail = val} />
     <div className={style.mailCodeWrap}>
-      <Input className={style.inputItem} description='邮箱验证码' gain={val => signUpInfo.mailCode = val} />
-      <Button onClick={() => getMailCode(signUpInfo.mail)}>获取验证码</Button>
+      <Input className={style.inputItem} description='邮箱验证码' gain={val => signUp.mailCode = val} />
+      <Button onClick={() => getMailCode(signUp.mail)}>获取验证码</Button>
     </div>
     <Link to='/login?type=signIn' replace>登入</Link>
     <Button className={style.submit} type="primary" loading={loading} onClick={submit}>注册</Button>

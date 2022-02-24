@@ -1,16 +1,24 @@
-const SETVISIBLE = Symbol('setVisble');
+const SHOWMESSAGE = Symbol('showMessage');
+const HIDDENMESSAGE = Symbol('hiddenMessage');
 
 type InitialState = {
-  visible: boolean
+  visible: boolean,
+  icon: string,
+  message: string,
 }
 const initialState: InitialState = {
-  visible: false
+  visible: false,
+  message: '',
+  icon: '',
 };
 
 function reducer(state = initialState, action: { type: symbol, payload?: any }) {
   switch (action.type) {
-    case SETVISIBLE:
-      return Object.assign({}, state, { visible: action.payload });
+    case SHOWMESSAGE:
+      const { message, icon } = action.payload;
+      return Object.assign({}, state, { visible: true, message, icon } );
+    case HIDDENMESSAGE: 
+      return Object.assign({}, state, { visible: false });
     default:
       return state;
   }
@@ -18,10 +26,15 @@ function reducer(state = initialState, action: { type: symbol, payload?: any }) 
 
 
 export const actions = {
-  setVisibleAction(bool: boolean) {
+  showMessageAction(message = '网络错误', icon = '&#xec72;') {
     return {
-      type: SETVISIBLE,
-      payload: bool
+      type: SHOWMESSAGE,
+      payload: { message, icon }
+    }
+  },
+  hiddenMessageAction() {
+    return {
+      type: HIDDENMESSAGE
     }
   }
 }

@@ -1,5 +1,5 @@
 import { joinClass } from '@/utils/array';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { IRouteProps } from 'umi';
 import './index.less';
 
@@ -25,7 +25,7 @@ export default ({ gain = () => {}, icon, description = '请输入内容', isTrim
     setValue('');
     const input = inputRef.current;
     input.focus();
-    setTimeout(() => input.blur(), 0);
+    // setTimeout(() => input.blur(), 0);
   }
 
   return (<div className={joinClass('yu-input', value !== '' ? 'yu-input-focus' : '', className)}>

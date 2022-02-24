@@ -18,7 +18,7 @@ const defaultOption = {
  */
 export default (axios: AxiosInstance, option: Option) => {
 
-  Object.assign(option, defaultOption);
+  option = Object.assign(defaultOption, option);
 
   axios.interceptors.request.use((config) => {
     return config;

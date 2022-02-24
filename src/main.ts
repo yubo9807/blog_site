@@ -1,12 +1,13 @@
 import '@/styles';
 import { isClient } from '@/utils/browser';
-import { message } from 'antd';
+import store from '@/store';
+import { actions } from '@/store/comp/networkerror';
 
 if (isClient()) {
   window.addEventListener('online' , () => {
-    message.success('网络已连接');
+    store.dispatch(actions.showMessageAction('网络恢复', '&#xe65c;'));
   })
   window.addEventListener('offline' , () => {
-    message.warning('网络中断');
+    store.dispatch(actions.showMessageAction('网络中断'));
   })
 }
