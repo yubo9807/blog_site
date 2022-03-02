@@ -9,11 +9,12 @@ import { Provider } from 'react-redux';
 import store from '@/store';
 import NetworkError from '@/components/NetworkError';
 
-const LoginPage = () => {
+const LoginPage = ({ location }) => {
   
   const [ loginType, setLoginType ] = useState('signIn');
   useEffect(() => {
     const { type } = history.location.query;
+    if (!type) history.replace({ query: { type: 'signIn' }})
     setLoginType(type as string);
 
     const unlisten = history.listen((location) => {

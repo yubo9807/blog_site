@@ -11,7 +11,7 @@ const env: any = {
 
   BASE_API: VISIT_ORIGIN + base_api,  // 必须加 href，否则请求 SSR 会消失
 
-  BASE_SOCKET: base_api + '/socket',
+  BASE_SOCKET: base_api  + '/socket',
 
   VISIT_ORIGIN,
 

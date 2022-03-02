@@ -1,0 +1,60 @@
+@sideWidth: 60px;
+@roomListWidth: 240px;
+@lintColor: #ccc;
+
+.chat-wrap{
+  max-width: 1000px;
+  height: 70vh;
+  margin: 30px auto;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px 4px rgba(0,0,0,.2);
+  overflow: hidden;
+}
+.side{
+  width: @sideWidth;
+  height: 100%;
+  text-align: center;
+  background-color: #404040;
+}
+.room-list{
+  width: @roomListWidth;
+  height: 100%;
+  overflow-y: auto;
+  li{
+    padding: 6px 20px;
+    &:not(:last-of-type){
+      border-bottom: 1px solid #eee;
+    }
+  }
+}
+.content{
+  width: calc(100% - @roomListWidth - @sideWidth);
+  border-left: 1px solid @lintColor;
+  box-sizing: border-box;
+  .record{
+    min-height: 50vh;
+  }
+  .send-wrap{
+    height: 140px;
+    border-top: 1px solid @lintColor;
+  }
+}
+.search{
+  padding: 6px 10px;
+  background-color: #eee;
+  :global(.ant-input-affix-wrapper), > :global(.iconfont){
+    border-radius: 4px;
+    vertical-align: middle;
+  }
+  :global(.ant-input-affix-wrapper){
+    width: 80%;
+    height: 28px;
+    box-sizing: border-box;
+  }
+  > :global(.iconfont){
+    margin-left: 6px;
+    padding: 6px 10px;
+    background-color: white;
+    cursor: pointer;
+  }
+}

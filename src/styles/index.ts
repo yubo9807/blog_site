@@ -9,5 +9,6 @@ import 'antd/lib/typography/style/index.css';
 import 'antd/lib/notification/style/index.css';
 import 'antd/lib/spin/style/index.css';
 import 'antd/lib/skeleton/style/index.css';
+import 'antd/lib/input/style/index.css';
 
 import './antd-reset.less';

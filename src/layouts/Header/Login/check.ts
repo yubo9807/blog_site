@@ -16,7 +16,6 @@ export default (data: any) => {
     @isNotEmpty
     static role = data.role;
 
-    @isType('string')
     static remark = data.remark;
 
     @isType('number')

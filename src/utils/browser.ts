@@ -35,11 +35,11 @@ declare const cookieStore: any;
  * @param {*} key 要获取的 key
  * @returns 
  */
-export async function getCookie(key: string) {
-  if (typeof cookieStore === 'object') {
-    const obj = await cookieStore.get(key)
-    return obj?.value;
-  }
+export function getCookie(key: string) {
+  // if (typeof cookieStore === 'object') {
+  //   const obj = await cookieStore.get(key)
+  //   return obj?.value;
+  // }
   const cookie = document.cookie;
   const str = cookie.replace(/\s/g, '');
   const obj = {}
