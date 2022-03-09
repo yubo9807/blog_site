@@ -11,20 +11,20 @@ import '@/utils/optimize-watch';
 import NetworkError from '@/components/NetworkError';
 
 const Layouts = ({ children }) => {
-
+  
   useEffect(() => {
     window.addEventListener('scroll', throttle(() => {
       const scrollY = window.scrollY;
       store.dispatch(actions.setScrollYAction(scrollY));
     }, 30))
   }, [])
-
+  
   return (
     <Provider store={store}>
       {/* 头部 */}
       <Header />
 
-      {/* 主题内容 */}
+      {/* 主体内容 */}
       <section className={style.section}>{children}</section>
 
       {/* 版权 */}

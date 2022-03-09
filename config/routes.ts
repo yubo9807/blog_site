@@ -18,14 +18,12 @@ export default [
         exact: true,
         component: '@/pages/home/index',
         title: '首页',
-        state: { role: ['user'] },
       },
       {
         path: '/note',
         exact: false,
         component: '@/pages/note/index',
         title: '个人笔记',
-        state: { role: ['user'] },
       },
       {
         path: '/skill',
@@ -38,6 +36,7 @@ export default [
         exact: true,
         component: '@/pages/chat/index',
         title: '聊天室',
+        state: { roles: ['user'] },
       },
       {
         path: '/about',
