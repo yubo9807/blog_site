@@ -1,32 +1,11 @@
 import { Button } from 'antd';
 import style from './module.less';
-import { history, Link } from 'umi';
-import { useEffect } from 'react';
-import { api_getUserInfo } from '@/api/login';
-import { deleteCookie, getCookie, setCookie } from '@/utils/browser';
+import { history } from 'umi';
+import { deleteCookie } from '@/utils/browser';
 import { connect } from 'react-redux';
 import { actions } from '@/store/user';
-import check from './check';
 
 const Login = (props) => {
-
-  useEffect(() => {
-    getUserInfo();
-  }, []);
-
-  // 获取用户信息
-  async function getUserInfo() {
-    const token = await getCookie('token');
-    if (token) {
-      const response: any = await api_getUserInfo({ token });
-      if (response.code === 200) {
-        // 用户验证成功
-        props.onSignInAction();
-        check(response.data);
-        props.onSetUserinfoAction(response.data);
-      }
-    }
-  }
 
   function signOut() {
     deleteCookie({name: 'token', path: '/'});
@@ -55,14 +34,8 @@ function mapStateToProps(state: any, ownProps: any) {
 // 映射事件处理函数
 function mapDispatchToProps(dispatch: any) {
   return {
-    onSignInAction() {
-      dispatch(actions.signInAction());
-    },
     onSignOutAction() {
       dispatch(actions.signOutAction());
-    },
-    onSetUserinfoAction(data: any) {
-      dispatch(actions.setUserinfoAction(data));
     },
   }
 }

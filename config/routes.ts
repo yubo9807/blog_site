@@ -36,13 +36,13 @@ export default [
         exact: true,
         component: '@/pages/chat/index',
         title: '聊天室',
-        state: { roles: ['user'] },
       },
       {
         path: '/about',
         exact: true,
         component: '@/pages/about/index',
         title: '关于我',
+        // state: { roles: ['user'] },
       },
       {
         component: '@/pages/not-found/index',

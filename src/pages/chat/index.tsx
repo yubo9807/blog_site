@@ -89,7 +89,7 @@ function chatPage(props: IRouteProps) {
       </div>
     </div>
     <Modal visible={visible} onOk={confirmGoLogin} onCancel={() => setVisible(false)} centered okText='确认' cancelText='取消'>
-      <p>检测到您的信息，请前往登录</p>
+      <p>检测到没有您的信息，请前往登录</p>
     </Modal>
   </div>);
 }
