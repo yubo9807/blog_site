@@ -33,16 +33,17 @@ export default ({ users = [], visible = false, onCancel = () => {}, onJoinRoom =
     setJoins(arr);
   }
 
-  return (<Modal visible={visible} onCancel={onCancel}>
-    <div className={style.wrap}>
+  return (<Modal className={style.modal} visible={visible} width='400px' footer={null} onCancel={onCancel}>
       <div className={style.header}>
-        <ul className={joinClass(style.jions, 'clearfix')}>
-          {joins.map((val, index) => <li key={index}>
-            <div>{val.name}</div>
-            <span onClick={() => delUser(index)}>-</span>
-          </li>)}
-        </ul>
-        <div className="search">
+        <div className={joinClass(style.jions, 'clearfix')} style={{width: joins.length * 30 + 'px'}}>
+          <ul className='clearfix' style={{width: joins.length * 30 + 'px'}}>
+            {joins.map((val, index) => <li key={index}>
+              <div>{val.name}</div>
+              <span onClick={() => delUser(index)}>-</span>
+            </li>)}
+          </ul>
+        </div>
+        <div className={style.search} style={{width: `calc(100% - ${joins.length * 30}px)`}}>
           <Input onChange={search} />
         </div>
       </div>
@@ -52,7 +53,8 @@ export default ({ users = [], visible = false, onCancel = () => {}, onJoinRoom =
           <span className={style.name}>{val.name}</span>
         </li>)
       }</ul>
-      <Button onClick={() => onJoinRoom(joins)}>确定</Button>
-    </div>
+      <div className={style.btn}>
+        <Button type='primary' onClick={() => onJoinRoom(joins)}>确定</Button>
+      </div>
   </Modal>);
 }

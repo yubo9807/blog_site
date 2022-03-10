@@ -1,9 +1,9 @@
-.wrap{
-  width: 400px;
-  height: 500px;
-  background-color: white;
-  border-radius: 4px;
-  box-shadow: 0 10px 20px 4px rgba(0,0,0,.2);
+@media (min-width: 768px) {
+  .modal{
+    :global(.ant-modal-close){
+      display: none;
+    }
+  }
 }
 
 @headerHeight: 40px;
@@ -14,10 +14,16 @@
     display: inline-block;
     height: 100%;
   }
+  @searchMinWidth: 100px;
   .search{
-    min-width: 60px;
+    min-width: @searchMinWidth;
+    overflow: hidden;
+    > input{
+      height: 100%;
+    }
   }
   .jions{
+    max-width: calc(100% - @searchMinWidth);
     overflow-x: auto;
     li{
       float: left;
@@ -26,20 +32,33 @@
     }
   }
 
-  .user-list{
-    height: calc(100% - @headerHeight);
-    overflow-y: auto;
-    .portrait, .name{
-      display: inline-block;
-    }
-    @portraitSize: 30px;
-    .portrait{
-      width: @portraitSize;
-      height: @portraitSize;
-    }
-    .name{
-      width: calc(100% - @portraitSize);
+}
+
+.user-list{
+  max-height: 500px;
+  overflow-y: auto;
+  .portrait, .name{
+    display: inline-block;
+    vertical-align: bottom;
+  }
+  @portraitSize: 30px;
+  .portrait{
+    width: @portraitSize;
+    height: @portraitSize;
+    border: 1px solid;
+  }
+  .name{
+    width: calc(100% - @portraitSize);
+    padding-left: 20px;
+  }
+  li{
+    margin-top: 4px;
+    &:not(:last-child) .name{
+      border-bottom: 1px solid #ccc;
     }
   }
+}
 
+.btn{
+  text-align: center;
 }
