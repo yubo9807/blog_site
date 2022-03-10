@@ -1,0 +1,45 @@
+.wrap{
+  width: 400px;
+  height: 500px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 10px 20px 4px rgba(0,0,0,.2);
+}
+
+@headerHeight: 40px;
+.header{
+  height: @headerHeight;
+
+  .search, .jions{
+    display: inline-block;
+    height: 100%;
+  }
+  .search{
+    min-width: 60px;
+  }
+  .jions{
+    overflow-x: auto;
+    li{
+      float: left;
+      width: 30px;
+      height: 30px; 
+    }
+  }
+
+  .user-list{
+    height: calc(100% - @headerHeight);
+    overflow-y: auto;
+    .portrait, .name{
+      display: inline-block;
+    }
+    @portraitSize: 30px;
+    .portrait{
+      width: @portraitSize;
+      height: @portraitSize;
+    }
+    .name{
+      width: calc(100% - @portraitSize);
+    }
+  }
+
+}

@@ -1,25 +1,22 @@
 import { io } from 'socket.io-client';
 import env from '~/config/env';
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { history, IRouteProps } from 'umi';
 import style from './module.less';
 import { joinClass } from '@/utils/array';
 import { Input, message, Modal } from 'antd';
-import { getCookie, isClient } from '@/utils/browser';
+import { getCookie } from '@/utils/browser';
 import { connect } from 'react-redux';
+import CreateRoom from './CreateRoom';
 
 import ref from './state';
 let socket = null;
 
-
 function chatPage(props: IRouteProps) {
   const { userInfo, route } = props;
-  // isClient() && console.log(userInfo, route);
   
-  const [ visible, setVisible ] = useState(false);  // 是否显示弹框
-  function confirmGoLogin() {
-    history.push('/login');
-  }
+  const [ modalVisible, setModalVisible ] = useState(false);  // 是否显示弹框
+  const [ createRoomVisible, setCreateRoomVisible ] = useState(false);  // 是否显示弹框
 
   const state = ref();
 
@@ -34,41 +31,60 @@ function chatPage(props: IRouteProps) {
     });
 
     socket.on('message', res => {
-      if (res.code === 405) setVisible(true);
+      if (res.code === 405) setModalVisible(true);
     })
 
+    if (!userName) return;
     socket.once('users', res => state.setUsers(res));
     socket.on(`rooms_${userName}`, res => state.setRooms(res));
-    socket.on('chatRecord', res => {
-      console.log(res)
-    })
-    
+    socket.on('online', res => message.success(res))
+
     socket.on('disconnect', () => {
       console.log('断开连接');
     })
 
-    // 离开页面断开 socket
     const unlisten = history.listen((location) => {
       if (location.pathname !== '/chat') {
-        socket.close();
+        socket.close();  // 离开页面断开 socket
       }
     })
     
     return () => {
       unlisten();
     }
-  }, [ userInfo.name ])
+  }, [ userInfo.name ]);
 
+  useEffect(() => {
+    if (!state.roomId) return;
+    socket.on(`record_${state.roomId}`, res => {
+      state.setRecord(res);
+    })
+  }, [ state.roomId ]);
+
+  // 切换房间
   function changeRoom(row) {
-    console.log(row)
+    const { id: roomId } = row
+    state.setRoomId(roomId);
+    socket.emit('queryRecord', { roomId });
   }
 
+  // 要发送的消息
   const [ word, setWord ] = useState('');
   const onChange = e => setWord(e.target.value)
   async function send(e) {
     e.preventDefault();
-    console.log(word)
+    socket.emit('addRecord', { text: word, roomId: state.roomId });
+    socket.on(`record_${state.roomId}`, res => {
+      state.setRecord(res);
+    })
     setWord('');
+  }
+
+  function onCreateRoom(nameList) {
+    const names = nameList.map(val => val.name);
+    const roomName = '群聊-' + parseInt('' + Date.now() / 1000);
+    socket.emit('createRoom', { roomId: state.roomId, roomName, names });
+    setCreateRoomVisible(false);
   }
   
   return (<div className={joinClass(style.chatWrap, 'clearfix')}>
@@ -78,17 +94,28 @@ function chatPage(props: IRouteProps) {
     <ul className={joinClass(style.roomList, 'fl')}>
       <div className={style.search}>
         <Input allowClear prefix={<span className='iconfont'>&#xe64d;</span>} />
-        <span className='iconfont'>&#xe622;</span>
+        <span className='iconfont' onClick={() => setCreateRoomVisible(true)}>&#xe622;</span>
       </div>
       {state.rooms.map(val => <li key={val.id} onClick={() => changeRoom(val)}>{val.name}</li>)}
     </ul>
     <div className={joinClass(style.content, 'fl')}>
-      <div className={style.record}></div>
+      <div className={style.record}>
+        <ul>{state.record.map((val, index) => <li key={index}>
+          <div>
+            <span>{val.userName}</span>
+          </div>
+          <div>
+            <span className="time">{val.time}</span>
+            <span className="time">{val.text}</span>
+          </div>
+        </li>)}</ul>
+      </div>
       <div className={style.sendWrap}>
         <Input.TextArea value={word} onChange={onChange} style={{height: '100%'}} bordered={false} onPressEnter={send} />
       </div>
     </div>
-    <Modal visible={visible} onOk={confirmGoLogin} onCancel={() => setVisible(false)} centered okText='确认' cancelText='取消'>
+    <CreateRoom visible={createRoomVisible} users={state.users} onJoinRoom={onCreateRoom} onCancel={() => setCreateRoomVisible(false)} />
+    <Modal visible={modalVisible} onOk={() => history.push('/login')} onCancel={() => setModalVisible(false)} centered okText='确认' cancelText='取消'>
       <p>检测到没有您的信息，请前往登录</p>
     </Modal>
   </div>);
