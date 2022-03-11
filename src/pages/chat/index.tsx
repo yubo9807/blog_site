@@ -13,13 +13,14 @@ import ref from './state';
 let socket = null;
 
 function chatPage(props: IRouteProps) {
-  const { userInfo, route } = props;
+  const { userInfo } = props;
   
   const [ modalVisible, setModalVisible ] = useState(false);  // 是否显示弹框
   const [ createRoomVisible, setCreateRoomVisible ] = useState(false);  // 是否显示弹框
 
   const state = ref();
 
+  // 初始化
   useEffect(() => {
     const userName = userInfo.name;
 
@@ -68,9 +69,9 @@ function chatPage(props: IRouteProps) {
     socket.emit('queryRecord', { roomId });
   }
 
-  // 要发送的消息
-  const [ word, setWord ] = useState('');
+  const [ word, setWord ] = useState('');  // 要发送的消息
   const onChange = e => setWord(e.target.value)
+  // 发送
   async function send(e) {
     e.preventDefault();
     socket.emit('addRecord', { text: word, roomId: state.roomId });
@@ -80,25 +81,40 @@ function chatPage(props: IRouteProps) {
     setWord('');
   }
 
+  // 创建房间
   function onCreateRoom(nameList) {
     const names = nameList.map(val => val.name);
     const roomName = '群聊-' + parseInt('' + Date.now() / 1000);
     socket.emit('createRoom', { roomId: state.roomId, roomName, names });
     setCreateRoomVisible(false);
   }
+
+  function onContextMenu(e) {
+    if (e.button === 2) {
+      e.preventDefault();
+      console.log('11111 :>> ', 11111);
+    }
+  }
   
   return (<div className={joinClass(style.chatWrap, 'clearfix')}>
+
+    {/* 侧边栏 */}
     <div className={joinClass(style.side, 'fl')}>
       <span className='iconfont'>&#xe622;</span>
     </div>
+
+    {/* 房间列表 */}
     <ul className={joinClass(style.roomList, 'fl')}>
       <div className={style.search}>
         <Input allowClear prefix={<span className='iconfont'>&#xe64d;</span>} />
         <span className='iconfont' onClick={() => setCreateRoomVisible(true)}>&#xe622;</span>
       </div>
-      {state.rooms.map(val => <li key={val.id} onClick={() => changeRoom(val)}>{val.name}</li>)}
+      {state.rooms.map(val => <li key={val.id} onClick={() => changeRoom(val)} onContextMenu={onContextMenu}>{val.name}</li>)}
     </ul>
+
+    {/* 内容区 */}
     <div className={joinClass(style.content, 'fl')}>
+      {/* 聊天记录 */}
       <div className={style.record}>
         <ul>{state.record.map((val, index) => <li key={index}>
           <div>
@@ -110,14 +126,21 @@ function chatPage(props: IRouteProps) {
           </div>
         </li>)}</ul>
       </div>
+
+      {/* 发送消息 */}
       <div className={style.sendWrap}>
         <Input.TextArea value={word} onChange={onChange} style={{height: '100%'}} bordered={false} onPressEnter={send} />
       </div>
     </div>
+
+    {/* 创建房间 */}
     <CreateRoom visible={createRoomVisible} users={state.users} onJoinRoom={onCreateRoom} onCancel={() => setCreateRoomVisible(false)} />
+
+    {/* 提示登录 */}
     <Modal visible={modalVisible} onOk={() => history.push('/login')} onCancel={() => setModalVisible(false)} centered okText='确认' cancelText='取消'>
       <p>检测到没有您的信息，请前往登录</p>
     </Modal>
+
   </div>);
 }
 

@@ -4,16 +4,15 @@ import style from './module.less';
 import { joinClass } from "@/utils/array";
 import PropTypes from 'prop-types';
 
-const CreateRoom = ({ users = [], visible = false, onCancel = () => {}, onJoinRoom = (joins) => {} }) => {
+const CreateRoom = ({ users, visible = false, onCancel = () => {}, onJoinRoom = (joins) => {} }) => {
 
   const [ list, setList ] = useState([]);  // 用户列表
   const [ selectList, setSelectList ] = useState([]);  // 选择的用户
-
+  const [ searchValue, setSearchValue ] = useState('');  // 搜索条件
+  
   useEffect(() => {
     if (users.length > 0) setList(users);
   }, [users]);
-
-  const [ searchValue, setSearchValue ] = useState('');
 
   // 搜索过滤
   useEffect(() => {
@@ -51,7 +50,10 @@ const CreateRoom = ({ users = [], visible = false, onCancel = () => {}, onJoinRo
     }
   }
 
+
   return (<Modal className={style.modal} visible={visible} width='400px' footer={null} onCancel={onCancel}>
+
+      {/* 筛选后的用户 */}
       <div className={style.header}>
         <div className={joinClass(style.jions, 'clearfix')} style={{width: selectList.length * 30 + 'px'}}>
           <ul className='clearfix' style={{width: selectList.length * 30 + 'px'}}>
@@ -64,6 +66,8 @@ const CreateRoom = ({ users = [], visible = false, onCancel = () => {}, onJoinRo
           <Input value={searchValue} placeholder='搜索' bordered={false} onChange={e => setSearchValue(e.target.value)} onKeyDown={delSelectUser} />
         </div>
       </div>
+
+      {/* 用户列表 */}
       <ul className={style.userList}>
         {list.map((val, index) => <li key={index}>
           <Checkbox checked={val.checked} onChange={(e) => selectUser(e, val)}>
@@ -72,9 +76,12 @@ const CreateRoom = ({ users = [], visible = false, onCancel = () => {}, onJoinRo
           </Checkbox>
         </li>)
       }</ul>
+
+      {/* 提交 */}
       <div className={style.btn}>
-        <Button type='primary' onClick={() => onJoinRoom(selectList)}>确定</Button>
+        <Button type='primary' onClick={() => onJoinRoom(selectList)}>创建房间</Button>
       </div>
+
   </Modal>);
 }
 
