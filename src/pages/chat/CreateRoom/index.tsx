@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Input, Button, Modal, Checkbox } from 'antd';
 import style from './module.less';
 import { joinClass } from "@/utils/array";
+import PropTypes from 'prop-types';
 
-export default ({ users = [], visible = false, onCancel = () => {}, onJoinRoom = (joins) => {} }) => {
+const CreateRoom = ({ users = [], visible = false, onCancel = () => {}, onJoinRoom = (joins) => {} }) => {
 
   const [ list, setList ] = useState([]);  // 用户列表
   const [ selectList, setSelectList ] = useState([]);  // 选择的用户
@@ -76,3 +77,14 @@ export default ({ users = [], visible = false, onCancel = () => {}, onJoinRoom =
       </div>
   </Modal>);
 }
+
+CreateRoom.propTypes = {
+  users: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+  })),
+  visible: PropTypes.bool,
+  onCancel: PropTypes.func,
+  onJoinRoom: PropTypes.func,
+}
+
+export default CreateRoom;
