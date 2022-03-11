@@ -18,8 +18,14 @@
   .search{
     min-width: @searchMinWidth;
     overflow: hidden;
-    > input{
+    :global(.ant-input-affix-wrapper) {
       height: 100%;
+      span{
+        order: 1;
+      }
+      input{
+        order: 2;
+      }
     }
   }
   .jions{
