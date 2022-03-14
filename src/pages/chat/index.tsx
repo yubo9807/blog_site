@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { history, IRouteProps } from 'umi';
 import style from './module.less';
 import { joinClass } from '@/utils/array';
-import { Input, message, Modal, Dropdown, Menu } from 'antd';
+import { Input, Modal, Menu } from 'antd';
 import { connect } from 'react-redux';
 import CreateRoom from './CreateRoom';
 
@@ -14,7 +14,7 @@ function chatPage(props: IRouteProps) {
   // 切换房间
   function changeRoom(row) {
     const { id: roomId } = row
-    state.setRoomId(roomId);
+    state.setSelectRow(row);
     socket.emit('queryRecord', { roomId });
   }
 
@@ -23,10 +23,10 @@ function chatPage(props: IRouteProps) {
   // 发送
   async function send(e) {
     e.preventDefault();
-    socket.emit('addRecord', { text: word, roomId: state.roomId });
-    socket.on(`record_${state.roomId}`, res => {
+    socket.emit('addRecord', { text: word, roomId: state.selectRow.id });
+    socket.on(`record_${state.selectRow.id}`, res => {
       state.setRecord(res);
-    })
+    });
     setWord('');
   }
 
@@ -34,10 +34,11 @@ function chatPage(props: IRouteProps) {
   function onCreateRoom(nameList) {
     const names = nameList.map(val => val.name);
     const roomName = '群聊-' + parseInt('' + Date.now() / 1000);
-    socket.emit('createRoom', { roomId: state.roomId, roomName, names });
+    socket.emit('createRoom', { roomName, names });
     state.setCreateRoomVisible(false);
   }
 
+  // 控制房间右键菜单
   const [ roomMenuVisible, setRoomMenuVisible ] = useState(false);
   const roomMenuRef = useRef();
   function onContextMenu(e, row) {
@@ -47,7 +48,7 @@ function chatPage(props: IRouteProps) {
       const ele: HTMLElement = roomMenuRef.current;
       ele.style.left = clientX + 'px';
       ele.style.top = clientY + 'px';
-      state.setRoomId(row.roomId);
+      state.setSelectRow(row);
       setRoomMenuVisible(true);
     }
   }
@@ -55,6 +56,15 @@ function chatPage(props: IRouteProps) {
     e.stopPropagation();
     if (!e.target.className.includes(style.roomMenuBg)) return;
     setRoomMenuVisible(false);
+  }
+  // 删除房间
+  function deleteRoom() {
+    const { id: roomId, admin } = state.selectRow;
+    socket.emit('delRoom', { roomId, admin });
+    setRoomMenuVisible(false);
+    socket.on(`room_${props.userInfo.name}`, res => {
+      state.setRooms(res);
+    });
   }
 
   return (<div className={joinClass(style.chatWrap, 'clearfix')}>
@@ -80,7 +90,7 @@ function chatPage(props: IRouteProps) {
       <div ref={roomMenuRef} className={style.roomOperation}>
         <Menu>
           <Menu.Item key={0}>修改群名称</Menu.Item>
-          <Menu.Item key={1}>删除群聊</Menu.Item>
+          <Menu.Item key={1} onClick={deleteRoom}>删除群聊</Menu.Item>
         </Menu>
       </div>
     </div>

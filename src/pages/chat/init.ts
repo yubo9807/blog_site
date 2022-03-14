@@ -2,7 +2,7 @@ import env from '~/config/env';
 import { getCookie } from "@/utils/browser";
 import { useState, useEffect } from "react";
 import { history, IRouteProps } from 'umi';
-import { io, Socket } from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { message } from "antd";
 
 export let socket = null;
@@ -10,14 +10,16 @@ export let socket = null;
 export default (props: IRouteProps) => {
   const { userInfo } = props;
 
-  const [ rooms,  setRooms  ] = useState([]);  // 房间列表
-  const [ users,  setUsers  ] = useState([]);  // 用户列表
-  const [ record, setRecord ] = useState([]);  // 聊天记录
-  const [ roomId, setRoomId ] = useState('');  // 当前所在房间
+  const [ rooms,     setRooms     ] = useState([]);  // 房间列表
+  const [ users,     setUsers     ] = useState([]);  // 用户列表
+  const [ record,    setRecord    ] = useState([]);  // 聊天记录
+  const [ selectRow, setSelectRow ] = useState({ id: '', admin: '' });  // 所选中的房间
 
-  const [ modalVisible,      setModalVisible      ] = useState(false);  // 是否显示弹框
-  const [ createRoomVisible, setCreateRoomVisible ] = useState(false);  // 是否显示弹框
+  // 弹框显示
+  const [ modalVisible,      setModalVisible      ] = useState(false);  // 是否显示登录提示弹框
+  const [ createRoomVisible, setCreateRoomVisible ] = useState(false);  // 是否显示创建房间弹框
 
+  // 初始化
   useEffect(() => {
     const userName = userInfo.name;
 
@@ -36,7 +38,7 @@ export default (props: IRouteProps) => {
     if (!userName) return;
     socket.once('users', res => setUsers(res));
     socket.on(`rooms_${userName}`, res => setRooms(res));
-    socket.on('online', res => message.success(res))
+    socket.on('online', res => message.success(res));
 
     socket.on('disconnect', () => {
       console.log('断开连接');
@@ -54,17 +56,17 @@ export default (props: IRouteProps) => {
   }, [ userInfo.name ]);
 
   useEffect(() => {
-    if (!roomId) return;
-    socket.on(`record_${roomId}`, res => {
+    if (!selectRow.id) return;
+    socket.on(`record_${selectRow.id}`, res => {
       setRecord(res);
     })
-  }, [ roomId ]);
+  }, [ selectRow.id ]);
   
   return {
     rooms, setRooms,
     users, setUsers,
     record, setRecord,
-    roomId, setRoomId,
+    selectRow, setSelectRow,
     modalVisible, setModalVisible,
     createRoomVisible, setCreateRoomVisible,
   }
