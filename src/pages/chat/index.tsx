@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { history, IRouteProps } from 'umi';
 import style from './module.less';
 import { joinClass } from '@/utils/array';
-import { Input, Modal, Menu } from 'antd';
+import { Input, Modal, Menu, Empty } from 'antd';
 import { connect } from 'react-redux';
 import CreateRoom from './CreateRoom';
 
@@ -20,13 +20,10 @@ function chatPage(props: IRouteProps) {
 
   const [ word, setWord ] = useState('');  // 要发送的消息
   const onChange = e => setWord(e.target.value)
-  // 发送
+  // 发送聊天记录
   async function send(e) {
     e.preventDefault();
     socket.emit('addRecord', { text: word, roomId: state.selectRow.id });
-    socket.on(`record_${state.selectRow.id}`, res => {
-      state.setRecord(res);
-    });
     setWord('');
   }
 
@@ -62,9 +59,6 @@ function chatPage(props: IRouteProps) {
     const { id: roomId, admin } = state.selectRow;
     socket.emit('delRoom', { roomId, admin });
     setRoomMenuVisible(false);
-    socket.on(`room_${props.userInfo.name}`, res => {
-      state.setRooms(res);
-    });
   }
 
   return (<div className={joinClass(style.chatWrap, 'clearfix')}>
@@ -97,9 +91,10 @@ function chatPage(props: IRouteProps) {
 
     {/* 内容区 */}
     <div className={joinClass(style.content, 'fl')}>
+      <div className={style.header}></div>
       {/* 聊天记录 */}
       <div className={style.record}>
-        <ul>{state.record.map((val, index) => <li key={index}>
+        {state.record.length ? <ul>{state.record.map((val, index) => <li key={index}>
           <div>
             <span>{val.userName}</span>
           </div>
@@ -107,7 +102,7 @@ function chatPage(props: IRouteProps) {
             <span className="time">{val.time}</span>
             <span className="time">{val.text}</span>
           </div>
-        </li>)}</ul>
+        </li>)}</ul> : <Empty />}
       </div>
 
       {/* 发送消息 */}

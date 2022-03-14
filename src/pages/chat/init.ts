@@ -21,20 +21,19 @@ export default (props: IRouteProps) => {
 
   // 初始化
   useEffect(() => {
-    const userName = userInfo.name;
-
     socket = io(env.VISIT_ORIGIN.replace('http', 'ws'), {
       path: env.BASE_SOCKET + '/chat',
       extraHeaders: {
         Authorization: getCookie('token'),
       },
     });
-
+    
     // 验证身份
     socket.on('message', res => {
       if (res.code === 405) setModalVisible(true);
     })
-
+    
+    const userName = userInfo.name;
     if (!userName) return;
     socket.once('users', res => setUsers(res));
     socket.on(`rooms_${userName}`, res => setRooms(res));

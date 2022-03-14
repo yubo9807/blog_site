@@ -30,15 +30,22 @@
 }
 .content{
   width: calc(100% - @roomListWidth - @sideWidth);
+  height: 100%;
   border-left: 1px solid @lintColor;
   box-sizing: border-box;
+  @headerHeight: 40px;
+  .header{
+    height: @headerHeight;
+    border-bottom: 1px solid @lintColor;
+    box-sizing: border-box;
+  }
   .record{
-    height: 50vh;
+    height: calc(70% - @headerHeight);
     min-height: 50vh;
     overflow: auto;
   }
   .send-wrap{
-    height: 140px;
+    height: 30%;
     border-top: 1px solid @lintColor;
   }
 }
