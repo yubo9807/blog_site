@@ -2,10 +2,11 @@ import { useRef, useState } from "react";
 import { history, IRouteProps } from 'umi';
 import style from './module.less';
 import { joinClass } from '@/utils/array';
-import { Input, Modal, Menu, Empty } from 'antd';
+import { Input, Modal, Menu, Empty, message } from 'antd';
 import { connect } from 'react-redux';
 import CreateRoom from './CreateRoom';
 import Record from './Record';
+import Protective from '@/components/Protective';
 
 import init, { socket } from './init';
 
@@ -38,26 +39,19 @@ function chatPage(props: IRouteProps) {
 
   // 控制房间右键菜单
   const [ roomMenuVisible, setRoomMenuVisible ] = useState(false);
-  const roomMenuRef = useRef();
+  const [ roomMenuStyle, setRoomMenuStyle ] = useState({ top: '0', left: '0' });
   function onContextMenu(e, row) {
     if (e.button === 2) {
       e.preventDefault();
       const { clientX, clientY } = e;
-      const ele: HTMLElement = roomMenuRef.current;
-      ele.style.left = clientX + 'px';
-      ele.style.top = clientY + 'px';
+      setRoomMenuStyle({ top: clientY + 'px', left: clientX + 'px' });
       state.setSelectRow(row);
       setRoomMenuVisible(true);
     }
   }
-  function hiddenRoomMenu(e) {
-    e.stopPropagation();
-    if (!e.target.className.includes(style.roomMenuBg)) return;
-    setRoomMenuVisible(false);
-  }
   // 删除房间
-  function deleteRoom() {
-    const { id: roomId, admin } = state.selectRow;
+  function deleteRoom(e) {
+    const { id: roomId, admin, name } = state.selectRow;
     socket.emit('delRoom', { roomId, admin });
     setRoomMenuVisible(false);
   }
@@ -81,14 +75,17 @@ function chatPage(props: IRouteProps) {
     </ul>
 
     {/* 房间列表右键菜单 */}
-    <div className={joinClass(style.roomMenuBg, roomMenuVisible ? style.active : '')} onClick={hiddenRoomMenu}>
-      <div ref={roomMenuRef} className={style.roomOperation}>
-        <Menu>
-          <Menu.Item key={0}>修改群名称</Menu.Item>
-          <Menu.Item key={1} onClick={deleteRoom}>删除群聊</Menu.Item>
-        </Menu>
-      </div>
-    </div>
+    <Protective
+      visible={roomMenuVisible}
+      className={style.roomOperation}
+      onClose={() => setRoomMenuVisible(false)}
+      style={roomMenuStyle}
+    >
+      <Menu>
+        <Menu.Item key={0}>修改群名称</Menu.Item>
+        <Menu.Item key={1} onClick={deleteRoom}>删除群聊</Menu.Item>
+      </Menu>
+    </Protective>
 
     {/* 内容区 */}
     <div className={joinClass(style.content, 'fl')}>
@@ -105,11 +102,22 @@ function chatPage(props: IRouteProps) {
       </div>
     </div>
 
+    <Protective visible={roomMenuVisible} onClose={() => setRoomMenuVisible(false)}>
+      <div>hhhhh</div>
+    </Protective>
+
     {/* 创建房间 */}
     <CreateRoom visible={state.createRoomVisible} users={state.users} onJoinRoom={onCreateRoom} onCancel={() => state.setCreateRoomVisible(false)} />
 
     {/* 提示登录 */}
-    <Modal visible={state.modalVisible} onOk={() => history.push('/login')} onCancel={() => state.setModalVisible(false)} centered okText='确认' cancelText='取消'>
+    <Modal
+      visible={state.modalVisible}
+      onOk={() => history.push('/login')}
+      onCancel={() => state.setModalVisible(false)}
+      centered
+      okText='确认'
+      cancelText='取消'
+    >
       <p>检测到没有您的信息，请前往登录</p>
     </Modal>
 
