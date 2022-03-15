@@ -38,14 +38,17 @@
     height: @headerHeight;
     border-bottom: 1px solid @lintColor;
     box-sizing: border-box;
-  }
-  .record{
-    height: calc(70% - @headerHeight);
-    min-height: 50vh;
-    overflow: auto;
+    padding: 0 10px;
+    line-height: @headerHeight;
+    .room-name{
+      font-size: 16px;
+    }
+    .icon{
+      cursor: pointer;
+    }
   }
   .send-wrap{
-    height: 30%;
+    height: calc(36% - @headerHeight);
     border-top: 1px solid @lintColor;
   }
 }

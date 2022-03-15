@@ -13,7 +13,7 @@ export default (props: IRouteProps) => {
   const [ rooms,     setRooms     ] = useState([]);  // 房间列表
   const [ users,     setUsers     ] = useState([]);  // 用户列表
   const [ record,    setRecord    ] = useState([]);  // 聊天记录
-  const [ selectRow, setSelectRow ] = useState({ id: '', admin: '' });  // 所选中的房间
+  const [ selectRow, setSelectRow ] = useState({ id: '', admin: '', name: '' });  // 所选中的房间
 
   // 弹框显示
   const [ modalVisible,      setModalVisible      ] = useState(false);  // 是否显示登录提示弹框

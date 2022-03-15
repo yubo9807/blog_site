@@ -5,6 +5,7 @@ import { joinClass } from '@/utils/array';
 import { Input, Modal, Menu, Empty } from 'antd';
 import { connect } from 'react-redux';
 import CreateRoom from './CreateRoom';
+import Record from './Record';
 
 import init, { socket } from './init';
 
@@ -91,19 +92,12 @@ function chatPage(props: IRouteProps) {
 
     {/* 内容区 */}
     <div className={joinClass(style.content, 'fl')}>
-      <div className={style.header}></div>
-      {/* 聊天记录 */}
-      <div className={style.record}>
-        {state.record.length ? <ul>{state.record.map((val, index) => <li key={index}>
-          <div>
-            <span>{val.userName}</span>
-          </div>
-          <div>
-            <span className="time">{val.time}</span>
-            <span className="time">{val.text}</span>
-          </div>
-        </li>)}</ul> : <Empty />}
+      <div className={style.header}>
+        <h2 className={joinClass('fl', style.roomName)}>{state.selectRow.name}</h2>
+        <i className={joinClass('iconfont fr', style.icon)}>&#xe601;</i>
       </div>
+      {/* 聊天记录 */}
+      <Record recordList={state.record} />
 
       {/* 发送消息 */}
       <div className={style.sendWrap}>
