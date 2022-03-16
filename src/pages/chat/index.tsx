@@ -10,13 +10,17 @@ import Protective from '@/components/Protective';
 import init from './init';
 import operationWord from './operation-word';
 import operationRoom from './operation-room';
+import operationPopup from './operation-popup';
 
 function ChatPage(props: IRouteProps) {
   const state = init(props);
-
-  const { word, onChangeWord, enterSend } = operationWord(state);
-  const { roomMenuVisible, setRoomMenuVisible, roomMenuStyle, onChangeRoom, onCreateRoom, onDeleteRoom, onContextMenu } = operationRoom(state);
   
+  const { word, onChangeWord, enterSend } = operationWord(state);
+  const { roomMenuVisible, setRoomMenuVisible, roomMenuStyle, onContextMenu, createRoomVisible, setCreateRoomVisible } = operationPopup(state);
+
+  (state as any).setRoomMenuVisible = setRoomMenuVisible;
+  const { onChangeRoom, onCreateRoom, onDeleteRoom } = operationRoom(state);
+
   return (<div className={joinClass(style.chatWrap, 'clearfix')}>
 
     {/* 侧边栏 */}
@@ -28,7 +32,7 @@ function ChatPage(props: IRouteProps) {
     <ul className={joinClass(style.roomList, 'fl')}>
       <div className={style.search}>
         <Input allowClear prefix={<span className='iconfont'>&#xe64d;</span>} />
-        <span className='iconfont' onClick={() => state.setCreateRoomVisible(true)}>&#xe622;</span>
+        <span className='iconfont' onClick={() => setCreateRoomVisible(true)}>&#xe622;</span>
       </div>
       {state.rooms.map(val => <li key={val.id} onClick={() => onChangeRoom(val)} onContextMenu={e => onContextMenu(e, val)}>
         {val.name}
@@ -68,7 +72,7 @@ function ChatPage(props: IRouteProps) {
     </Protective>
 
     {/* 创建房间 */}
-    <CreateRoom visible={state.createRoomVisible} users={state.users} onJoinRoom={onCreateRoom} onCancel={() => state.setCreateRoomVisible(false)} />
+    <CreateRoom visible={createRoomVisible} users={state.users} onJoinRoom={onCreateRoom} onCancel={() => setCreateRoomVisible(false)} />
 
     {/* 提示登录 */}
     <Modal

@@ -16,8 +16,7 @@ export default (props: IRouteProps) => {
   const [ selectRow, setSelectRow ] = useState({ id: '', admin: '', name: '' });  // 所选中的房间
 
   // 弹框显示
-  const [ modalVisible,      setModalVisible      ] = useState(false);  // 是否显示登录提示弹框
-  const [ createRoomVisible, setCreateRoomVisible ] = useState(false);  // 是否显示创建房间弹框
+  const [ modalVisible, setModalVisible ] = useState(false);  // 是否显示登录提示弹框
 
   // 初始化
   useEffect(() => {
@@ -67,6 +66,5 @@ export default (props: IRouteProps) => {
     record, setRecord,
     selectRow, setSelectRow,
     modalVisible, setModalVisible,
-    createRoomVisible, setCreateRoomVisible,
   }
 }
