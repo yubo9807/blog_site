@@ -16,7 +16,16 @@ function ChatPage(props: IRouteProps) {
   const state = init(props);
   
   const { word, onChangeWord, enterSend } = operationWord(state);
-  const { roomMenuVisible, setRoomMenuVisible, roomMenuStyle, onContextMenu, createRoomVisible, setCreateRoomVisible } = operationPopup(state);
+  const {
+    roomMenuVisible,
+    setRoomMenuVisible,
+    roomMenuStyle,
+    onContextMenu,
+    createRoomVisible,
+    setCreateRoomVisible,
+    roomDetailVisible,
+    setRoomDetailVisible,
+  } = operationPopup(state);
 
   (state as any).setRoomMenuVisible = setRoomMenuVisible;
   const { onChangeRoom, onCreateRoom, onDeleteRoom } = operationRoom(state);
@@ -56,7 +65,7 @@ function ChatPage(props: IRouteProps) {
     <div className={joinClass(style.content, 'fl')}>
       <div className={style.header}>
         <h2 className={joinClass('fl', style.roomName)}>{state.selectRow.name}</h2>
-        <i className={joinClass('iconfont fr', style.icon)}>&#xe601;</i>
+        <i className={joinClass('iconfont fr', style.icon)} onClick={() => setRoomDetailVisible(true)}>&#xe601;</i>
       </div>
       {/* 聊天记录 */}
       <Record recordList={state.record} />
@@ -67,8 +76,8 @@ function ChatPage(props: IRouteProps) {
       </div>
     </div>
 
-    <Protective visible={roomMenuVisible} onClose={() => setRoomMenuVisible(false)}>
-      <div>hhhhh</div>
+    <Protective className={style.roomDetailWrap} visible={roomDetailVisible} onClose={() => setRoomDetailVisible(false)}>
+      <div>房间详情</div>
     </Protective>
 
     {/* 创建房间 */}

@@ -1,0 +1,25 @@
+.yu-tree-node{
+  transition: height .4s;
+  overflow: hidden;
+  padding-left: 20px;
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
+  & > i{
+    display: inline-block;
+    width: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #666;
+  }
+  &.is-open > i{
+    transform-origin: center center;
+    transform: rotateZ(90deg);
+  }
+  .yu-tree-node-title{
+    display: inline-block;
+  }
+  &.active > .yu-tree-node-title{
+    background-color: orange;
+  }
+}

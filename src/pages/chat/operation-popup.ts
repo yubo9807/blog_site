@@ -7,6 +7,7 @@ export default (state) => {
   const [ createRoomVisible, setCreateRoomVisible ] = useState(false);
   const [ roomMenuVisible,   setRoomMenuVisible   ] = useState(false);
   const [ roomMenuStyle,     setRoomMenuStyle     ] = useState({ top: '0', left: '0' });
+  const [ roomDetailVisible, setRoomDetailVisible ] = useState(false);
 
   return {
     
@@ -34,6 +35,10 @@ export default (state) => {
         setRoomMenuVisible(true);
       }
     },
+
+    // 房间详情弹窗
+    roomDetailVisible,
+    setRoomDetailVisible,
     
   }
 }
