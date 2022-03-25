@@ -42,10 +42,10 @@ export default () => {
     <h1>登入</h1>
     <Input className={style.inputItem} description='账号' gain={val => signIn.username = val} />
     <Input className={style.inputItem} type='password' description='密码' gain={val => signIn.password = val} />
-    <Link to='/login?type=signUp' replace>注册</Link>
+    <Link to={{ query: { type: 'signUp' }}} replace>注册</Link>
     <Button className={style.submit} type="primary" loading={loading} onClick={submit}>登入</Button>
     <p>
-      <Link to='/login?type=reset'>忘记密码/邮箱</Link>
+      <Link to={{ query: { type: 'seting' }}} replace>忘记密码/邮箱</Link>
     </p>
   </>)
 }

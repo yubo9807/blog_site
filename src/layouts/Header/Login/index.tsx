@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import style from './module.less';
-import { history } from 'umi';
+import { history, Link } from 'umi';
 import { deleteCookie } from '@/utils/browser';
 import { connect } from 'react-redux';
 import { actions } from '@/store/user';
@@ -16,6 +16,7 @@ const Login = (props) => {
     {props.isLogin ? <div className={style.user}>
       <span>{props.userInfo.name}&nbsp;<i className='iconfont'>&#xe6b9;</i></span>
       <ul>
+        <li><Link to='/login?type=seting'>设置</Link></li>
         <li onClick={signOut}>退出</li>
       </ul>
     </div>
