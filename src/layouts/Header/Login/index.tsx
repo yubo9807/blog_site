@@ -16,7 +16,7 @@ const Login = (props) => {
     {props.isLogin ? <div className={style.user}>
       <span>{props.userInfo.name}&nbsp;<i className='iconfont'>&#xe6b9;</i></span>
       <ul>
-        <li><Link to='/login?type=seting'>设置</Link></li>
+        <li><Link to='/login?type=setings'>设置</Link></li>
         <li onClick={signOut}>退出</li>
       </ul>
     </div>

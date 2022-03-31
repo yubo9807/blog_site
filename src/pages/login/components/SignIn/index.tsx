@@ -45,7 +45,7 @@ export default () => {
     <Link to={{ query: { type: 'signUp' }}} replace>注册</Link>
     <Button className={style.submit} type="primary" loading={loading} onClick={submit}>登入</Button>
     <p>
-      <Link to={{ query: { type: 'seting' }}} replace>忘记密码/邮箱</Link>
+      <Link to={{ query: { type: 'setings' }}} replace>忘记密码/邮箱</Link>
     </p>
   </>)
 }

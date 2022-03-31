@@ -1,3 +1,5 @@
+import { getCookie } from "@/utils/browser";
+
 const SIGNIN = Symbol('signIn');
 const SIGNOUT = Symbol('signOut');
 const SETUSERINFO = Symbol('setUserinfo');
@@ -41,6 +43,7 @@ export const actions = {
       payload: false
     }
   },
+  // 设置用户信息
   setUserinfoAction(data: any) {
     return {
       type: SETUSERINFO,
