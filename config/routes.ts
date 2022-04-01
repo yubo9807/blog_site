@@ -45,6 +45,13 @@ export default [
         // state: { roles: ['user'] },
       },
       {
+        path: '/user',
+        exact: true,
+        component: '@/pages/user/index',
+        title: '我的账号',
+        // state: { roles: ['user'] },
+      },
+      {
         component: '@/pages/not-found/index',
         title: '找不到页面'
       }

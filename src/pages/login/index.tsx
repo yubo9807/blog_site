@@ -1,7 +1,6 @@
 import '@/main';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
-import Setings from './components/Setings';
 import { history } from 'umi';
 import { useEffect, useState } from 'react';
 import style from './module.less';
@@ -12,7 +11,6 @@ import NetworkError from '@/components/NetworkError';
 
 const SIGNIN = 'signIn';
 const SIGNUP = 'signUp';
-const SETING = 'setings';
 
 const LoginPage = ({ location }) => {
   
@@ -36,7 +34,6 @@ const LoginPage = ({ location }) => {
     <div className={style.login}>
       {loginType === SIGNIN && <SignIn />}
       {loginType === SIGNUP && <SignUp />}
-      {loginType === SETING && <Setings />}
       <i className={joinClass('iconfont', style.close)} onClick={() => {
         history.goBack();
       }}>&#xeca0;</i>

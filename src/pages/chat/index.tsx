@@ -91,6 +91,7 @@ function ChatPage(props: IRouteProps) {
       centered
       okText='确认'
       cancelText='取消'
+      width='400px'
     >
       <p>检测到没有您的信息，请前往登录</p>
     </Modal>

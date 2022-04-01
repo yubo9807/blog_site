@@ -61,22 +61,23 @@ const Setings = (props: IRouteProps) => {
   }
 
   return (<div>
+    <h2>账户信息</h2>
     <Form className={style.form} initialValues={userInfo}>
-      <Form.Item label='昵称：'>
-        <Input value={userInfo.name} disabled={disabled} onChange={e => onChange('name', e.target.value)} />
-      </Form.Item>
       <Form.Item label='头像'>
         <Upload listType='picture-card' showUploadList={false} beforeUpload={uploadPortrait} disabled={disabled}>
           {userInfo.portrait ? <img src={userInfo.portrait} alt={userInfo.name} /> : <i className='iconfont'>&#xe622;</i>}
         </Upload>
       </Form.Item>
+      <Form.Item label='昵称：'>
+        <Input value={userInfo.name} disabled={disabled} onChange={e => onChange('name', e.target.value)} />
+      </Form.Item>
       <Form.Item label='邮箱：'>
         <Input value={userInfo.mail} disabled={disabled} onChange={e => onChange('mail', e.target.value)} />
       </Form.Item>
-      <Form.Item label='邮箱接收消息'>
+      <Form.Item label='邮箱是否接收消息'>
         <Switch checked={userInfo.is_receive} disabled={disabled} onChange={checked => onChange('is_receive', checked)} />
       </Form.Item>
-      <Form.Item label='密码：'>
+      <Form.Item label='重置密码：'>
         <Input value={userInfo.new_password} disabled={disabled} onChange={e => onChange('new_password', e.target.value)} />
       </Form.Item>
     </Form>
