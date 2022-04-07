@@ -1,13 +1,12 @@
 import { connect } from 'react-redux';
 import { actions } from '@/store/user';
-import { IRouteProps, history } from 'umi';
+import { IRouteProps } from 'umi';
 import { useEffect, useState } from 'react';
 import { Form, Input, Switch, Button, Upload, message } from 'antd';
-import { getCookie } from '@/utils/browser';
-import { api_getUserInfo } from '@/api/login';
 import style from './module.less';
 import { api_uploadPortrait } from '@/api/upload';
 import env from '~/config/env';
+import { getUserInfo } from '@/common/user';
 
 const Setings = (props: IRouteProps) => {
   const [ userInfo, setUserInfo ] = useState({
@@ -19,20 +18,8 @@ const Setings = (props: IRouteProps) => {
   })
 
   useEffect(() => {
-    getUserInfo()
-  }, [])
-
-  // 获取用户信息
-  async function getUserInfo() {
-    const token = await getCookie('token');
-    const response: any = await api_getUserInfo({ token });
-    if (response.code === 200) {
-      setUserInfo(Object.assign({}, userInfo, response.data));
-    } else {
-      // 验证不通过，返回登陆页
-      history.push({ query: { type: 'signIn' } });
-    }
-  }
+    setUserInfo(Object.assign({}, userInfo, props.userInfo));
+  }, [props.userInfo])
 
   const [ disabled, setDisabled ] = useState(true);
 
@@ -55,13 +42,17 @@ const Setings = (props: IRouteProps) => {
     else {
       const response = await api_uploadPortrait(file);
       if (response.code === 200) {
-        console.log('response :>> ', response);
+        getUserInfo();
       }
     }
   }
 
   // 编辑
   function editor() {
+    if (!props.isLogin) {
+      message.warning('未监测到您的信息，请先登录');
+      return;
+    }
     setDisabled(false);
   }
 

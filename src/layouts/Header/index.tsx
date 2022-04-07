@@ -4,6 +4,7 @@ import style from './module.less';
 import Logo from './Logo';
 import Login from './Login';
 import { useState } from 'react';
+import Item from 'antd/lib/list/Item';
 
 
 const navList = [
@@ -11,6 +12,7 @@ const navList = [
   { name: '笔记', link: '/note/JavaScript' },
   { name: '聊天', link: '/chat' },
   { name: '关于', link: '/about' },
+  { name: 'GitHub', link: 'https://github.com/yubo9807', target: '_blank' },
 ]
 
 export default () => {
@@ -21,7 +23,10 @@ export default () => {
     <Logo />
     <ul className={joinClass(style.navWrap, 'clearfix', active ? style.active : '')}>{
       navList.map(val => <li key={val.name}>
-        <NavLink to={val.link} activeClassName={val.link === '/' ? '' : style.active} onClick={() => setActive(false)}>{val.name}</NavLink>
+        {val.link.startsWith('http')
+          ? <a href={val.link} target={val.target || '_blank'}>{val.name}</a>
+          : <NavLink to={val.link} activeClassName={val.link === '/' ? '' : style.active} onClick={() => setActive(false)}>{val.name}</NavLink>
+        }
       </li>)
     }</ul>
     <Login />

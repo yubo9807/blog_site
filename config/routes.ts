@@ -1,5 +1,11 @@
 import env from './env';
 
+/**
+ * state 参数说明
+ * @param {boolean} roles true：登录所有角色都有权限访问
+ * @param {array} roles 所包含的角色具有权限访问
+ */
+
 export default [
   {
     path: '/login',
@@ -49,7 +55,7 @@ export default [
         exact: true,
         component: '@/pages/user/index',
         title: '我的账号',
-        // state: { roles: ['user'] },
+        state: { roles: true },
       },
       {
         component: '@/pages/not-found/index',
