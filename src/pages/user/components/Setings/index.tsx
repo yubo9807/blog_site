@@ -6,6 +6,8 @@ import { Form, Input, Switch, Button, Upload, message } from 'antd';
 import { getCookie } from '@/utils/browser';
 import { api_getUserInfo } from '@/api/login';
 import style from './module.less';
+import { api_uploadPortrait } from '@/api/upload';
+import env from '~/config/env';
 
 const Setings = (props: IRouteProps) => {
   const [ userInfo, setUserInfo ] = useState({
@@ -43,7 +45,7 @@ const Setings = (props: IRouteProps) => {
    * 上传头像
    * @param file 文件
    */
-  function uploadPortrait(file: File) {
+  async function uploadPortrait(file: File) {
 
     const errorArr = [];  // 收集错误
     !file.type.startsWith('image/') && errorArr.push('请上传图片类型文件');
@@ -51,21 +53,23 @@ const Setings = (props: IRouteProps) => {
 
     if (errorArr.length > 0) message.warn(errorArr[0]);
     else {
-      // 上传
+      const response = await api_uploadPortrait(file);
+      if (response.code === 200) {
+        console.log('response :>> ', response);
+      }
     }
   }
 
   // 编辑
   function editor() {
-    // 弹框输入密码验证
+    setDisabled(false);
   }
 
   return (<div>
-    <h2>账户信息</h2>
     <Form className={style.form} initialValues={userInfo}>
       <Form.Item label='头像'>
         <Upload listType='picture-card' showUploadList={false} beforeUpload={uploadPortrait} disabled={disabled}>
-          {userInfo.portrait ? <img src={userInfo.portrait} alt={userInfo.name} /> : <i className='iconfont'>&#xe622;</i>}
+          {userInfo.portrait ? <img src={env.VISIT_ORIGIN + userInfo.portrait} alt={userInfo.name} /> : <i className='iconfont'>&#xe622;</i>}
         </Upload>
       </Form.Item>
       <Form.Item label='昵称：'>

@@ -1,8 +1,14 @@
 .form{
   text-align: left;
-  :global(.ant-upload){
+  :global(.ant-upload-select){
     width: 60px;
     height: 60px;
     border-radius: 4px;
+    > :global(.ant-upload){
+      padding: 2px;
+    }
+    img{
+      width: 100%;
+    }
   }
 }
