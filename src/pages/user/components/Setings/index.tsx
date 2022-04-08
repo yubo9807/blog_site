@@ -49,7 +49,7 @@ const Setings = (props: IRouteProps) => {
 
   // 编辑
   function editor() {
-    if (!props.isLogin) {
+    if (props.isLogin !== 1) {
       message.warning('未监测到您的信息，请先登录');
       return;
     }

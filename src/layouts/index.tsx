@@ -1,30 +1,35 @@
-import Header from './Header';
-import Footer from './Footer';
 import '@/main';
 import style from './module.less';
 import { useEffect } from 'react';
+import { history } from 'umi';
+
 import { Provider } from 'react-redux';
 import store from '@/store';
-import { actions } from '@/store/scroll';
+import { actions as scrollActions } from '@/store/scroll';
+import { actions as routeActions } from '@/store/route';
+
 import { throttle } from '@/utils/optimize';
 import '@/utils/optimize-watch';
-import NetworkError from '@/components/NetworkError';
-import { history } from 'umi';
-import { getUserInfo } from '@/common/user';
 import { isType } from '@/utils/validate';
+import { getUserInfo } from '@/common/user';
+
+import Header from './Header';
+import Footer from './Footer';
+import NetworkError from '@/components/NetworkError';
 
 let unlisten = null;
 
 const Layouts = ({ children, routes, route, location }) => {
   
+  // 记录滚动位置
   useEffect(() => {
-    // 记录滚动位置
     window.addEventListener('scroll', throttle(() => {
       const scrollY = window.scrollY;
-      store.dispatch(actions.setScrollYAction(scrollY));
+      store.dispatch(scrollActions.setScrollYAction(scrollY));
     }, 30))
   }, [])
 
+  // 进入页面/切换页面 路由守卫
   useEffect(() => {
     (async () => {
       await getUserInfo();
@@ -42,6 +47,16 @@ const Layouts = ({ children, routes, route, location }) => {
     }
   }, [])
 
+  // 退出登录再次权限守卫
+  function exitJumpPage() {
+    const exit = store.getState().user.isLogin === 2;
+    if (exit) {
+      const layoutsRoutes = routes.find(val => val.path === route.path).routes;
+      const nowRoute = layoutsRoutes.find(val => val.path === location.pathname);
+      nowRoute.state && nowRoute.state.roles && history.push('/');
+    }
+  }
+
   /**
    * 路由权限守卫
    * @param pathname 当前的 url
@@ -50,18 +65,20 @@ const Layouts = ({ children, routes, route, location }) => {
    * @returns 
    */
   function routeIntercept(pathname: string, routes: any[], role: string) {
-    const route = routes.find(val => {
+    const nowRoute = routes.find(val => {
       const { exact, path } = val;
       if (exact) return path === pathname;
       else return pathname.startsWith(path + '/');
     });
-    if (!route || !route.state || !route.state.roles) return;
+    store.dispatch(routeActions.setNowRouteAction(nowRoute));  // 将当前路由信息存入 store
 
-    const { roles } = route.state;
+    if (!nowRoute || !nowRoute.state || !nowRoute.state.roles) return;
+
+    const { roles } = nowRoute.state;
     if (isType(roles) === 'boolean') {
       // roles 为 true，但没有登录
-      roles && !store.getState().user.isLogin && history.replace('/404');
-    } else if (isType(role) === 'array') {
+      roles && store.getState().user.isLogin !== 1 && history.replace('/404');
+    } else if (isType(roles) === 'array') {
       // 登录角色不符
       if (!roles.includes(role)) history.replace('/404');
     } else {

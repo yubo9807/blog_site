@@ -1,11 +1,25 @@
-import { Button } from 'antd';
 import style from './module.less';
+import { Button } from 'antd';
 import { history, Link } from 'umi';
+import { useEffect } from 'react';
+
 import { deleteCookie } from '@/utils/browser';
+import { joinClass } from '@/utils/array';
+import { isEmptyObject } from '@/utils/object';
+import env from '~/config/env';
+
 import { connect } from 'react-redux';
-import { actions } from '@/store/user';
+import { actions as userActions } from '@/store/user';
 
 const Login = (props) => {
+
+  // 监控登录退出状态，有设置权限的页面返回首页
+  useEffect(() => {
+    const { isLogin, nowRoute } = props;
+    if (isLogin === 2 && !isEmptyObject(nowRoute)) {
+      nowRoute.state && nowRoute.state.roles && history.push('/');
+    }
+  }, [props.isLogin, props.nowRoute]);
 
   function signOut() {
     deleteCookie({name: 'token', path: '/'});
@@ -13,8 +27,13 @@ const Login = (props) => {
   }
 
   return (<div className={style.wrap}>
-    {props.isLogin ? <div className={style.user}>
-      <span>{props.userInfo.name}&nbsp;<i className='iconfont'>&#xe6b9;</i></span>
+    {props.isLogin === 1 ? <div className={joinClass(style.user, 'clearfix')}>
+      {props.userInfo.portrait
+        ? <div className={style.portrait}>
+            <img src={env.VISIT_ORIGIN + props.userInfo.portrait} alt={props.userInfo.name} />
+          </div>
+        : <span>{props.userInfo.name}</span>
+      }
       <ul>
         <li><Link to='/user?type=setings'>设置</Link></li>
         <li onClick={signOut}>退出</li>
@@ -25,10 +44,11 @@ const Login = (props) => {
 }
 
 function mapStateToProps(state: any, ownProps: any) {
-  const { isLogin, userInfo } = state.user
+  const { user, route } = state;
   return {
-    isLogin,
-    userInfo,
+    isLogin: user.isLogin,
+    userInfo: user.userInfo,
+    nowRoute: route.nowRoute,
   }
 }
 
@@ -36,7 +56,7 @@ function mapStateToProps(state: any, ownProps: any) {
 function mapDispatchToProps(dispatch: any) {
   return {
     onSignOutAction() {
-      dispatch(actions.signOutAction());
+      dispatch(userActions.signOutAction());
     },
   }
 }

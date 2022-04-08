@@ -5,11 +5,11 @@ const SIGNOUT = Symbol('signOut');
 const SETUSERINFO = Symbol('setUserinfo');
 
 type InitialState = {
-  isLogin: boolean
+  isLogin: 0 | 1 | 2,  // 0 初始状态 1 登录成功 2 退出登录
   userInfo: any
 }
 const initialState: InitialState = {
-  isLogin: false,
+  isLogin: 0,
   userInfo: {}
 };
 
@@ -33,14 +33,14 @@ export const actions = {
   signInAction() {
     return {
       type: SIGNIN,
-      payload: true
+      payload: 1
     }
   },
   // 登出
   signOutAction() {
     return {
       type: SIGNOUT,
-      payload: false
+      payload: 2
     }
   },
   // 设置用户信息
