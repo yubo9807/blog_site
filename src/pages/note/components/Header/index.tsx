@@ -19,7 +19,7 @@ export default ({ crumb, path }: IRouteProps) => {
     )}</Breadcrumb>
 
     <div className={style.search}>
-      <Input icon='&#xe64d;' gain={search} />
+      <Input icon='&#xe64d;' onEnter={search} />
     </div>
   </div>)
 }

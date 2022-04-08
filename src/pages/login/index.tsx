@@ -7,7 +7,6 @@ import style from './module.less';
 import { joinClass } from '@/utils/array';
 import { Provider } from 'react-redux';
 import store from '@/store';
-import NetworkError from '@/components/NetworkError';
 
 const SIGNIN = 'signIn';
 const SIGNUP = 'signUp';
@@ -38,8 +37,6 @@ const LoginPage = ({ location }) => {
         history.goBack();
       }}>&#xeca0;</i>
     </div>
-
-    <NetworkError />
 
   </Provider>)
 }

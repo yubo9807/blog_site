@@ -3,36 +3,39 @@ import { useRef, useState } from 'react';
 import { IRouteProps } from 'umi';
 import './index.less';
 
-export default ({ gain = () => {}, icon, description = '请输入内容', isTrim = true, className = '', type = 'text' }: IRouteProps) => {
+export default ({
+  value = null,
+  onChange = () => {},
+  onEnter = () => {},
+  onClear = () => {},
+  icon,
+  description = '请输入内容',
+  className = '',
+  type = 'text'
+}: IRouteProps) => {
 
-  const [ value, setValue ] = useState('');
+  const [ input, setInput ] = useState('');
 
-  // value 值变化重新赋值
-  function change(e: any) {
-    const str: string = e.target.value;
-    if (isTrim) setValue(str.trim());
-    else setValue(str);
+  // 回车触发
+  function enter(e) {
+    if (e.keyCode !== 13) return; 
+    if (value === null) onEnter(input);
+    else onEnter(value);
   }
-  
-  function getValue(e: any) {
-    if (['blur', 'click'].includes(e.type) || e.keyCode === 13) {
-      gain(value);
+
+  function clearInput() {
+    if (value === null) setInput('');
+    else onClear();
+  }
+
+  return (<div className={joinClass('yu-input', (value || input) !== '' ? 'yu-input-focus' : '', className)}>
+    {value === null
+      ? <input type={type} value={input} onChange={e => setInput(e.target.value)} onKeyUp={enter} />
+      : <input type={type} value={value} onChange={onChange} onKeyUp={enter} />
     }
-  }
-
-  const inputRef: any = useRef();
-  function clearValue() {
-    setValue('');
-    const input = inputRef.current;
-    input.focus();
-    // setTimeout(() => input.blur(), 0);
-  }
-
-  return (<div className={joinClass('yu-input', value !== '' ? 'yu-input-focus' : '', className)}>
-    <input ref={inputRef} type={type} value={value} onChange={change} onKeyDown={getValue} onBlur={getValue} />
     <span className='yu-input-prompt'>{description}</span>
     <div className='yu-input-line'></div>
-    {value === '' ? <i className='iconfont yu-input-icon' onClick={getValue}>{icon}</i>
-    : <i className='iconfont yu-input-icon' onClick={clearValue}>&#xeca0;</i>}
+    {(value || input) === '' ? <i className='iconfont yu-input-icon'>{icon}</i>
+    : <i className='iconfont yu-input-icon' onClick={clearInput}>&#xeca0;</i>}
   </div>)
 }

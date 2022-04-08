@@ -6,19 +6,15 @@ import { history } from 'umi';
 import { api_userSginIn, SignIn } from '@/api/login';
 import { setCookie } from '@/utils/browser';
 import check from './check';
-import { useEffect, useState } from 'react';
-
-const signIn: SignIn = {
-  username: '',
-  password: '',
-};
+import { useState } from 'react';
 
 export default () => {
   const [ loading, setLoading ] = useState(false);
 
-  useEffect(() => {
-    for (const prop in signIn) signIn[prop] = '';
-  }, [])
+  const [ signIn, setSignIn ] = useState({
+    username: '',
+    password: '',
+  })
 
   // 登入提交
   async function submit() {
@@ -38,10 +34,32 @@ export default () => {
     }
   }
 
+  // 状态更新
+  function onChange(key: string, e) {
+    setSignIn(Object.assign({}, signIn, { [key]: e.target.value }));
+  }
+  // 清空内容
+  function onClear(key: string) {
+    setSignIn(Object.assign({}, signIn, { [key]: '' }));
+  }
+
   return (<>
     <h1>登入</h1>
-    <Input className={style.inputItem} description='账号' gain={val => signIn.username = val} />
-    <Input className={style.inputItem} type='password' description='密码' gain={val => signIn.password = val} />
+    <Input
+      value={signIn.username}
+      onChange={e => onChange('username', e)}
+      onClear={() => onClear('username')}
+      className={style.inputItem}
+      description='账号'
+    />
+    <Input
+      value={signIn.password}
+      onChange={e => onChange('password', e)}
+      onClear={() => onClear('password')}
+      onEnter={submit}
+      className={style.inputItem}
+      type='password' description='密码'
+    />
     <Link to={{ query: { type: 'signUp' }}} replace>注册</Link>
     <Button className={style.submit} type="primary" loading={loading} onClick={submit}>登入</Button>
     <p>
