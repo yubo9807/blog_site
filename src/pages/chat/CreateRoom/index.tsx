@@ -3,6 +3,7 @@ import { Input, Button, Modal, Checkbox } from 'antd';
 import style from './module.less';
 import { joinClass } from "@/utils/array";
 import PropTypes from 'prop-types';
+import env from "~/config/env";
 
 const CreateRoom = ({ users, visible = false, onCancel = () => {}, onJoinRoom = (joins) => {} }) => {
 
@@ -71,7 +72,9 @@ const CreateRoom = ({ users, visible = false, onCancel = () => {}, onJoinRoom = 
       <ul className={style.userList}>
         {list.map((val, index) => <li key={index}>
           <Checkbox checked={val.checked} onChange={(e) => selectUser(e, val)}>
-            <span className={style.portrait}>{val.portrait}</span>
+            <span className={style.portrait}>
+              <img src={env.VISIT_ORIGIN + val.portrait} alt="" />
+            </span>
             <span className={style.name}>{val.name}</span>
           </Checkbox>
         </li>)
