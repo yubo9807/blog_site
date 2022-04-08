@@ -1,13 +1,12 @@
 import '@/styles';
 import { isClient } from '@/utils/browser';
-import store from '@/store';
-import { actions } from '@/store/comp/networkerror';
+import Toast from '@/components/Toast';
 
 if (isClient()) {
   window.addEventListener('online' , () => {
-    store.dispatch(actions.showMessageAction('网络恢复', '&#xe65c;'));
+    Toast({ content: '网络恢复', icon: '&#xe65c;' });
   })
   window.addEventListener('offline' , () => {
-    store.dispatch(actions.showMessageAction('网络中断'));
+    Toast({ content: '网络中断', icon: '&#xec72;' });
   })
 }

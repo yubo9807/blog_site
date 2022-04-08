@@ -3,7 +3,6 @@ import { createStore, combineReducers, bindActionCreators, applyMiddleware } fro
 import scroll from './scroll';
 import user from './user';
 import route from './route';
-import networkerror from './comp/networkerror';
 
 // function reducer (state: any, action: any) {
 //   return {
@@ -15,7 +14,6 @@ const reducer = combineReducers({
   scroll,
   user,
   route,
-  networkerror,
 })
 
 // 中间件

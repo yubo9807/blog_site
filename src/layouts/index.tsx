@@ -15,7 +15,6 @@ import { getUserInfo } from '@/common/user';
 
 import Header from './Header';
 import Footer from './Footer';
-import NetworkError from '@/components/NetworkError';
 
 let unlisten = null;
 
@@ -98,7 +97,6 @@ const Layouts = ({ children, routes, route, location }) => {
       {/* 版权 */}
       <Footer />
 
-      <NetworkError />
     </Provider>
   );
 };

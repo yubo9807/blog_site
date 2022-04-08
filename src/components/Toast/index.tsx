@@ -8,22 +8,22 @@ let setState: any;
 const Toast = () => {
   const [ visible, setVisible ] = useState(false);
   const [ content, setContent ] = useState('提示：');
-  const [ imgSrc, setImgSrc ] = useState('');
+  const [ icon, setIcon ] = useState('');
 
   // 保存到外部变量，方便调用
   setState = {
     setVisible,
     setContent,
-    setImgSrc,
+    setImgSrc: setIcon,
     reset() {
       setContent('');
-      setImgSrc('');
+      setIcon('');
     }
   }
 
   return (<div className='yu-toast'>
     {visible ? <div className='yu-toast-wrap'>
-      {imgSrc && <img src={imgSrc} />}
+    {icon && <i className='iconfont' dangerouslySetInnerHTML={{ __html: icon }}></i>}
       <p>{content}</p>
     </div> : null}
   </div>);
@@ -50,14 +50,14 @@ function notice(content: string, imgSrc?: string, duration: number = 3000) {
 
 type Option = {
   content: string
-  imgSrc: string
-  duration: number
+  icon?: string
+  duration?: number
 }
 
 export default function (option: string | Option) {
   if (typeof option === 'string') {
     return notice(option);
   } else if (typeof option === 'object') {
-    return notice(option.content, option.imgSrc, option.duration);
+    return notice(option.content, option.icon, option.duration);
   }
 }

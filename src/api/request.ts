@@ -1,10 +1,11 @@
 import axios, { AxiosStatic, AxiosRequestConfig } from 'axios';
-import axiosRetry from './axios-retry';
-import env from '~/config/env';
 import { message, notification } from 'antd';
+import Toast from '@/components/Toast';
+
+import env from '~/config/env';
 import { getCookie, isClient } from '@/utils/browser';
-import store from '@/store';
-import { actions } from '@/store/comp/networkerror';
+import axiosRetry from './axios-retry';
+
 const client = isClient();
 
 const config: AxiosRequestConfig = {
@@ -18,7 +19,7 @@ axiosRetry(instance, {
   retries: 3,
   retryDelay: 3000,
   retryTips: () => {
-    client && store.dispatch(actions.showMessageAction('网络错误，正在尝试重新连接', ''));
+    client && Toast('网络错误，正在尝试重新连接');
   }
 });
 
