@@ -1,4 +1,5 @@
 import { dynamic } from 'umi';
+import { Skeleton } from 'antd';
 
 const Loading = dynamic({
   loader: async function() {
@@ -12,5 +13,5 @@ export default dynamic({
     const { default: AsyncMarkdown } = await import(/* webpackChunkName: "markdown" */ './index');
     return AsyncMarkdown;
   },
-  loading: Loading
+  loading: Skeleton
 });

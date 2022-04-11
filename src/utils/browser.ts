@@ -4,7 +4,7 @@
  * @returns 
  */
 export function pathNameSplit(src: string) {
-  const arr = src?.split(/\//);
+  const arr = src && src.split(/\//);
   return arr;
 }
 

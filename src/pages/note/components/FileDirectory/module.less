@@ -1,0 +1,22 @@
+.wrap{
+  > li{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 6px;
+    > a{
+      display: inline-block;
+      width: 100%;
+    }
+    :global(.iconfont){
+      color: #1195db;
+      margin-right: 8px;
+    }
+    &.active{
+      background-color: #459fed50;
+      > a{
+        color: #40a9ff;
+      }
+    }
+  }
+}
