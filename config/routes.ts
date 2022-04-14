@@ -26,12 +26,6 @@ export default [
         title: '首页',
       },
       {
-        path: '/note2',
-        exact: false,
-        component: '@/pages/note2/index',
-        title: '个人笔记',
-      },
-      {
         path: '/note',
         exact: false,
         component: '@/pages/note/index',

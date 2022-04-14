@@ -1,35 +1,45 @@
-
 .side, .content{
   float: left;
 }
 
+@sideWidth: 200px;
 .side{
-  width: 200px;
-  &.box{
-    width: 100%;
-    > ul{
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      > li{
-        width: 160px;
-        padding: 10px;
-        text-align: center;
-        border-radius: 8px;
-        cursor: pointer;
-        &:hover{
-          box-shadow: 0 2px 4px 4px rgba(0,0,0,.1);
-        }
-      }
-      :global(.iconfont) {
-        font-size: 50px;
-        display: block;
-        margin: 0;
-      }
-    }
-  }
+  position: fixed;
+  width: @sideWidth;
+  max-height: 70vh;
+  overflow-y: auto;
 }
 
 .content{
-  width: calc(100% - 200px);
+  width: calc(100% - @sideWidth);
+  margin-left: @sideWidth;
+}
+
+// 网格布局
+.side.grid{
+  position: static;
+  width: 100%;
+  overflow: visible;
+  > ul{
+    display: grid;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    grid-template-columns: repeat(auto-fill, 160px);
+    grid-gap: 10px;
+    > li{
+      width: 160px;
+      padding: 10px;
+      text-align: center;
+      border-radius: 8px;
+      cursor: pointer;
+      &:hover{
+        box-shadow: 0 2px 4px 4px rgba(0,0,0,.1);
+      }
+    }
+    :global(.iconfont) {
+      font-size: 40px;
+      display: block;
+      margin: 0;
+    }
+  }
 }

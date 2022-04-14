@@ -11,7 +11,9 @@ export default ({ filename, route }) => {
     </Breadcrumb.Item>
   {piecewise.map((val: any, index: number) =>
     <Breadcrumb.Item key={index}>
-      <Link to={route.path + '/' + piecewise.slice(0, index + 1).join('/')}>{val}</Link>
+      <Link to={route.path + '/' + piecewise.slice(0, index + 1).join('/')}>
+        {val}
+      </Link>
     </Breadcrumb.Item>
   )}
   </Breadcrumb>)

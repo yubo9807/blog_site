@@ -4,7 +4,7 @@ import { IRouteProps } from 'umi';
 import { useEffect, useState } from 'react';
 import { Form, Input, Switch, Button, Upload, message } from 'antd';
 import style from './module.less';
-import { api_uploadPortrait } from '@/api/upload';
+import { api_uploadPortrait } from '@/api/file';
 import env from '~/config/env';
 import { getUserInfo } from '@/common/user';
 
@@ -43,6 +43,7 @@ const Setings = (props: IRouteProps) => {
       const response = await api_uploadPortrait(file);
       if (response.code === 200) {
         getUserInfo();
+        message.success('上传成功');
       }
     }
   }

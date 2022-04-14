@@ -1,35 +1,49 @@
 .markdown {
-  padding: 0 10px;
+  padding: 0 10px 20px 10px;
+  ol > li{
+    list-style-type: custom-counter-style;
+    ol > li{
+      list-style-type: custom-counter-style;
+      ol > li{
+        list-style-type: custom-counter-style;
+      }
+      ul > li{
+        list-style-type: circle;
+      }
+    }
+    ul > li{
+      list-style-type: circle;
+    }
+  }
   ul li {
-    list-style: inside;
+    list-style-type: disc;
+    ul > li{
+      list-style-type: circle;
+      ul > li{
+        list-style-type: square;
+      }
+      ol > li{
+        list-style-type: custom-counter-style;
+      }
+    }
+    ol > li{
+      list-style-type: custom-counter-style;
+    }
   }
   h1 {
     text-align: center;
   }
-  h1,
-  h2,
-  h3,
-  h4 {
+  h1, h2, h3, h4 {
     color: #111111;
     font-weight: 400;
-    margin-top: .6em;
+    margin-top: .4em;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5 {
+  h1, h2, h3, h4, h5 {
     font-family: 'Helvetica Neue', Helvetica, Arial, freesans, sans-serif;
     font-weight: 700;
   }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  p,
-  dl {
+  h1, h2, h3, h4, h5, p, dl {
     padding: 0;
   }
   h1 {
@@ -38,8 +52,7 @@
   h2 {
     font-size: 1.4rem;
   }
-  h1,
-  h2 {
+  h1, h2 {
     border-bottom: 1px solid #efeaea;
   }
   h3 {
@@ -52,6 +65,7 @@
     font-size: 0.8rem;
     list-style: 23px;
   }
+
   a {
     color: #0099ff;
     margin: 0;
@@ -60,11 +74,8 @@
   }
   a:hover {
     text-decoration: none;
-    color: #ff6600;
   }
-  a:visited {
-    color: purple;
-  }
+
   ul, ol {
     padding: 0;
     padding-left: 12px;
@@ -97,8 +108,7 @@
     font-size: 14px;
   }
 
-  code,
-  pre {
+  code, pre {
     // background-color: #f7f7f7;
     background-color: #282c34;
     color: inherit;
@@ -157,6 +167,7 @@
     float: right;
     width: 390px;
   }
+
   blockquote {
     border-left: 4px solid #eee;
     padding-left: 1em;
@@ -207,39 +218,29 @@
 
   /* Code below this line is copyright Twitter Inc. */
 
-  button,
-  input,
-  select,
-  textarea {
+  button, input, select, textarea {
     font-size: 100%;
     margin: 0;
     vertical-align: baseline;
     *vertical-align: middle;
   }
-  button,
-  input {
+  button, input {
     line-height: normal;
     *overflow: visible;
   }
-  button::-moz-focus-inner,
-  input::-moz-focus-inner {
+  button::-moz-focus-inner, input::-moz-focus-inner {
     border: 0;
     padding: 0;
   }
-  button,
-  input[type='button'],
-  input[type='reset'],
-  input[type='submit'] {
+  button, input[type='button'], input[type='reset'], input[type='submit'] {
     cursor: pointer;
     -webkit-appearance: button;
   }
-  input[type='checkbox'],
-  input[type='radio'] {
+  input[type='checkbox'], input[type='radio'] {
     cursor: pointer;
   }
   /* override default chrome & firefox settings */
-  input:not([type='image']),
-  textarea {
+  input:not([type='image']), textarea {
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box;
@@ -254,25 +255,18 @@
   input[type='search']::-webkit-search-decoration {
     -webkit-appearance: none;
   }
-  label,
-  input,
-  select,
-  textarea {
+  label, input, select, textarea {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 13px;
     font-weight: normal;
     line-height: normal;
     margin-bottom: 18px;
   }
-  input[type='checkbox'],
-  input[type='radio'] {
+  input[type='checkbox'], input[type='radio'] {
     cursor: pointer;
     margin-bottom: 0;
   }
-  input[type='text'],
-  input[type='password'],
-  textarea,
-  select {
+  input[type='text'], input[type='password'], textarea, select {
     display: inline-block;
     width: 210px;
     padding: 4px;
@@ -286,8 +280,7 @@
     -moz-border-radius: 3px;
     border-radius: 3px;
   }
-  select,
-  input[type='file'] {
+  select, input[type='file'] {
     height: 27px;
     line-height: 27px;
   }
@@ -301,10 +294,7 @@
   ::-webkit-input-placeholder {
     color: #bfbfbf;
   }
-  input[type='text'],
-  input[type='password'],
-  select,
-  textarea {
+  input[type='text'], input[type='password'], select, textarea {
     -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
     -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
     transition: border linear 0.2s, box-shadow linear 0.2s;
@@ -312,9 +302,7 @@
     -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
   }
-  input[type='text']:focus,
-  input[type='password']:focus,
-  textarea:focus {
+  input[type='text']:focus, input[type='password']:focus, textarea:focus {
     outline: none;
     border-color: rgba(82, 168, 236, 0.8);
     -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1),
@@ -388,14 +376,16 @@
     padding: 0;
     border: 0;
   }
+
   table {
-    *border-collapse: collapse; /* IE7 and lower */
+    border-collapse: separate;
+    *border-collapse: separate; /* IE7 and lower */
     border-spacing: 0;
     width: 100%;
     margin-bottom: 10px;
   }
   table {
-    border: solid #ccc 1px;
+    border: 1px solid #eee;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
@@ -404,45 +394,27 @@
         box-shadow: 0 1px 1px #ccc;   */
   }
   table tr:hover {
-    background: #fbf8e9;
+    background: #fafafa;
     -o-transition: all 0.1s ease-in-out;
     -webkit-transition: all 0.1s ease-in-out;
     -moz-transition: all 0.1s ease-in-out;
     -ms-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;
   }
-  table td,
-  .table th {
-    border-left: 1px solid #ccc;
-    border-top: 1px solid #ccc;
+  table td, .table th {
+    border-left: 1px solid #eee;
+    border-top: 1px solid #eee;
     padding: 10px;
     text-align: left;
   }
 
   table th {
-    background-color: #dce9f9;
-    background-image: -webkit-gradient(
-      linear,
-      left top,
-      left bottom,
-      from(#ebf3fc),
-      to(#dce9f9)
-    );
-    background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
-    background-image: -moz-linear-gradient(top, #ebf3fc, #dce9f9);
-    background-image: -ms-linear-gradient(top, #ebf3fc, #dce9f9);
-    background-image: -o-linear-gradient(top, #ebf3fc, #dce9f9);
-    background-image: linear-gradient(top, #ebf3fc, #dce9f9);
-    /*-webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
-        -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
-        box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;*/
+    background: #fafafa;
     border-top: none;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
     padding: 5px;
   }
 
-  table td:first-child,
-  table th:first-child {
+  table td:first-child, table th:first-child {
     border-left: none;
   }
 

@@ -1,14 +1,19 @@
-import { api_getFileContentOrChildDirectory } from '@/api/file';
-import { isType } from '@/utils/validate';
+import { useEffect, useState } from 'react';
 import { IRouteProps } from 'umi';
 
+import style from './module.less';
+
+// 请求
+import { api_getFileContentOrChildDirectory } from '@/api/file';
+
+// 公共函数
+import { isType } from '@/utils/validate';
+import { joinClass } from '@/utils/array';
+
+// 组件
 import Breadcrumb from './components/Breadcrumb';
 import FileDirectory from './components/FileDirectory';
 import Markdown from '@/components/Markdown/async';
-
-import style from './module.less';
-import { useEffect, useState } from 'react';
-import { joinClass } from '@/utils/array';
 
 
 const NotePage = (props: IRouteProps) => {
@@ -19,13 +24,16 @@ const NotePage = (props: IRouteProps) => {
     setIsRender(true);
   }, [])
 
-  return (<div className='leayer clearfix'>
+  return (<div className={joinClass(style.container, 'leayer clearfix')}>
     {data && <>
 
-      <Breadcrumb filename={data.filename} route={route} />
+      {/* 面包屑 */}
+      <div className={style.breadCrumb}>
+        <Breadcrumb filename={data.filename} route={route} />
+      </div>
 
       {/* 文件目录 */}
-      <div className={joinClass(style.side, data.fileContent ? '' : style.box)}>
+      <div className={joinClass(style.side, data.fileContent ? '' : style.grid)}>
         <FileDirectory fileDirectory={data.fileDirectory} />
       </div>
 
@@ -59,9 +67,12 @@ NotePage.getInitialProps = async({ history, path }) => {
 
 export default NotePage;
 
+
+
+
 /**
  * 获取文件子目录和内容
- * @param filename 
+ * @param filename
  * @returns 
  */
 async function getFileChildDirectoryAndContent(filename: string = '', path: string) {
