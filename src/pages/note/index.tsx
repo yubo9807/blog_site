@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { IRouteProps } from 'umi';
 
+// 样式
 import style from './module.less';
 
 // 请求
@@ -9,11 +10,13 @@ import { api_getFileContentOrChildDirectory } from '@/api/file';
 // 公共函数
 import { isType } from '@/utils/validate';
 import { joinClass } from '@/utils/array';
+import { dateFormater } from '@/utils/date';
 
 // 组件
 import Breadcrumb from './components/Breadcrumb';
 import FileDirectory from './components/FileDirectory';
 import Markdown from '@/components/Markdown/async';
+
 
 
 const NotePage = (props: IRouteProps) => {
@@ -33,17 +36,27 @@ const NotePage = (props: IRouteProps) => {
       </div>
 
       {/* 文件目录 */}
-      <div className={joinClass(style.side, data.fileContent ? '' : style.grid)}>
+      <div className={joinClass(style.side, data.fileAttr.content ? '' : style.grid)}>
         <FileDirectory fileDirectory={data.fileDirectory} />
       </div>
+      
 
       {/* 内容 */}
-      <div className={style.content}>
+      {data.fileAttr.content && <div className={style.content}>
+
+        {/* 文件信息 */}
+        <p className={style.fileInfo}>
+          <span>{dateFormater('YYYY/MM/DD', data.fileAttr.createTime * 1000)}</span>
+          <span>{data.fileAttr.size}字节</span>
+        </p>
+
+        {/* 文件内容 */}
         {isRender
-          ? <Markdown html={data.fileContent} />
-          : <div dangerouslySetInnerHTML={{ __html: data.fileContent }} ></div>
+          ? <Markdown html={data.fileAttr.content} />
+          : <div dangerouslySetInnerHTML={{ __html: data.fileAttr.content }} ></div>
         }
-      </div>
+
+      </div>}
 
     </>}
   </div>)
@@ -54,12 +67,12 @@ NotePage.getInitialProps = async({ history, path }) => {
   const piecewise = pathname.split('/');
   const filename = (pathname.startsWith('http') ? piecewise.slice(4) : piecewise.slice(2)).join('/');
   
-  const { fileDirectory, fileContent } = await getFileChildDirectoryAndContent(filename, path);
+  const { fileDirectory, fileAttr } = await getFileChildDirectoryAndContent(filename, path);
 
   return {
     data: {
       fileDirectory,
-      fileContent,
+      fileAttr,
       filename,
     }
   }
@@ -76,14 +89,14 @@ export default NotePage;
  * @returns 
  */
 async function getFileChildDirectoryAndContent(filename: string = '', path: string) {
-  let fileDirectory = [], fileContent = '';
+  let fileDirectory = [], fileAttr: any = {};
 
   const response = await api_getFileContentOrChildDirectory(`/note/${filename}`);
   if (response.code !== 200) {
-    fileContent = response.msg;
+    fileAttr.content = response.msg;
     return {
       fileDirectory,
-      fileContent,
+      fileAttr,
     }
   }
   const { data } = response;
@@ -97,15 +110,15 @@ async function getFileChildDirectoryAndContent(filename: string = '', path: stri
     fileDirectory = [].concat(folderList, fileList);
 
     if (fileList.length === 0) {
-      return { fileDirectory, fileContent };
+      return { fileDirectory, fileAttr };
     }
 
     // 获取子目录下第一个文件的内容
     const response = await api_getFileContentOrChildDirectory(`/note/${filename}/${fileList[0].name}`);
-    if (response.code === 200) fileContent = response.data;
-    else fileContent = response.msg;
-  } else if (isType(data) === 'string') {  // 如果是文件内容
-    fileContent = data;
+    if (response.code === 200) fileAttr = response.data;
+    else fileAttr.content = response.msg;
+  } else if (isType(data) === 'object') {  // 如果是文件内容
+    fileAttr = data;
 
     // 获取上一级文件目录
     const piecewise = filename.split('/');
@@ -126,7 +139,7 @@ async function getFileChildDirectoryAndContent(filename: string = '', path: stri
 
   return {
     fileDirectory,
-    fileContent,
+    fileAttr,
   }
 
 }

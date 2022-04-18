@@ -12,7 +12,7 @@ export default ({ filename, route }) => {
   {piecewise.map((val: any, index: number) =>
     <Breadcrumb.Item key={index}>
       <Link to={route.path + '/' + piecewise.slice(0, index + 1).join('/')}>
-        {val}
+        {/\..+$/.test(val) ? val : val && val.match(/\s.+/)[0].slice(1)}
       </Link>
     </Breadcrumb.Item>
   )}

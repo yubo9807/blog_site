@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link, history } from 'umi';
 import style from './module.less';
 
+import { dateFormater } from '@/utils/date';
+
 function FileDirectory({ fileDirectory }) {
 
   const [ active, setActive ] = useState('');
@@ -24,6 +26,10 @@ function FileDirectory({ fileDirectory }) {
         <span className={style.content}>
           {val.isFile ? val.name : val.name.match(/\s.+/)[0].slice(1)}
         </span>
+        {val.isFile ? null : <p className={style.otherInfo}>
+          {dateFormater('YYYY/MM/DD', val.createTime * 1000)}
+          &nbsp;{val.size}byte
+        </p>}
       </Link>
     </li>
   )}</ul>)
