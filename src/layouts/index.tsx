@@ -1,5 +1,6 @@
 import '@/main';
 import style from './module.less';
+
 import { useEffect } from 'react';
 import { history } from 'umi';
 

@@ -1,14 +1,23 @@
+
 .side, .content{
   float: left;
 }
 
 @sideWidth: 200px;
 .side{
-  position: fixed;
   width: @sideWidth;
+}
+
+.side{
+  position: fixed;
   max-height: 70vh;
   overflow-y: auto;
 }
+
+.anchor-link{
+  right: 0;
+}
+
 
 .content{
   width: calc(100% - @sideWidth);

@@ -16,17 +16,19 @@ const navList = [
 export default () => {
   const [active, setActive] = useState(false);
 
-  return (<header className={joinClass('leayer', style.header, 'clearfix')}>
-    <i className={joinClass(style.menu, active ? style.active : '')} onClick={() => setActive(!active)}></i>
-    <Logo />
-    <ul className={joinClass(style.navWrap, 'clearfix', active ? style.active : '')}>{
-      navList.map(val => <li key={val.name}>
-        {val.link.startsWith('http')
-          ? <a href={val.link} target={val.target || '_blank'}>{val.name}</a>
-          : <NavLink to={val.link} activeClassName={val.link === '/' ? '' : style.active} onClick={() => setActive(false)}>{val.name}</NavLink>
-        }
-      </li>)
-    }</ul>
-    <Login />
+  return (<header className={style.header}>
+    <div className='leayer clearfix'>
+      <i className={joinClass(style.menu, active ? style.active : '')} onClick={() => setActive(!active)}></i>
+      <Logo />
+      <ul className={joinClass(style.navWrap, 'clearfix', active ? style.active : '')}>{
+        navList.map(val => <li key={val.name}>
+          {val.link.startsWith('http')
+            ? <a href={val.link} target={val.target || '_blank'}>{val.name}</a>
+            : <NavLink to={val.link} activeClassName={val.link === '/' ? '' : style.active} onClick={() => setActive(false)}>{val.name}</NavLink>
+          }
+        </li>)
+      }</ul>
+      <Login />
+    </div>
   </header>)
 }
