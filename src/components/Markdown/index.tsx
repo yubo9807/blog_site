@@ -9,7 +9,7 @@ import { scrollTo } from '@/utils/browser';
 import { history } from 'umi';
 
 
-const Markdown = ({ html, getLinkList = (arg) => {} }) => {
+const Markdown = ({ html, skewing = 0, getLinkList = (arg) => {} }) => {
 
   const refMd: any = useRef();
 
@@ -56,7 +56,7 @@ const Markdown = ({ html, getLinkList = (arg) => {} }) => {
     history.replace({ hash: `#${id}` });
     const ele = document.getElementById(id);
     const top = ele && ele.offsetTop || 0;
-    scrollTo(top - 44);
+    scrollTo(top - skewing);
   }
 
 
@@ -73,4 +73,5 @@ export default Markdown;
 
 Markdown.propTypes = {
   html: PropTypes.string,
+  skewing: PropTypes.number,  // 锚链接偏移
 };

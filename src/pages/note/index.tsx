@@ -15,7 +15,6 @@ import { dateFormater } from '@/utils/date';
 // 组件
 import Breadcrumb from './components/Breadcrumb';
 import FileDirectory from './components/FileDirectory';
-import AnchorLink from './components/AnchorLink';
 import Markdown from '@/components/Markdown/async';
 
 
@@ -27,8 +26,6 @@ const NotePage = (props: IRouteProps) => {
   useEffect(() => {
     setIsRender(true);
   }, [])
-
-  const [ linkList, setLinkList ] = useState([]);  // 跳转链接数组
 
 
   return (<div className={joinClass(style.container, 'leayer clearfix')}>
@@ -56,7 +53,7 @@ const NotePage = (props: IRouteProps) => {
 
         {/* 文件内容 */}
         {isRender
-          ? <Markdown html={data.fileAttr.content} getLinkList={(list) => setLinkList(list)} />
+          ? <Markdown html={data.fileAttr.content} skewing={90}/>
           : <div dangerouslySetInnerHTML={{ __html: data.fileAttr.content }} ></div>
         }
 

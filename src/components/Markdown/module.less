@@ -42,6 +42,14 @@
   h1, h2, h3, h4, h5 {
     font-family: 'Helvetica Neue', Helvetica, Arial, freesans, sans-serif;
     font-weight: 700;
+    > span{
+      margin-left: 8px;
+      cursor: pointer;
+      color: #999;
+      &:hover{
+        color: #0070f3;
+      }
+    }
   }
   h1, h2, h3, h4, h5, p, dl {
     padding: 0;
@@ -442,5 +450,11 @@
     -moz-border-radius: 0 0 6px 0;
     -webkit-border-radius: 0 0 6px 0;
     border-radius: 0 0 6px 0;
+  }
+}
+
+@media (max-width: 540px) {
+  .markdown{
+    padding: 0 0 20px 0;
   }
 }

@@ -8,28 +8,24 @@
   width: @sideWidth;
 }
 
+@breadCrumbHeight: 42px;
+.bread-crumb{
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(5px);
+  padding-right: 20px;
+  border-bottom-right-radius: 100px;
+  border-right: 1px solid white;
+  box-shadow: 1px 1px 2px rgba(0,0,0,.1);
+  z-index: 9;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .side{
   position: fixed;
-  max-height: 70vh;
+  top: calc(var(--main-header-height) + @breadCrumbHeight);
   overflow-y: auto;
-}
-
-.anchor-link{
-  right: 0;
-}
-
-
-.content{
-  width: calc(100% - @sideWidth);
-  margin-left: @sideWidth;
-  .file-info{
-    font-size: 12px;
-    color: #666;
-    margin-left: 10px;
-    span{
-      margin-right: 10px;
-    }
-  }
 }
 
 // 网格布局
@@ -37,6 +33,7 @@
   position: static;
   width: 100%;
   overflow: visible;
+  margin-top: @breadCrumbHeight;
   > ul{
     display: grid;
     flex-wrap: wrap;
@@ -58,5 +55,45 @@
       display: block;
       margin: 0;
     }
+  }
+}
+
+.content{
+  width: calc(100% - @sideWidth);
+  margin-left: @sideWidth;
+  margin-top: @breadCrumbHeight;
+  .file-info{
+    font-size: 12px;
+    color: #666;
+    margin-left: 10px;
+    span{
+      margin-right: 10px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .content, .side{
+    width: 100%;
+  }
+  .content{
+    margin-left: 0;
+    .file-info{
+      margin: 0;
+    }
+  }
+  .bread-crumb{
+    border-bottom: 1px solid white;
+  }
+  .side{
+    top: auto;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(5px);
+    border-top: 1px solid white;
+    transform: translateY(100%);
+  }
+  .side.grid{
+    transform: translateY(0);
   }
 }
