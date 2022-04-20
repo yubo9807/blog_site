@@ -3,6 +3,7 @@ import { createStore, combineReducers, bindActionCreators, applyMiddleware } fro
 import scroll from './scroll';
 import user from './user';
 import route from './route';
+import fixedBtns from './fixed-btns';
 
 // function reducer (state: any, action: any) {
 //   return {
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   scroll,
   user,
   route,
+  fixedBtns,
 })
 
 // 中间件

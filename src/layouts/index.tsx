@@ -16,19 +16,27 @@ import { getUserInfo } from '@/common/user';
 
 import Header from './Header';
 import Footer from './Footer';
+import FixedBtn from './FixedBtn';
 
 let unlisten = null;
 
 const Layouts = ({ children, routes, route, location }) => {
-  
-  // 记录滚动位置
+
+
+
+  // #region 记录滚动位置
   useEffect(() => {
     window.addEventListener('scroll', throttle(() => {
       const scrollY = window.scrollY;
       store.dispatch(scrollActions.setScrollYAction(scrollY));
     }, 30))
   }, [])
+  // #endregion
 
+
+
+
+  // #region 路由守卫
   // 进入页面/切换页面 路由守卫
   useEffect(() => {
     (async () => {
@@ -86,7 +94,11 @@ const Layouts = ({ children, routes, route, location }) => {
     }
 
   }
+  // #endregion
   
+
+
+
   return (
     <Provider store={store}>
       {/* 头部 */}
@@ -97,6 +109,8 @@ const Layouts = ({ children, routes, route, location }) => {
 
       {/* 版权 */}
       <Footer />
+
+      <FixedBtn />
 
     </Provider>
   );

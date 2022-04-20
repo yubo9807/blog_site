@@ -8,6 +8,14 @@
   width: @sideWidth;
   max-height: 70vh;
   overflow-y: auto;
+  &::-webkit-scrollbar{
+    width: 6px;
+    background: #eee;
+  }
+  &::-webkit-scrollbar-thumb{
+    background: #ccc;
+    border-radius: 3px;
+  }
 }
 
 @breadCrumbHeight: 42px;
