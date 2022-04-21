@@ -1,10 +1,13 @@
 const SETSCROLLY = Symbol('setScrollY');
+const SETCLIENTWIDTH = Symbol('setClientWidth');
 
 type InitialState = {
   scrollY: number
+  clientWidth: number
 }
 const initialState: InitialState = {
-  scrollY: 0
+  scrollY: 0,
+  clientWidth: 0
 };
 
 // reducer 必须是一个没有副作用的纯函数
@@ -12,6 +15,8 @@ function reducer(state = initialState, action: { type: symbol, payload?: any }) 
   switch (action.type) {
     case SETSCROLLY:
       return Object.assign({}, state, { scrollY: action.payload });
+    case SETCLIENTWIDTH:
+      return Object.assign({}, state, { clientWidth: action.payload });
     default:
       return state;
   }
@@ -22,6 +27,12 @@ export const actions = {
   setScrollYAction(value: number) {
     return {
       type: SETSCROLLY,
+      payload: value
+    }
+  },
+  setClientWidthAction(value: number) {
+    return {
+      type: SETCLIENTWIDTH,
       payload: value
     }
   }

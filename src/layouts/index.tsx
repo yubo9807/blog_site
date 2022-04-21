@@ -35,7 +35,17 @@ const Layouts = ({ children, routes, route, location }) => {
 
 
 
+  // #region 记录窗口宽度
+  useEffect(() => {
+    store.dispatch(scrollActions.setClientWidthAction(document.body.clientWidth));
+    window.addEventListener('resize', throttle(() => {
+      store.dispatch(scrollActions.setClientWidthAction(document.body.clientWidth));
+    }, 60))
+  })
+  // #endregion
 
+
+  
   // #region 路由守卫
   // 进入页面/切换页面 路由守卫
   useEffect(() => {

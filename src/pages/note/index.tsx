@@ -32,18 +32,32 @@ const NotePage = (props: IRouteProps) => {
   }, [])
 
 
+  // #region 手机端菜单按钮控制
   const [ phoneMenuVisible, setPhoneMenuVisible ] = useState(false);
   useEffect(() => {
     const listKey = 'note_fileList';
-    const outlineKey = 'note_outline';
-    props.onAddFixedBtn(listKey, <i className='iconfont' onClick={() => setPhoneMenuVisible(!phoneMenuVisible)}>&#xe603;</i>, 6);
-    props.onAddFixedBtn(outlineKey, <i className='iconfont'>&#xe618;</i>, 5)
+    props.clientWidth < 768 && props.onAddFixedBtn(listKey, <i
+      className='iconfont'
+      onClick={() => setPhoneMenuVisible(!phoneMenuVisible)}
+    >&#xe603;</i>, 6);
 
     return () => {
       props.onDelFixedBtn(listKey);
+    }
+  }, [phoneMenuVisible, props.clientWidth])
+  // #endregion
+
+
+  // #region 文件大纲按钮
+  useEffect(() => {
+    const outlineKey = 'note_outline';
+    props.onAddFixedBtn(outlineKey, <i className='iconfont'>&#xe618;</i>, 5)
+
+    return () => {
       props.onDelFixedBtn(outlineKey);
     }
-  }, [phoneMenuVisible])
+  }, [])
+  // #endregion
 
 
   return (<div className={joinClass(style.container, 'leayer clearfix')}>
@@ -101,6 +115,7 @@ NotePage.getInitialProps = async({ history, path }) => {
 function mapStateToProps(state: any, ownProps: any) {
   return {
     scrollY: state.scroll.scrollY,
+    clientWidth: state.scroll.clientWidth,
     btns: state.fixedBtns,
   }
 }
