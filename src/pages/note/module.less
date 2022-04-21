@@ -5,6 +5,9 @@
 
 @sideWidth: 200px;
 .side{
+  position: fixed;
+  top: calc(var(--main-header-height) + @breadCrumbHeight);
+  overflow-y: auto;
   width: @sideWidth;
   max-height: 70vh;
   overflow-y: auto;
@@ -31,18 +34,14 @@
   max-width: 100%;
   overflow-x: auto;
   padding-left: 4px;
-}
-
-.side{
-  position: fixed;
-  top: calc(var(--main-header-height) + @breadCrumbHeight);
-  overflow-y: auto;
+  white-space: nowrap;
 }
 
 // 网格布局
 .side.grid{
   position: static;
   width: 100%;
+  max-height: 100%;
   overflow: visible;
   margin-top: @breadCrumbHeight;
   > ul{
@@ -97,14 +96,21 @@
     border-bottom: 1px solid white;
   }
   .side{
+    left: 0;
     top: auto;
     bottom: 0;
     background-color: rgba(245, 245, 250, 0.6);
     backdrop-filter: blur(5px);
     border-top: 1px solid white;
     transform: translateY(100%);
-  }
-  .side.grid{
-    transform: translateY(0);
+    transition: transform .3s;
+    box-shadow: 0 -2px 2px rgba(0,0,0,.1);
+    &.grid, &.active{
+      transform: translateY(0);
+    }
+    &.grid{
+      box-shadow: none;
+      border: none;
+    }
   }
 }

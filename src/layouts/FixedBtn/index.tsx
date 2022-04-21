@@ -3,15 +3,16 @@ import { scrollTo } from '@/utils/browser';
 import { connect } from 'react-redux';
 import { actions } from '@/store/fixed-btns';
 import { useEffect } from 'react';
-import { joinClass } from '@/utils/array';
+
+
 
 const FixedBtn = (props) => {
 
   useEffect(() => {
     const key = 'toTop';
     
-    if (props.scrollY > 160) {
-      !props.btns[key] && props.onAddFixedBtn(key, <i className={joinClass('iconfont', style.toTop)} onClick={() => scrollTo()}>&#xe600;</i>);
+    if (props.scrollY > 140) {
+      !props.btns[key] && props.onAddFixedBtn(key, <i className='iconfont' onClick={() => scrollTo()}>&#xe600;</i>);
     } else {
       props.onDelFixedBtn(key);
     }

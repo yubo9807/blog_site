@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { IRouteProps } from 'umi';
 
+// redux
+import { connect } from 'react-redux';
+import { actions } from '@/store/fixed-btns';
+
 // 样式
 import style from './module.less';
 
@@ -28,6 +32,20 @@ const NotePage = (props: IRouteProps) => {
   }, [])
 
 
+  const [ phoneMenuVisible, setPhoneMenuVisible ] = useState(false);
+  useEffect(() => {
+    const listKey = 'note_fileList';
+    const outlineKey = 'note_outline';
+    props.onAddFixedBtn(listKey, <i className='iconfont' onClick={() => setPhoneMenuVisible(!phoneMenuVisible)}>&#xe603;</i>)
+    props.onAddFixedBtn(outlineKey, <i className='iconfont'>&#xe618;</i>)
+
+    return () => {
+      props.onDelFixedBtn(listKey);
+      props.onDelFixedBtn(outlineKey);
+    }
+  }, [phoneMenuVisible])
+
+
   return (<div className={joinClass(style.container, 'leayer clearfix')}>
     {data && <>
 
@@ -37,7 +55,9 @@ const NotePage = (props: IRouteProps) => {
       </div>
 
       {/* 文件目录 */}
-      <div className={joinClass(style.side, data.fileAttr.content ? '' : style.grid)}>
+      <div className={joinClass(style.side, data.fileAttr.content ? '' : style.grid, phoneMenuVisible ? style.active : '' )}
+        onClick={() => setPhoneMenuVisible(false)}
+      >
         <FileDirectory fileDirectory={data.fileDirectory} />
       </div>
       
@@ -78,7 +98,27 @@ NotePage.getInitialProps = async({ history, path }) => {
   }
 }
 
-export default NotePage;
+function mapStateToProps(state: any, ownProps: any) {
+  return {
+    scrollY: state.scroll.scrollY,
+    btns: state.fixedBtns,
+  }
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    onAddFixedBtn(key, val) {
+      dispatch(actions.addFixedBtn(key, val));
+    },
+    onDelFixedBtn(key) {
+      dispatch(actions.delFixedBtn(key));
+    }
+  }
+}
+
+const hoc = connect(mapStateToProps, mapDispatchToProps);
+
+export default hoc(NotePage);
 
 
 
