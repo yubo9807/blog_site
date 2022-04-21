@@ -23,10 +23,10 @@ function reducer(state = initialState, action: { type: symbol, payload?: any }) 
 
 
 export const actions = {
-  addFixedBtn(key: string, element: HTMLElement) {
+  addFixedBtn(key: string, element: HTMLElement, count: number) {
     return {
       type: ADD,
-      payload: { [key]: element }
+      payload: { [key]: { element, count } }
     }
   },
   delFixedBtn(key: string) {

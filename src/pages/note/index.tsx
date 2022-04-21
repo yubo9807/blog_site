@@ -36,8 +36,8 @@ const NotePage = (props: IRouteProps) => {
   useEffect(() => {
     const listKey = 'note_fileList';
     const outlineKey = 'note_outline';
-    props.onAddFixedBtn(listKey, <i className='iconfont' onClick={() => setPhoneMenuVisible(!phoneMenuVisible)}>&#xe603;</i>)
-    props.onAddFixedBtn(outlineKey, <i className='iconfont'>&#xe618;</i>)
+    props.onAddFixedBtn(listKey, <i className='iconfont' onClick={() => setPhoneMenuVisible(!phoneMenuVisible)}>&#xe603;</i>, 6);
+    props.onAddFixedBtn(outlineKey, <i className='iconfont'>&#xe618;</i>, 5)
 
     return () => {
       props.onDelFixedBtn(listKey);
@@ -107,8 +107,8 @@ function mapStateToProps(state: any, ownProps: any) {
 
 function mapDispatchToProps(dispatch: any) {
   return {
-    onAddFixedBtn(key, val) {
-      dispatch(actions.addFixedBtn(key, val));
+    onAddFixedBtn(key, element, count) {
+      dispatch(actions.addFixedBtn(key, element, count));
     },
     onDelFixedBtn(key) {
       dispatch(actions.delFixedBtn(key));
