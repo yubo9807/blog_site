@@ -36,7 +36,7 @@ const NotePage = (props: IRouteProps) => {
   const [ phoneMenuVisible, setPhoneMenuVisible ] = useState(false);
   useEffect(() => {
     const listKey = 'note_fileList';
-    props.clientWidth < 768 && props.onAddFixedBtn(listKey, <i
+    data && data.fileAttr.content && props.clientWidth < 768 && props.onAddFixedBtn(listKey, <i
       className='iconfont'
       onClick={() => setPhoneMenuVisible(!phoneMenuVisible)}
     >&#xe603;</i>, 6);
@@ -44,20 +44,20 @@ const NotePage = (props: IRouteProps) => {
     return () => {
       props.onDelFixedBtn(listKey);
     }
-  }, [phoneMenuVisible, props.clientWidth])
+  }, [phoneMenuVisible, props.clientWidth, data])
   // #endregion
 
 
-  // #region 文件大纲按钮
-  useEffect(() => {
-    const outlineKey = 'note_outline';
-    props.onAddFixedBtn(outlineKey, <i className='iconfont'>&#xe618;</i>, 5)
+  // // #region 文件大纲按钮
+  // useEffect(() => {
+  //   const outlineKey = 'note_outline';
+  //   props.onAddFixedBtn(outlineKey, <i className='iconfont'>&#xe618;</i>, 5)
 
-    return () => {
-      props.onDelFixedBtn(outlineKey);
-    }
-  }, [])
-  // #endregion
+  //   return () => {
+  //     props.onDelFixedBtn(outlineKey);
+  //   }
+  // }, [])
+  // // #endregion
 
 
   return (<div className={joinClass(style.container, 'leayer clearfix')}>
