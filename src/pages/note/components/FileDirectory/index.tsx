@@ -1,11 +1,19 @@
-import { useEffect, useState } from 'react';
-import { Link, history } from 'umi';
 import style from './module.less';
 
+// npm
+import { useEffect, useState } from 'react';
+import { Link, history } from 'umi';
+
+// 工具函数
 import { dateFormater } from '@/utils/date';
+
+
 
 function FileDirectory({ fileDirectory }) {
 
+
+
+  // #region 高亮显示控制
   const [ active, setActive ] = useState('');
 
   useEffect(() => {
@@ -18,7 +26,11 @@ function FileDirectory({ fileDirectory }) {
       index >= 0 && setActive(fileDirectory[index].name);
     }
   }, [fileDirectory]);
+  // #endregion
 
+
+
+  // #region jsx
   return (<ul className={style.wrap}>{fileDirectory.map((val, index: number) => 
     <li key={index} className={val.isFile && active === val.name ? style.active : ''} onClick={() => setActive(val.name)}>
       <Link to={val.path}>
@@ -33,6 +45,8 @@ function FileDirectory({ fileDirectory }) {
       </Link>
     </li>
   )}</ul>)
+  // #endregion
+
 }
 
 export default FileDirectory;

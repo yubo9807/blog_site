@@ -1,12 +1,19 @@
+import style from './module.less';
+
+// npm
 import { useEffect, useState } from 'react';
 import { history } from 'umi';
-import style from './module.less';
+
+// 工具函数
 import { scrollTo } from '@/utils/browser';
 
 
 
 export default ({ list }) => {
 
+
+
+  // #region hash 跳转
   const [ hash, setHash ] = useState('0');  // 通过监控 hash 滚动到指定位置
 
   // 查找id，滚动条跳转
@@ -30,8 +37,11 @@ export default ({ list }) => {
       roll2scrollY(history.location.hash.slice(1) || '0');
     });
   }, [hash]);
+  // #endregion
 
 
+
+  // #region jsx
   return (<ul className={style.linkList}>
     {list.map((val: any, index: number) => (
       <li
@@ -42,5 +52,7 @@ export default ({ list }) => {
       >{val.text}</li>
     ))}
   </ul>);
+  // #endregion
+
 }
 

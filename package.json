@@ -23,6 +23,7 @@
     "@umijs/preset-react": "1.x",
     "compression-webpack-plugin": "^5.0.2",
     "cross-env": "^7.0.3",
+    "tslib": "^2.4.0",
     "typescript": "^4.5.5"
   }
 }

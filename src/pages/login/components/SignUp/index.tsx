@@ -1,18 +1,32 @@
-import { Button, message } from 'antd';
-import { Link, history } from 'umi';
-import Input from '@/components/Input';
 import style from '../../module.less';
-import { api_getMailCode, api_userSignUp } from '@/api/login';
-import { removeUseLessKey } from '@/utils/object';
-import check from './check';
+
+// npm
+import { Link, history } from 'umi';
 import { useState } from 'react';
+import { Button, message } from 'antd';
+
+// 组件
+import Input from '@/components/Input';
+
+// 接口
+import { api_getMailCode, api_userSignUp } from '@/api/login';
+
+// 公共函数
+import { removeUseLessKey } from '@/utils/object';
+
+// 数据校验
+import check from './check';
+
+
 
 export default () => {
   
-  const [ loading, setLoading ] = useState(false);
 
-  // 注册信息
-  const [ signUp, setSignUp ] = useState({
+
+  // #region 注册
+  const [ loading, setLoading ] = useState(false);  // 按钮加载动画
+
+  const [ signUp, setSignUp ] = useState({  // 注册信息
     username: '',
     password: '',
     newPassword: '',
@@ -20,7 +34,9 @@ export default () => {
     mailCode: '',
   })
 
-  // 数据验证是否通过
+  /**
+   * 数据验证是否通过
+   */
   function verify() {
     const errorArr = check(signUp);
     const error = errorArr[0];
@@ -29,14 +45,19 @@ export default () => {
     return false;
   }
 
-  // 获取邮箱验证码
+  /**
+   * 获取邮箱验证码
+   * @param mail 
+   */
   async function getMailCode(mail: string) {
     if (!verify()) return;
     const response: any = await api_getMailCode({ mail });
     if (response.code === 200) message.success('验证码已发送，请注意查收');
   }
   
-  // 注册提交
+  /**
+   * 注册提交
+   */
   async function submit() {
     if (!verify()) return;
     setLoading(true);
@@ -51,16 +72,31 @@ export default () => {
     }
     setLoading(false);
   }
+  // #endregion
 
-  // 状态更新
+
+
+  // #region 公共函数，input 框发生改变
+  /**
+   * 状态更新
+   * @param key 字段名
+   * @param e
+   */
   function onChange(key: string, e) {
     setSignUp(Object.assign({}, signUp, { [key]: e.target.value }));
   }
-  // 清空内容
+  /**
+   * 清空内容
+   * @param key 字段名
+   */
   function onClear(key: string) {
     setSignUp(Object.assign({}, signUp, { [key]: '' }));
   }
+  // #endregion
 
+
+
+  // #region jsx
   return (<>
     <h1>注册</h1>
     <Input
@@ -104,4 +140,6 @@ export default () => {
     <Link to='/login?type=signIn' replace>登入</Link>
     <Button className={style.submit} type="primary" loading={loading} onClick={submit}>注册</Button>
   </>)
+  // #endregion
+
 }

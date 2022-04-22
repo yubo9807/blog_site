@@ -1,10 +1,15 @@
+import style from './module.less';
+
+// npm
 import { Breadcrumb } from 'antd';
 import { Link } from 'umi';
-import style from './module.less';
+
+
 
 export default ({ filename, route }) => {
   const piecewise = filename.split('/');
   
+  // #region jsx
   return (<Breadcrumb className={style.breadcrumb}>
     <Breadcrumb.Item>
       <Link to={route.path}>笔记</Link>
@@ -17,4 +22,6 @@ export default ({ filename, route }) => {
     </Breadcrumb.Item>
   )}
   </Breadcrumb>)
+  // #endregion
+
 }

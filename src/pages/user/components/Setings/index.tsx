@@ -1,14 +1,28 @@
-import { connect } from 'react-redux';
-import { actions } from '@/store/user';
+import style from './module.less';
+
+// npm
 import { IRouteProps } from 'umi';
 import { useEffect, useState } from 'react';
 import { Form, Input, Switch, Button, Upload, message } from 'antd';
-import style from './module.less';
+
+// redux
+import { connect } from 'react-redux';
+import { actions } from '@/store/user';
+
+// api
 import { api_uploadPortrait } from '@/api/file';
-import env from '~/config/env';
+
+// common
 import { getUserInfo } from '@/common/user';
+import env from '~/config/env';
+
+
 
 const Setings = (props: IRouteProps) => {
+
+
+
+  // #region 用户信息发生变化，更新用户信息
   const [ userInfo, setUserInfo ] = useState({
     name: '',
     mail: '',
@@ -20,14 +34,34 @@ const Setings = (props: IRouteProps) => {
   useEffect(() => {
     setUserInfo(Object.assign({}, userInfo, props.userInfo));
   }, [props.userInfo])
+  // #endregion
 
-  const [ disabled, setDisabled ] = useState(true);
 
+
+  // #region 公共函数，input 框发生改变
   function onChange(key: string, value: any) {
     const obj = Object.assign({}, userInfo, { [key]: value });
     setUserInfo(obj);
   }
+  // #endregion
+  
 
+
+  // #region 编辑/锁定 控制
+  const [ disabled, setDisabled ] = useState(true);
+
+  function editor() {
+    if (props.isLogin !== 1) {
+      message.warning('未监测到您的信息，请先登录');
+      return;
+    }
+    setDisabled(false);
+  }
+  // #endregion
+
+
+
+  // #region 上传头像
   /**
    * 上传头像
    * @param file 文件
@@ -47,16 +81,11 @@ const Setings = (props: IRouteProps) => {
       }
     }
   }
+  // #endregion
 
-  // 编辑
-  function editor() {
-    if (props.isLogin !== 1) {
-      message.warning('未监测到您的信息，请先登录');
-      return;
-    }
-    setDisabled(false);
-  }
+  
 
+  // #region jsx
   return (<div>
     <Form className={style.form} initialValues={userInfo}>
       <Form.Item label='头像'>
@@ -81,8 +110,12 @@ const Setings = (props: IRouteProps) => {
       ? <Button onClick={editor}>编辑</Button>
       : <Button type='primary' onClick={() => setDisabled(true)}>锁定</Button>}
   </div>)
+  // #endregion
+
 }
 
+
+// #region store 绑定
 function mapStateToProps(state: any) {
   const { isLogin, userInfo } = state.user
   return {
@@ -106,5 +139,6 @@ function mapDispatchToProps(dispatch: any) {
 }
 
 const hoc = connect(mapStateToProps, mapDispatchToProps);
+// #endregion
 
 export default hoc(Setings);

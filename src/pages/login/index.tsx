@@ -1,19 +1,31 @@
 import '@/main';
-import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
+import style from './module.less';
+
+// npm
 import { history } from 'umi';
 import { useEffect, useState } from 'react';
-import style from './module.less';
+
+// 组件
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
 import { joinClass } from '@/utils/array';
+
+// redux
 import { Provider } from 'react-redux';
 import store from '@/store';
 
+
+// 常量
 const SIGNIN = 'signIn';
 const SIGNUP = 'signUp';
 
 const LoginPage = ({ location }) => {
   
+  
+
+  // #region 根据路由 query 参数加载页面
   const [ loginType, setLoginType ] = useState(SIGNIN);
+
   useEffect(() => {
     const { type } = history.location.query;
     if (!type) history.replace({ query: { type: SIGNIN }})
@@ -27,7 +39,11 @@ const LoginPage = ({ location }) => {
       unlisten();
     }
   }, [loginType]);
+  // #endregion
 
+
+
+  // #region jsx
   return (<Provider store={store}>
 
     <div className={style.login}>
@@ -39,6 +55,8 @@ const LoginPage = ({ location }) => {
     </div>
 
   </Provider>)
+  // #endregion
+
 }
 
 export default LoginPage;

@@ -1,21 +1,33 @@
-import { history, IRouteProps } from 'umi';
 import style from './module.less';
-import { joinClass } from '@/utils/array';
+
+// npm
+import { history, IRouteProps } from 'umi';
 import { Input, Modal, Menu } from 'antd';
 import { connect } from 'react-redux';
+
+// 组件
 import CreateRoom from './CreateRoom';
 import Record from './Record';
 import Protective from '@/components/Protective';
 
+// 公共函数
+import { joinClass } from '@/utils/array';
+
+// 抽离的模块功能
 import init from './init';
 import operationWord from './operation-word';
 import operationRoom from './operation-room';
 import operationPopup from './operation-popup';
 
+
+
 function ChatPage(props: IRouteProps) {
   const state = init(props);
   
+  // 发送消息
   const { word, onChangeWord, enterSend } = operationWord(state);
+
+  // 菜单控制
   const {
     roomMenuVisible,
     setRoomMenuVisible,
@@ -27,9 +39,13 @@ function ChatPage(props: IRouteProps) {
     setRoomDetailVisible,
   } = operationPopup(state);
 
+  // 创建/加入/删除... 房间
   (state as any).setRoomMenuVisible = setRoomMenuVisible;
   const { onChangeRoom, onCreateRoom, onDeleteRoom } = operationRoom(state);
 
+
+
+  // #region jsx
   return (<div className={joinClass(style.chatWrap, 'clearfix')}>
 
     {/* 侧边栏 */}
@@ -97,8 +113,12 @@ function ChatPage(props: IRouteProps) {
     </Modal>
 
   </div>);
+  // #endregion
+
 }
 
+
+// #region store
 function mapStateToProps(state: any, ownProps: any) {
   const { userInfo } = state.user
   return {
@@ -107,5 +127,8 @@ function mapStateToProps(state: any, ownProps: any) {
 }
 
 const hoc = connect(mapStateToProps);
+// #endregion
+
+
 
 export default hoc(ChatPage);

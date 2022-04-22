@@ -26,10 +26,15 @@ import Markdown from '@/components/Markdown/async';
 const NotePage = (props: IRouteProps) => {
   const { data, route } = props;
 
+
+
+  // #region dom 渲染完成后做一些事情
   const [ isRender, setIsRender ] = useState(false);
   useEffect(() => {
     setIsRender(true);
   }, [])
+  // #endregion
+
 
 
   // #region 手机端菜单按钮控制
@@ -47,8 +52,9 @@ const NotePage = (props: IRouteProps) => {
   }, [phoneMenuVisible, props.clientWidth, data])
   // #endregion
 
+  
 
-  // // #region 文件大纲按钮
+  // #region 文件大纲按钮
   // useEffect(() => {
   //   const outlineKey = 'note_outline';
   //   props.onAddFixedBtn(outlineKey, <i className='iconfont'>&#xe618;</i>, 5)
@@ -57,9 +63,11 @@ const NotePage = (props: IRouteProps) => {
   //     props.onDelFixedBtn(outlineKey);
   //   }
   // }, [])
-  // // #endregion
+  // #endregion
 
 
+  
+  // #region jsx
   return (<div className={joinClass(style.container, 'leayer clearfix')}>
     {data && <>
 
@@ -94,8 +102,13 @@ const NotePage = (props: IRouteProps) => {
       </div>}
     </>}
   </div>)
+  // #endregion
+
 }
 
+
+
+// #region 页面渲染之前拿到数据
 NotePage.getInitialProps = async({ history, path }) => {
   const { pathname } = history.location;
   const piecewise = pathname.split('/');
@@ -112,38 +125,12 @@ NotePage.getInitialProps = async({ history, path }) => {
   }
 }
 
-function mapStateToProps(state: any, ownProps: any) {
-  return {
-    scrollY: state.scroll.scrollY,
-    clientWidth: state.scroll.clientWidth,
-    btns: state.fixedBtns,
-  }
-}
-
-function mapDispatchToProps(dispatch: any) {
-  return {
-    onAddFixedBtn(key, element, count) {
-      dispatch(actions.addFixedBtn(key, element, count));
-    },
-    onDelFixedBtn(key) {
-      dispatch(actions.delFixedBtn(key));
-    }
-  }
-}
-
-const hoc = connect(mapStateToProps, mapDispatchToProps);
-
-export default hoc(NotePage);
-
-
-
-
 /**
  * 获取文件子目录和内容
  * @param filename
  * @returns 
  */
-async function getFileChildDirectoryAndContent(filename: string = '', path: string) {
+ async function getFileChildDirectoryAndContent(filename: string = '', path: string) {
   let fileDirectory = [], fileAttr: any = {};
 
   const response = await api_getFileContentOrChildDirectory(`/note/${filename}`);
@@ -198,3 +185,37 @@ async function getFileChildDirectoryAndContent(filename: string = '', path: stri
   }
 
 }
+// #endregion
+
+
+
+// #region store 绑定
+function mapStateToProps(state: any, ownProps: any) {
+  return {
+    scrollY: state.scroll.scrollY,
+    clientWidth: state.scroll.clientWidth,
+    btns: state.fixedBtns,
+  }
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    onAddFixedBtn(key, element, count) {
+      dispatch(actions.addFixedBtn(key, element, count));
+    },
+    onDelFixedBtn(key) {
+      dispatch(actions.delFixedBtn(key));
+    }
+  }
+}
+
+const hoc = connect(mapStateToProps, mapDispatchToProps);
+// #endregion
+
+
+
+export default hoc(NotePage);
+
+
+
+
