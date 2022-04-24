@@ -14,35 +14,11 @@ import Protective from '@/components/Protective';
 import { joinClass } from '@/utils/array';
 
 // 抽离的模块功能
-import init from './init';
-import operationWord from './operation-word';
-import operationRoom from './operation-room';
-import operationPopup from './operation-popup';
-
+import setup from './setup';
 
 
 function ChatPage(props: IRouteProps) {
-  const state = init(props);
-  
-  // 发送消息
-  const { word, onChangeWord, enterSend } = operationWord(state);
-
-  // 菜单控制
-  const {
-    roomMenuVisible,
-    setRoomMenuVisible,
-    roomMenuStyle,
-    onContextMenu,
-    createRoomVisible,
-    setCreateRoomVisible,
-    roomDetailVisible,
-    setRoomDetailVisible,
-  } = operationPopup(state);
-
-  // 创建/加入/删除... 房间
-  (state as any).setRoomMenuVisible = setRoomMenuVisible;
-  const { onChangeRoom, onCreateRoom, onDeleteRoom } = operationRoom(state);
-
+  const state = setup(props);
 
 
   // #region jsx
@@ -57,23 +33,23 @@ function ChatPage(props: IRouteProps) {
     <ul className={joinClass(style.roomList, 'fl')}>
       <div className={style.search}>
         <Input allowClear prefix={<span className='iconfont'>&#xe64d;</span>} />
-        <span className='iconfont' onClick={() => setCreateRoomVisible(true)}>&#xe622;</span>
+        <span className='iconfont' onClick={() => state.setCreateRoomVisible(true)}>&#xe622;</span>
       </div>
-      {state.rooms.map(val => <li key={val.id} onClick={() => onChangeRoom(val)} onContextMenu={e => onContextMenu(e, val)}>
+      {state.rooms.map(val => <li key={val.id} onClick={() => state.onChangeRoom(val)} onContextMenu={e => state.onContextMenu(e, val)}>
         {val.name}
       </li>)}
     </ul>
 
     {/* 房间列表右键菜单 */}
     <Protective
-      visible={roomMenuVisible}
+      visible={state.roomMenuVisible}
       className={style.roomOperation}
-      onClose={() => setRoomMenuVisible(false)}
-      style={roomMenuStyle}
+      onClose={() => state.setRoomMenuVisible(false)}
+      style={state.roomMenuStyle}
     >
       <Menu>
         <Menu.Item key={0}>修改群名称</Menu.Item>
-        <Menu.Item key={1} onClick={onDeleteRoom}>删除群聊</Menu.Item>
+        <Menu.Item key={1} onClick={state.onDeleteRoom}>删除群聊</Menu.Item>
       </Menu>
     </Protective>
 
@@ -81,23 +57,23 @@ function ChatPage(props: IRouteProps) {
     <div className={joinClass(style.content, 'fl')}>
       <div className={style.header}>
         <h2 className={joinClass('fl', style.roomName)}>{state.selectRow.name}</h2>
-        <i className={joinClass('iconfont fr', style.icon)} onClick={() => setRoomDetailVisible(true)}>&#xe601;</i>
+        <i className={joinClass('iconfont fr', style.icon)} onClick={() => state.setRoomDetailVisible(true)}>&#xe601;</i>
       </div>
       {/* 聊天记录 */}
       <Record recordList={state.record} />
 
       {/* 发送消息 */}
       <div className={style.sendWrap}>
-        <Input.TextArea value={word} onChange={onChangeWord} style={{height: '100%'}} bordered={false} onPressEnter={enterSend} />
+        <Input.TextArea value={state.word} onChange={state.onChangeWord} style={{height: '100%'}} bordered={false} onPressEnter={state.enterSend} />
       </div>
     </div>
 
-    <Protective className={style.roomDetailWrap} visible={roomDetailVisible} onClose={() => setRoomDetailVisible(false)}>
+    <Protective className={style.roomDetailWrap} visible={state.roomDetailVisible} onClose={() => state.setRoomDetailVisible(false)}>
       <div>房间详情</div>
     </Protective>
 
     {/* 创建房间 */}
-    <CreateRoom visible={createRoomVisible} users={state.users} onJoinRoom={onCreateRoom} onCancel={() => setCreateRoomVisible(false)} />
+    <CreateRoom visible={state.createRoomVisible} users={state.users} onJoinRoom={state.onCreateRoom} onCancel={() => state.setCreateRoomVisible(false)} />
 
     {/* 提示登录 */}
     <Modal
