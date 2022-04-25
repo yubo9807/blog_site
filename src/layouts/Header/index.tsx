@@ -18,7 +18,9 @@ export default () => {
 
   return (<header className={style.header}>
     <div className='leayer clearfix'>
-      <i className={joinClass(style.menu, active ? style.active : '')} onClick={() => setActive(!active)}></i>
+      <span className={joinClass(style.menuBtnWrap, active ? style.active : '')} onClick={() => setActive(!active)}>
+        <span></span>
+      </span>
       <Logo />
       <ul className={joinClass(style.navWrap, 'clearfix', active ? style.active : '')}>{
         navList.map(val => <li key={val.name}>
