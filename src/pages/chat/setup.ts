@@ -75,6 +75,12 @@ export default (props: IRouteProps) => {
 
 
 
+  // #region 控制移动端聊天窗口
+  const [ phoneShowRecord, setPhoneShowRecord ] = useState(false);
+  // #endregion
+
+
+
   // #region 房间操作控制
   const [ createRoomVisible, setCreateRoomVisible ] = useState(false); // 创建房间弹窗
 
@@ -103,6 +109,7 @@ export default (props: IRouteProps) => {
    */
   function onChangeRoom(row) {
     const { id: roomId } = row
+    setPhoneShowRecord(true);
     setSelectRow(row);
     socket.emit('queryRecord', { roomId });
   }
@@ -184,7 +191,9 @@ export default (props: IRouteProps) => {
     // 消息
     word,
     onChangeWord,
-    enterSend
+    enterSend,
+
+    phoneShowRecord, setPhoneShowRecord,
 
   }
 }

@@ -21,7 +21,7 @@ const env: any = {
 // 开发环境
 if (process.env.APP_ENV === 'development') {
   
-  const VISIT_ORIGIN = 'http://10.0.26.175:20010';
+  const VISIT_ORIGIN = 'http://127.0.0.1:20010';
 
   Object.assign(env, {
 

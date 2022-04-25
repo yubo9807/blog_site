@@ -1,22 +1,16 @@
-@sideWidth: 60px;
-@roomListWidth: 240px;
+@roomListWidth: 260px;
 @lintColor: #ccc;
+
 
 .chat-wrap{
   max-width: 1000px;
-  height: 70vh;
+  height: 72vh;
   margin: 30px auto;
   border-radius: 8px;
   box-shadow: 0 10px 20px 4px rgba(0,0,0,.2);
   overflow: hidden;
   position: relative;
   background: white;
-}
-.side{
-  width: @sideWidth;
-  height: 100%;
-  text-align: center;
-  background-color: #404040;
 }
 .room-list{
   width: @roomListWidth;
@@ -30,11 +24,11 @@
   }
 }
 .content{
-  width: calc(100% - @roomListWidth - @sideWidth);
+  width: calc(100% - @roomListWidth);
   height: 100%;
   border-left: 1px solid @lintColor;
   box-sizing: border-box;
-  @headerHeight: 40px;
+  @headerHeight: 50px;
   .header{
     height: @headerHeight;
     border-bottom: 1px solid @lintColor;
@@ -52,9 +46,13 @@
     height: calc(36% - @headerHeight);
     border-top: 1px solid @lintColor;
   }
+  .go-back{
+    margin-right: 10px;
+    display: none;
+  }
 }
 .search{
-  padding: 6px 10px;
+  padding: 10px;
   background-color: #eee;
   :global(.ant-input-affix-wrapper), > :global(.iconfont){
     border-radius: 4px;
@@ -90,4 +88,31 @@
   right: 0;
   bottom: 0;
   background-color: white;
+}
+
+@media (max-width: 768px) {
+  .container{
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  .chat-wrap{
+    margin: 0;
+    width: 200%;
+    height: calc(100vh - 42px);
+    border-radius: 0;
+    transition: transform .4s;
+    &.move{
+      transform: translateX(-50%);
+    }
+  }
+  .room-list{
+    width: 50%;
+  }
+  .content{
+    width: 50%;
+    border: none;
+    .go-back{
+      display: inline-block;
+    }
+  }
 }

@@ -22,12 +22,8 @@ function ChatPage(props: IRouteProps) {
 
 
   // #region jsx
-  return (<div className={joinClass(style.chatWrap, 'clearfix')}>
-
-    {/* 侧边栏 */}
-    <div className={joinClass(style.side, 'fl')}>
-      <span className='iconfont'>&#xe622;</span>
-    </div>
+  return (<div className={style.container}>
+  <div className={joinClass(style.chatWrap, 'clearfix',  state.phoneShowRecord ? style.move : '')}>
 
     {/* 房间列表 */}
     <ul className={joinClass(style.roomList, 'fl')}>
@@ -56,6 +52,7 @@ function ChatPage(props: IRouteProps) {
     {/* 内容区 */}
     <div className={joinClass(style.content, 'fl')}>
       <div className={style.header}>
+        <i className={joinClass('iconfont', 'fl', style.goBack)} onClick={() => state.setPhoneShowRecord(false)}>&#xe625;</i>
         <h2 className={joinClass('fl', style.roomName)}>{state.selectRow.name}</h2>
         <i className={joinClass('iconfont fr', style.icon)} onClick={() => state.setRoomDetailVisible(true)}>&#xe601;</i>
       </div>
@@ -88,6 +85,7 @@ function ChatPage(props: IRouteProps) {
       <p>检测到没有您的信息，请前往登录</p>
     </Modal>
 
+  </div>
   </div>);
   // #endregion
 
