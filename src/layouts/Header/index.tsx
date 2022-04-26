@@ -18,7 +18,7 @@ export default () => {
 
   return (<header className={style.header}>
     <div className='leayer clearfix'>
-      <span className={joinClass(style.menuBtnWrap, active ? style.active : '')} onClick={() => setActive(!active)}>
+      <span className={joinClass('fl', style.menuBtnWrap, active ? style.active : '')} onClick={() => setActive(!active)}>
         <span></span>
       </span>
       <Logo />
