@@ -15,7 +15,8 @@
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
     "socket.io-client": "^4.4.1",
-    "umi": "^3.5.20"
+    "umi": "^3.5.20",
+    "umi-plugin-keep-alive": "0.0.1-beta.30"
   },
   "devDependencies": {
     "@types/react": "^17.0.39",
