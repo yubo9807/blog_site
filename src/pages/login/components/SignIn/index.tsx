@@ -3,7 +3,7 @@ import style from '../../module.less';
 // npm
 import { history, Link } from 'umi';
 import { Button, message } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // 组件
 import Input from '@/components/Input';
@@ -41,7 +41,7 @@ export default () => {
       if (response.code === 200) {
         setCookie({ name: 'token', value: response.data.token, path: '/' });
         message.success('登录成功');
-        history.goBack();
+        history.length > 2 ? history.goBack() : history.push('/');
       }
       setLoading(false);
     }

@@ -50,7 +50,7 @@ const LoginPage = ({ location }) => {
       {loginType === SIGNIN && <SignIn />}
       {loginType === SIGNUP && <SignUp />}
       <i className={joinClass('iconfont', style.close)} onClick={() => {
-        history.goBack();
+        history.length > 2 ? history.goBack() : history.push('/');
       }}>&#xeca0;</i>
     </div>
 
