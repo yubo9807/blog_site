@@ -19,6 +19,7 @@ import { dateFormater } from '@/utils/date';
 // 组件
 import Breadcrumb from './components/Breadcrumb';
 import FileDirectory from './components/FileDirectory';
+import Search from './components/Search';
 import Markdown from '@/components/Markdown/async';
 
 
@@ -53,6 +54,21 @@ const NotePage = (props: IRouteProps) => {
   // #endregion
 
   
+
+  // #region 搜索弹框控制
+  const [ searchVisible, setSearchVisible ] = useState(false);
+
+  useEffect(() => {
+    const key = 'note_search';
+    props.onAddFixedBtn(key, <i className='iconfont' onClick={() => setSearchVisible(true)}>&#xe64d;</i>, 7);
+    
+    return () => {
+      props.onDelFixedBtn(key);
+    }
+  }, [])
+  // #endregion
+
+
 
   // #region 文件大纲按钮
   // useEffect(() => {
@@ -100,6 +116,10 @@ const NotePage = (props: IRouteProps) => {
         }
 
       </div>}
+
+      {/* 搜索 */}
+      <Search visible={searchVisible} onCancel={() => setSearchVisible(false)} />
+
     </>}
   </div>)
   // #endregion
