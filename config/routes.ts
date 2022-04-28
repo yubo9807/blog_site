@@ -1,4 +1,3 @@
-import env from './env';
 
 /**
  * state 参数说明
@@ -15,7 +14,7 @@ export default [
   },
   {
     exact: false,
-    path: env.BASE_ROUTE_URL,
+    path: '/',
     title: 'yubo 的个人技术博客',
     component: '@/layouts/index',
     routes: [

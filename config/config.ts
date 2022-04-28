@@ -2,6 +2,7 @@ import { defineConfig } from 'umi';
 import path from 'path';
 import routes from './routes';
 import chainWebpack from './chainWebpack';
+import env from './env';
 
 export default defineConfig({
   define: {
@@ -16,6 +17,7 @@ export default defineConfig({
   dynamicImport: {
     loading: '@/components/Loading',
   },
+  base: env.BASE_ROUTE_URL,
   // 编译加速
   nodeModulesTransform: {
     type: 'none',
