@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IRouteProps } from 'umi';
+import { IRouteProps, history } from 'umi';
 
 // redux
 import { connect } from 'react-redux';
@@ -15,6 +15,7 @@ import { api_getFileContentOrChildDirectory } from '@/api/file';
 import { isType } from '@/utils/validate';
 import { joinClass } from '@/utils/array';
 import { dateFormater } from '@/utils/date';
+import { scrollTo } from '@/utils/browser';
 
 // 组件
 import Breadcrumb from './components/Breadcrumb';
@@ -38,6 +39,21 @@ const NotePage = (props: IRouteProps) => {
 
 
 
+  // #region 搜索弹框控制
+  const [ searchVisible, setSearchVisible ] = useState(false);
+
+  useEffect(() => {
+    const key = 'note_search';
+    props.onAddFixedBtn(key, <i className='iconfont' onClick={() => setSearchVisible(true)}>&#xe64d;</i>, 7);
+    
+    return () => {
+      props.onDelFixedBtn(key);
+    }
+  }, [])
+  // #endregion
+
+
+
   // #region 手机端菜单按钮控制
   const [ phoneMenuVisible, setPhoneMenuVisible ] = useState(false);
   useEffect(() => {
@@ -51,21 +67,6 @@ const NotePage = (props: IRouteProps) => {
       props.onDelFixedBtn(listKey);
     }
   }, [phoneMenuVisible, props.clientWidth, data])
-  // #endregion
-
-  
-
-  // #region 搜索弹框控制
-  const [ searchVisible, setSearchVisible ] = useState(false);
-
-  useEffect(() => {
-    const key = 'note_search';
-    props.onAddFixedBtn(key, <i className='iconfont' onClick={() => setSearchVisible(true)}>&#xe64d;</i>, 7);
-    
-    return () => {
-      props.onDelFixedBtn(key);
-    }
-  }, [])
   // #endregion
 
 
@@ -82,7 +83,21 @@ const NotePage = (props: IRouteProps) => {
   // #endregion
 
 
+
+  // #region 监听路由变化，页面回到顶部
+  useEffect(() => {
+    const unlisten = history.listen((location) => {
+      scrollTo(0);
+    })
+    
+    return () => {
+      unlisten();
+    }
+  }, [])
+  // #endregion
   
+
+
   // #region jsx
   return (<div className={joinClass(style.container, 'leayer clearfix')}>
     {data && <>

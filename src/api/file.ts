@@ -14,6 +14,19 @@ export function api_getFileContentOrChildDirectory(filename: string) {
 }
 
 /**
+ * 文件搜索
+ * @param basePath 基本路径
+ * @param keyword 关键字
+ */
+ export function api_fileContentSearch(basePath: string, text: string) {
+  return request({
+    url: '/file/search',
+    method: 'get',
+    params: { basePath, text }
+  })
+}
+
+/**
  * 上传头像
  */
 export function api_uploadPortrait(file: File){

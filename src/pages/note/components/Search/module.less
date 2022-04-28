@@ -3,9 +3,48 @@
     border-radius: 8px;
     background-color: rgba(245,245,250,.8);
     backdrop-filter: blur(5px);
+    border-bottom: 1px solid white;
   }
   :global(.ant-modal-body) {
     padding: 20px;
     padding-top: 30px;
   }
+}
+.list{
+  max-height: 400px;
+  overflow-y: auto;
+  li{
+    &:not(:last-child){
+      border-bottom: 1px solid #eee;
+    }
+    > a{
+      font-size: 16px;
+    }
+    .title{
+      font-weight: 400;
+    }
+    .content, .mark{
+      color: #999;
+    }
+    .content{
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #666;
+    }
+    .mark{
+      font-size: 10px;
+      > span{
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.empty{
+  color: #999;
+}
+.hidden{
+  display: none;
 }

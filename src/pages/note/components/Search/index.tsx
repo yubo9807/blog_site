@@ -3,9 +3,16 @@ import style from './module.less';
 // npm
 import { useEffect, useState } from 'react';
 import { Modal } from 'antd';
+import { Link } from 'umi';
 
 // 组件
 import Input from '@/components/Input';
+
+// 请求
+import { api_fileContentSearch } from '@/api/file';
+
+// 工具函数
+import { joinClass } from '@/utils/array';
 
 
 
@@ -14,6 +21,8 @@ export default ({ visible, onCancel = () => {} }) => {
   const [ list, setList ] = useState([]);
   const [ searchValue, setSearchValue ] = useState('');
   const [ focus, setFocus ] = useState(false);
+
+  const [ emptyPrompt, setEmptyPrompt ] = useState(false);
 
   useEffect(() => {
     if (visible) {
@@ -28,18 +37,53 @@ export default ({ visible, onCancel = () => {} }) => {
   /**
    * 搜索
    */
-  function search() {
-    console.log(searchValue);
+  async function search() {
+    const response = await api_fileContentSearch('/note', searchValue);
+    if (response.code === 200) {
+      setEmptyPrompt(false);
+      const { data } = response;
+      data.length === 0 && setEmptyPrompt(true);
+      setList(response.data);
+    }
+  }
+
+  /**
+   * 清空搜索框
+   */
+  function clear() {
+    setSearchValue('');
+    setEmptyPrompt(false);
+  }
+
+  /**
+   * 格式化路径
+   */
+  function formatPath(path: string) {
+    let str = '';
+    path.replace('/note', '').split('/').forEach((val) => {
+      str += /\..+$/.test(val) ? val : val && val.match(/\s.+/)[0].slice(1) + ' / ';
+    });
+    return str;
   }
 
   return (<Modal className={style.searchModal} visible={visible} closable={false} footer={null} onCancel={onCancel}>
     <Input focus={focus} value={searchValue}
       onChange={e => setSearchValue(e.target.value)}
       onEnter={search}
-      onClear={() => setSearchValue('')}
+      onClear={clear}
     />
-    <ul>
-      {list.map(val => <li></li>)}
+    <ul className={style.list} onClick={onCancel}>
+      {list.map((val, index) => <li key={index}>
+        <Link to={val.path}>
+          <strong className={style.title}>{formatPath(val.path)}</strong>
+          <p className={style.content}>{val.content}</p>
+          <p className={style.mark}>
+            <span>byte {val.size}</span>
+            <span>{val.createTime}</span>
+          </p>
+        </Link>
+      </li>)}
     </ul>
+    <p className={joinClass(style.empty, emptyPrompt ? '' : style.hidden)}>未找到任何内容</p>
   </Modal>);
 }
