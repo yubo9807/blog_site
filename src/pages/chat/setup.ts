@@ -34,7 +34,8 @@ export default (props: IRouteProps) => {
   // #region 初始化 房间列表/用户列表/聊天记录
   const [ rooms,     setRooms     ] = useState([]);  // 房间列表
   const [ users,     setUsers     ] = useState([]);  // 用户列表
-  const [ record,    setRecord    ] = useState([]);  // 聊天记录
+  const [ selectRow, setSelectRow ] = useState({ id: '', admin: '', name: '' });  // 所选中的房间
+  
 
   // 初始化
   useEffect(() => {
@@ -63,11 +64,13 @@ export default (props: IRouteProps) => {
 
 
 
-  // #region 选中了哪个房间
-  const [ selectRow, setSelectRow ] = useState({ id: '', admin: '', name: '' });  // 所选中的房间
+  // #region 选中房间，获取聊天记录
+  const [ record,    setRecord    ] = useState([]);  // 聊天记录
+
   useEffect(() => {
     if (!selectRow.id) return;
     socket.on(`record_${selectRow.id}`, res => {
+      console.log(res)
       setRecord(res);
     })
   }, [ selectRow.id ]);

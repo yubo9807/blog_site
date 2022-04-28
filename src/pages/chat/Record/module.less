@@ -1,8 +1,71 @@
 .record{
   height:  64%;
-  // min-height: 50vh;
+  padding: 10px;
   overflow: auto;
   :global(.ant-empty){
     margin-top: 40px;
+  }
+  li{
+    margin-bottom: 10px;
+  }
+}
+
+@portraitSize: 34px;
+.portrait{
+  float: left;
+  width:  @portraitSize;
+  height: @portraitSize;
+  border-radius: 4px;
+  border: 1px dashed #ccc;
+}
+.time{
+  font-size: 12px;
+  color: #999;
+}
+.chat{
+  margin: 0 @portraitSize + 8px;
+}
+.user-name{
+  font-size: 12px;
+  color: #999;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.content{
+  display: inline-block;
+  background-color: white;
+  padding: 4px 6px;
+  border-radius: 4px;
+  text-align: left;
+  word-break: break-all;
+  position: relative;
+  &::before{
+    content: '';
+    position: absolute;
+    left: -3px;
+    top: 8px;
+    width: 0;
+    height: 0;
+    border: 3px solid white;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    transform: rotateZ(45deg);
+  }
+}
+
+.oneself{
+  text-align: right;
+  .portrait{
+    float: right;
+  }
+  .content{
+    background-color: #52FE09;
+    &::before{
+      left: auto;
+      right: -3px;
+      transform: rotateZ(-135deg);
+      border-left-color: #52FE09;
+      border-bottom-color: #52FE09;
+    }
   }
 }

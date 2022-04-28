@@ -4,14 +4,14 @@ import style from './module.less';
 export default ({ recordList = [] }) => {
   
   return (<div className={style.record}>
-    {recordList.length ? <ul>{recordList.map((val, index) => <li key={index}>
-      <div>
-        <span>{val.userName}</span>
-      </div>
-      <div>
-        <span className="time">{val.time}</span>
-        <span className="time">{val.text}</span>
-      </div>
-    </li>)}</ul> : <Empty />}
+    {recordList.length ? <ul>
+      {recordList.map((val, index) => <li key={index} className={val.userName === 'test' ? style.oneself : ''}>
+        <div className={style.portrait}>{val.portrait}</div>
+        <div className={style.chat}>
+          <p className={style.userName}>{val.userName}</p>
+          <span className={style.content}>{val.text}</span>
+        </div>
+      </li>)}
+    </ul> : <Empty />}
   </div>);
 }
