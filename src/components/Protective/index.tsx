@@ -1,11 +1,14 @@
-/**
- * 遮照组件
- */
-import { joinClass } from '@/utils/array';
+// style
 import './module.less';
+
+// utils
+import { joinClass } from '@/utils/array';
+
+
 
 export default ({ children, visible = false, onClose = () => {}, className = '', style = {} }) => {
 
+  // #region jsx
   return (<div
     className={joinClass('yu-protective-bg', visible ? 'active' : '')}
     onClick={onClose}
@@ -14,4 +17,6 @@ export default ({ children, visible = false, onClose = () => {}, className = '',
       {children}
     </div>
   </div>)
+  // #endregion
+
 }

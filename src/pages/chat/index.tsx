@@ -1,3 +1,4 @@
+// style
 import style from './module.less';
 
 // npm
@@ -5,12 +6,12 @@ import { history, IRouteProps } from 'umi';
 import { Input, Modal, Menu } from 'antd';
 import { connect } from 'react-redux';
 
-// 组件
+// component
 import CreateRoom from './CreateRoom';
 import Record from './Record';
 import Protective from '@/components/Protective';
 
-// 公共函数
+// utils
 import { joinClass } from '@/utils/array';
 
 // 抽离的模块功能

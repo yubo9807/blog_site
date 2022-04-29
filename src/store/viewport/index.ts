@@ -10,7 +10,6 @@ const initialState: InitialState = {
   clientWidth: 0
 };
 
-// reducer 必须是一个没有副作用的纯函数
 function reducer(state = initialState, action: { type: symbol, payload?: any }) {
   switch (action.type) {
     case SETSCROLLY:

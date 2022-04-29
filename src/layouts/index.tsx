@@ -1,22 +1,27 @@
 import '@/main';
 import style from './module.less';
 
+// npm
 import { useEffect } from 'react';
 import { history } from 'umi';
 
+// store
 import { Provider } from 'react-redux';
 import store from '@/store';
-import { actions as scrollActions } from '@/store/scroll';
+import { actions as viewportActions } from '@/store/viewport';
 import { actions as routeActions } from '@/store/route';
 
+// utils
 import { throttle } from '@/utils/optimize';
 import '@/utils/optimize-watch';
 import { isType } from '@/utils/validate';
 import { getUserInfo } from '@/common/user';
 
+// component
 import Header from './Header';
 import Footer from './Footer';
-import FixedBtn from './FixedBtn';
+import FixedBtn from '@/components/FixedBtn';
+
 
 let unlisten = null;
 
@@ -28,7 +33,7 @@ const Layouts = ({ children, routes, route, location }) => {
   useEffect(() => {
     window.addEventListener('scroll', throttle(() => {
       const scrollY = window.scrollY;
-      store.dispatch(scrollActions.setScrollYAction(scrollY));
+      store.dispatch(viewportActions.setScrollYAction(scrollY));
     }, 30))
   }, [])
   // #endregion
@@ -37,9 +42,9 @@ const Layouts = ({ children, routes, route, location }) => {
 
   // #region 记录窗口宽度
   useEffect(() => {
-    store.dispatch(scrollActions.setClientWidthAction(document.body.clientWidth));
+    store.dispatch(viewportActions.setClientWidthAction(document.body.clientWidth));
     window.addEventListener('resize', throttle(() => {
-      store.dispatch(scrollActions.setClientWidthAction(document.body.clientWidth));
+      store.dispatch(viewportActions.setClientWidthAction(document.body.clientWidth));
     }, 60))
   })
   // #endregion

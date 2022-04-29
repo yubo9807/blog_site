@@ -1,6 +1,6 @@
 import { createStore, combineReducers, bindActionCreators, applyMiddleware } from 'redux';
 
-import scroll from './scroll';
+import viewport from './viewport';
 import user from './user';
 import route from './route';
 import fixedBtns from './fixed-btns';
@@ -12,7 +12,7 @@ import fixedBtns from './fixed-btns';
 // }
 
 const reducer = combineReducers({
-  scroll,
+  viewport,
   user,
   route,
   fixedBtns,

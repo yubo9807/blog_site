@@ -1,11 +1,17 @@
+// style
 import style from './module.less';
 
 // npm
 import { Empty } from 'antd';
+import { useEffect, useRef } from 'react';
+
+// store
 import { connect } from 'react-redux';
 
+// env
 import env from '~/config/env';
-import { useEffect, useRef } from 'react';
+
+
 
 const Record = ({ recordList = [], userInfo }) => {
 

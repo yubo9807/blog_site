@@ -4,7 +4,7 @@ import style from './module.less';
 import { useEffect, useState } from 'react';
 import { history } from 'umi';
 
-// 工具函数
+// utils
 import { scrollTo } from '@/utils/browser';
 
 

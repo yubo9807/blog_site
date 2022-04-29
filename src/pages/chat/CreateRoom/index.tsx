@@ -1,9 +1,18 @@
+// style
+import style from './module.less';
+
+// npm
 import { useEffect, useState } from "react";
 import { Input, Button, Modal, Checkbox } from 'antd';
-import style from './module.less';
-import { joinClass } from "@/utils/array";
 import PropTypes from 'prop-types';
+
+// utils
+import { joinClass } from "@/utils/array";
+
+// env
 import env from "~/config/env";
+
+
 
 const CreateRoom = ({ users, visible = false, onCancel = () => {}, onJoinRoom = (joins) => {} }) => {
 

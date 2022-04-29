@@ -5,13 +5,13 @@ import { useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { Link } from 'umi';
 
-// 组件
+// component
 import Input from '@/components/Input';
 
-// 请求
+// api
 import { api_fileContentSearch } from '@/api/file';
 
-// 工具函数
+// utils
 import { joinClass } from '@/utils/array';
 
 

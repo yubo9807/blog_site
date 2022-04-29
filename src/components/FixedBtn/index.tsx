@@ -1,13 +1,23 @@
+// style
 import style from './module.less';
+
+// npm
+import { useEffect, useState } from 'react';
+
+// utils
 import { scrollTo } from '@/utils/browser';
+
+// store
 import { connect } from 'react-redux';
 import { actions } from '@/store/fixed-btns';
-import { useEffect, useState } from 'react';
 
 
 
 const FixedBtn = (props) => {
 
+
+
+  // #region 添加回到顶部按钮
   useEffect(() => {
     const key = 'toTop';
     
@@ -17,26 +27,37 @@ const FixedBtn = (props) => {
       props.onDelFixedBtn(key);
     }
   }, [props.scrollY]);
+  // #endregion
 
 
-  // 对数据进行排序
+
+  // #region  store 存放数据发生改变，对数据重新进行排序
   const [ btnList, setBtnList ] = useState([]);
   useEffect(() => {
     const arr = Object.assign([], Object.values(props.btns));
     arr.sort((a: any, b: any) => b.count - a.count);
     setBtnList(arr);
   }, [props.btns]);
+  // #endregion
 
+
+
+  // #region jsx
   return (<ul className={style.fixed}>
     {btnList.map((val: any, index) => <li key={index}>
       {val.element}
     </li>)}
   </ul>)
+  // #endregion
+
 }
 
+
+
+// #region store
 function mapStateToProps(state: any, ownProps: any) {
   return {
-    scrollY: state.scroll.scrollY,
+    scrollY: state.viewport.scrollY,
     btns: state.fixedBtns,
   }
 }
@@ -53,5 +74,8 @@ function mapDispatchToProps(dispatch: any) {
 }
 
 const hoc = connect(mapStateToProps, mapDispatchToProps);
+// #endregion
+
+
 
 export default hoc(FixedBtn);

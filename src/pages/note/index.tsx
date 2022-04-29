@@ -1,3 +1,7 @@
+// style
+import style from './module.less';
+
+// npm
 import { useEffect, useState } from 'react';
 import { IRouteProps, history } from 'umi';
 
@@ -5,19 +9,16 @@ import { IRouteProps, history } from 'umi';
 import { connect } from 'react-redux';
 import { actions } from '@/store/fixed-btns';
 
-// 样式
-import style from './module.less';
-
-// 请求
+// api
 import { api_getFileContentOrChildDirectory } from '@/api/file';
 
-// 公共函数
+// utils
 import { isType } from '@/utils/validate';
 import { joinClass } from '@/utils/array';
 import { dateFormater } from '@/utils/date';
 import { scrollTo } from '@/utils/browser';
 
-// 组件
+// component
 import Breadcrumb from './components/Breadcrumb';
 import FileDirectory from './components/FileDirectory';
 import Search from './components/Search';
@@ -227,8 +228,8 @@ NotePage.getInitialProps = async({ history, path }) => {
 // #region store 绑定
 function mapStateToProps(state: any, ownProps: any) {
   return {
-    scrollY: state.scroll.scrollY,
-    clientWidth: state.scroll.clientWidth,
+    scrollY: state.viewport.scrollY,
+    clientWidth: state.viewport.clientWidth,
     btns: state.fixedBtns,
   }
 }

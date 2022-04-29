@@ -1,18 +1,25 @@
-import { joinClass } from '@/utils/array';
-import { useEffect, useRef, useState } from 'react';
-import { IRouteProps } from 'umi';
+// style
 import './index.less';
 
+// npm
+import { useEffect, useRef, useState } from 'react';
+import { IRouteProps } from 'umi';
+
+// utils
+import { joinClass } from '@/utils/array';
+
+
+
 export default ({
-  value = null,
-  onChange = () => {},
-  onEnter = () => {},
-  onClear = () => {},
-  focus = false,
-  icon,
-  description = '请输入内容',
-  className = '',
-  type = 'text'
+  value = null,         // 当前值
+  onChange = () => {},  // value 发生改变
+  onEnter = () => {},   // 按下回车触发
+  onClear = () => {},   // 清空内容触发
+  focus = false,        // 是否获取焦点
+  icon,                 // 图标
+  description = '请输入内容',  // 提示语
+  className = '',       // 自定义类名
+  type = 'text'         // 输入框类型
 }: IRouteProps) => {
 
   const [ input, setInput ] = useState('');
@@ -41,6 +48,7 @@ export default ({
   }, [focus])
 
 
+  // #region jsx
   return (<div className={joinClass('yu-input', (value || input) !== '' ? 'yu-input-focus' : '', className)}>
     {value === null
       ? <input ref={inputRef} type={type} value={input} onChange={e => setInput(e.target.value)} onKeyUp={enter} />
@@ -51,4 +59,6 @@ export default ({
     {(value || input) === '' ? <i className='iconfont yu-input-icon'>{icon}</i>
     : <i className='iconfont yu-input-icon' onClick={clearInput}>&#xeca0;</i>}
   </div>)
+  // #endregion
+
 }

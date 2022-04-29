@@ -1,5 +1,5 @@
 import { api_getFriendLinkList } from '@/api/home';
-import TitleLevel from '@/components/TitleLevel';
+import TitleLevel from './components/TitleLevel';
 import FriendLink from './components/FriendLink';
 import SkillShare from './components/SkillShare';
 import * as staticData from './static-data';

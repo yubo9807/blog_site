@@ -5,14 +5,17 @@ import style from './module.less';
 import { history } from 'umi';
 import { useEffect, useState } from 'react';
 
-// 组件
+// component
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
+
+// utils
 import { joinClass } from '@/utils/array';
 
 // redux
 import { Provider } from 'react-redux';
 import store from '@/store';
+
 
 
 // 常量
