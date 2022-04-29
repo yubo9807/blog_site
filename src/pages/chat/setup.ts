@@ -65,12 +65,11 @@ export default (props: IRouteProps) => {
 
 
   // #region 选中房间，获取聊天记录
-  const [ record,    setRecord    ] = useState([]);  // 聊天记录
+  const [ record, setRecord ] = useState([]);  // 聊天记录
 
   useEffect(() => {
     if (!selectRow.id) return;
     socket.on(`record_${selectRow.id}`, res => {
-      console.log(res)
       setRecord(res);
     })
   }, [ selectRow.id ]);

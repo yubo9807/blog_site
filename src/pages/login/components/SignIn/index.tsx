@@ -79,6 +79,7 @@ export default () => {
       onClear={() => onClear('username')}
       className={style.inputItem}
       description='账号'
+      focus={true}
     />
     <Input
       value={signIn.password}
