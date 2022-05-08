@@ -26,6 +26,11 @@ axiosRetry(instance, {
 // 响应拦截器
 instance.interceptors.response.use((response: any) => {
 
+  if (response.headers['content-type'].includes('text/html;')) {
+    Toast('请求地址错误');
+    return Promise.reject(response);
+  }
+
   if (response.status === 200) {
     const { data, config } = response;
 
