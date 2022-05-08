@@ -107,12 +107,15 @@ export async function deleteCookie(params: DeleteCookie) {
  * @returns 
  */
 export function getLabelTextList(str: string, label: string) {
-  const reg = eval('/<'+label+'>.+<\u005c\u002f'+label+'>/g');
+  if (!str) return [];
+  const reg = eval('/<'+label+'(.+)?>.+<\u005c\u002f'+label+'>/g');
   const match = str.match(reg);
-  if (!match) return '';
+  if (!match) return [];
   const arr = [];
   match.forEach(val => {
-    const text = val.replace(`<${label}>`, '').replace(`</${label}>`, '');
+    const startIndex = val.search('>');
+    const endIndex = val.search('</');
+    const text = val.slice(startIndex + 1, endIndex);
     arr.push(text.replace(/<.+>.+<\/.+>/, ''));
   })
   return arr;

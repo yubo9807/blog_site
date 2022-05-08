@@ -22,6 +22,7 @@ import { scrollTo } from '@/utils/browser';
 import Breadcrumb from './components/Breadcrumb';
 import FileDirectory from './components/FileDirectory';
 import Search from './components/Search';
+import Helmet from './components/Helmet';
 import Markdown from '@/components/Markdown/async';
 
 
@@ -103,6 +104,8 @@ const NotePage = (props: IRouteProps) => {
   return (<div className={joinClass(style.container, 'leayer clearfix')}>
     {data && <>
 
+      <Helmet html={data.fileAttr.content} />
+
       {/* 面包屑 */}
       <div className={style.breadCrumb}>
         <Breadcrumb filename={data.filename} route={route} />
@@ -166,7 +169,7 @@ NotePage.getInitialProps = async({ history, path }) => {
  * @param filename
  * @returns 
  */
- async function getFileChildDirectoryAndContent(filename: string = '', path: string) {
+async function getFileChildDirectoryAndContent(filename: string = '', path: string) {
   let fileDirectory = [], fileAttr: any = {};
 
   const response = await api_getFileContentOrChildDirectory(`/note/${filename}`);
