@@ -1,6 +1,6 @@
 
 const base_api = '/api';
-const VISIT_ORIGIN = typeof window === 'object' ? window.origin : '';
+const VISIT_ORIGIN = typeof window === 'object' ? window.origin : '' || 'http://hpyyb.cn';
 
 // 生产环境
 const env: any = {

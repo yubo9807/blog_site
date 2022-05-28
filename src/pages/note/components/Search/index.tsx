@@ -38,6 +38,7 @@ export default ({ visible, onCancel = () => {} }) => {
    * 搜索
    */
   async function search() {
+    if (searchValue === '') return;
     const response = await api_fileContentSearch('/note', searchValue);
     if (response.code === 200) {
       setEmptyPrompt(false);
@@ -53,6 +54,7 @@ export default ({ visible, onCancel = () => {} }) => {
   function clear() {
     setSearchValue('');
     setEmptyPrompt(false);
+    setList([]);
   }
 
   /**

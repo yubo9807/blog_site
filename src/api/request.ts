@@ -15,6 +15,7 @@ const config: AxiosRequestConfig = {
 };
 
 const instance = axios.create(config);
+
 axiosRetry(instance, {
   retries: 3,
   retryDelay: 3000,
@@ -26,7 +27,7 @@ axiosRetry(instance, {
 // 响应拦截器
 instance.interceptors.response.use((response: any) => {
 
-  if (response.headers['content-type'].includes('text/html;')) {
+  if (response.headers && response.headers['content-type'].includes('text/html;')) {
     Toast('请求地址错误');
     return Promise.reject(response);
   }
@@ -46,10 +47,11 @@ instance.interceptors.response.use((response: any) => {
     return response;
   }
 }, error => {
+  // console.log('error', error)
   // 响应出现错误（连接超时/网络断开/服务器忙没响应）
   client && notification.open({
     message: '网络可能存在一些问题',
-    description: '错误原因：网络断开/网络差/连接超时/服务器忙，请尝试重新操作或刷新页面',
+    description: error.message || '错误原因：网络断开/无法连接/网络差/连接超时/服务器忙，请尝试重新操作或刷新页面',
     duration: null,
   })
   
