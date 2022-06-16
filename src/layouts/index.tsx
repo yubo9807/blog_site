@@ -13,7 +13,6 @@ import { actions as routeActions } from '@/store/route';
 
 // utils
 import { throttle } from '@/utils/optimize';
-import '@/utils/optimize-watch';
 import { isType } from '@/utils/validate';
 import { getUserInfo } from '@/common/user';
 
