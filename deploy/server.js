@@ -11,7 +11,8 @@ let render = null;
 app.use(async (ctx, next) => {
 
   const ext = extname(ctx.request.path);
-  if (ext) {
+  const staticExt = ['.css', '.js', '.ico', '.txt', '.png', '.jpg', '.gif', '.ttf', '.woff', '.worf2'];
+  if (staticExt.includes(ext)) {
     await next(); // 走静态文件
     return;
   }

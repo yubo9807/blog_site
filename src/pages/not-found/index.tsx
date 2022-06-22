@@ -2,7 +2,7 @@
 import style from './module.less';
 
 // static
-import img_404 from '@/assets/imgs/404.png';
+import img_404 from '@/assets/images/404.png';
 
 
 
