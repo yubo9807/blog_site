@@ -1,4 +1,7 @@
 
+Disallow: /vise
+Disallow: /api
+
 User-agent: *
 Allow: /
 

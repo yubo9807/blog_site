@@ -11,7 +11,7 @@ let render = null;
 app.use(async (ctx, next) => {
 
   const ext = extname(ctx.request.path);
-  const staticExt = ['.css', '.js', '.ico', '.txt', '.png', '.jpg', '.gif', '.ttf', '.woff', '.worf2'];
+  const staticExt = ['.html', '.css', '.js', '.ico', '.txt', '.xml', '.png', '.jpg', '.gif', '.ttf', '.woff', '.worf2'];
   if (staticExt.includes(ext)) {
     await next(); // 走静态文件
     return;
@@ -35,26 +35,38 @@ app.use(async (ctx, next) => {
     ctx.throw(500, error);
   }
 
-  // 访问信息发送给后端
-  if (path.startsWith('/api')) return;
 
-  const data = ctx.headers;
-  for (const key in data) {
-    data[key] = data[key].replace(/\"/g, '');
+
+  // 访问信息发送给后端
+  const {
+    'user-agent': userAgent,
+    from,
+    'cache-control': cacheControl,
+    'x-forwarded-for': ip,
+  } = ctx.headers;
+
+  const info = {
+    url: path,
+    ip: ip || ctx.request.ip.replace('::ffff:', ''),
+    accessTime: Math.floor(Date.now() / 1000),
+    from,
+    cacheControl,
+    userAgent,
+  };
+
+  for (const key in info) {
+    const value = info[key];
+    if (typeof value === 'string') info[key] = value ? value.replace(/\"/g, '') : '';
   }
 
   axios({
     method: 'post',
     url: 'http://127.0.0.1:20010/api/access',
-    data: {
-      info: Object.assign(data, {
-        accessTime: Math.floor(Date.now() / 1000),
-        url: path,
-      }),
-    },
+    data: { info },
   })
 
 })
+
 
 // 静态资源
 app.use(koaStatic(resolve(__dirname + '/dist')));
