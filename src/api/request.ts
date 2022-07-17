@@ -36,9 +36,8 @@ instance.interceptors.response.use((response: any) => {
     const { data, config } = response;
 
     // 与后端协商 code 码
-    if (data.code >= 400 && data.code < 500) {  // 错误报给前端开发者
+    if (data.code >= 400) {
       client && console.error(Object.assign(data, { url: config.url }));
-    } else if (data.code >= 500 && !config.noTips) {  // 报给用户的错
       client && message.error(data.msg);
     }
 

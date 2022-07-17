@@ -181,6 +181,7 @@ async function getFileChildDirectoryAndContent(filename: string = '', path: stri
     }
   }
   const { data } = response;
+  
   // 如果是文件目录
   if (isType(data) === 'array') {
     const folderList = [], fileList = [];
