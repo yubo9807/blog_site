@@ -153,7 +153,7 @@ NotePage.getInitialProps = async({ history, path }) => {
   const piecewise = pathname.split('/');
   const filename = (pathname.startsWith('http') ? piecewise.slice(4) : piecewise.slice(2)).join('/');
   
-  const { fileDirectory, fileAttr } = await getFileChildDirectoryAndContent(filename, path);
+  const { fileDirectory, fileAttr } = await getFileChildDirectoryAndContent(encodeURI(filename), path);
 
   return {
     data: {
