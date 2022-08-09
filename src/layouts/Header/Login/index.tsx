@@ -30,7 +30,7 @@ const Login = (props) => {
     {props.isLogin === 1 ? <div className={joinClass(style.user, 'clearfix')}>
       {props.userInfo.portrait
         ? <div className={style.portrait}>
-            <img src={env.VISIT_ORIGIN + props.userInfo.portrait} alt={props.userInfo.name} />
+            <img src={env.BASE_IMAGE_URL + props.userInfo.portrait} alt={props.userInfo.name} />
           </div>
         : <span>{props.userInfo.name}</span>
       }

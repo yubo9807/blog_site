@@ -38,19 +38,11 @@ app.use(async (ctx, next) => {
 
 
   // 访问信息发送给后端
-  const {
-    'user-agent': userAgent,
-    from,
-    'cache-control': cacheControl,
-    'x-forwarded-for': ip,
-  } = ctx.headers;
+  const { 'x-forwarded-for': ip, 'user-agent': userAgent } = ctx.headers;
 
   const info = {
     url: path,
-    ip: ip || ctx.request.ip.replace('::ffff:', ''),
-    accessTime: Math.floor(Date.now() / 1000),
-    from,
-    cacheControl,
+    ip,
     userAgent,
   };
 
@@ -62,7 +54,7 @@ app.use(async (ctx, next) => {
   axios({
     method: 'post',
     url: 'http://127.0.0.1:20010/api/access',
-    data: { info },
+    data: info,
   })
 
 })

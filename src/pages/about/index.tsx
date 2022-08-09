@@ -13,7 +13,7 @@ const AboutPage = () => {
   return (<div className={joinClass('leayer', style.aboutPage)}>
     <Typography>
 
-      <Title level={3}>你好，我叫宇波！</Title>
+      <Title level={3}>你好，我叫杨宇波！</Title>
       <Paragraph>
         <ul>
           <li>2 年前端开发工作经验</li>

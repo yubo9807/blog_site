@@ -1,6 +1,6 @@
 
 const base_api = '/api';
-const VISIT_ORIGIN = 'http://hpyyb.cn';
+const VISIT_ORIGIN = 'http://hicky.hpyyb.cn';
 
 // 生产环境
 const env: any = {
@@ -12,6 +12,8 @@ const env: any = {
   BASE_API: VISIT_ORIGIN + base_api,  // 必须加 href，否则请求 SSR 会消失
 
   BASE_SOCKET: base_api  + '/socket',
+  
+  BASE_IMAGE_URL: 'http://assets.hpyyb.cn',
 
   VISIT_ORIGIN,
 
@@ -28,6 +30,8 @@ if (process.env.APP_ENV === 'development') {
     VISIT_ORIGIN,
 
     BASE_API: VISIT_ORIGIN + base_api,
+
+    BASE_IMAGE_URL: VISIT_ORIGIN,
 
   })
 
