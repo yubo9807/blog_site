@@ -1,3 +1,4 @@
+import { staticExtList } from '../utils/file';
 import { Context, Next } from 'koa';
 import { extname } from 'path';
 import { getClientIP } from '../utils/network';
@@ -7,7 +8,8 @@ let token = '';
 
 export default async(ctx: Context, next: Next) => {
 
-  if (extname(ctx.url)) {
+  const ext = extname(ctx.request.path);
+  if (staticExtList.includes(ext.slice(1))) {
     await next();
     return;
   }

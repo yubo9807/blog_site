@@ -6,7 +6,7 @@
       "esnext"
     ],
     "allowJs": true,
-    "module": "commonjs",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "skipLibCheck": true,
     "sourceMap": false,
@@ -16,6 +16,7 @@
     "noFallthroughCasesInSwitch": true,
     "removeComments": true,
     "noEmitOnError": false,
+    "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
       "@": [ "src" ],

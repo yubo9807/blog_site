@@ -1,20 +1,15 @@
 import { Context, Next } from 'koa';
 import { extname } from 'path';
 import env from '../env';
+import { staticExtList } from '../utils/file';
 
 let render = null;
-const staticExtList = [
-  'html', 'css', 'js',
-  'xml', 'txt',
-  'ico', 'png', 'jpg', 'gif',
-  'ttf', 'woff', 'worf2'
-];
 
 export default async(ctx: Context, next: Next) => {
 
   const ext = extname(ctx.request.path);
   if (staticExtList.includes(ext.slice(1))) {
-    await next(); // 走静态文件
+    await next();
     return;
   }
 
