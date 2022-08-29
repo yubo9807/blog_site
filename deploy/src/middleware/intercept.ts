@@ -17,14 +17,12 @@ export default async(ctx: Context, next: Next) => {
       username: 'visitor',
       password: '111111',
     });
-    if (err) return;
+    if (err) ctx.throw(400, err.msg);
     token = res.data.token;
   }
 
   const [ err, res ] = await getBlacklist(token);
-  if (err) {
-    ctx.throw(400, err.msg);
-  };
+  if (err) ctx.throw(400, err.msg);
 
   const ip = getClientIP(ctx);
   const blacklist = res.data;
@@ -33,9 +31,7 @@ export default async(ctx: Context, next: Next) => {
   if (index >= 0) ctx.throw(403, `您已被禁止访问，IP: ${ip}`);
 
   await next();
-  return;
 
-  
 }
 
 

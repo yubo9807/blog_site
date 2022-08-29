@@ -6,7 +6,7 @@ export default defineConfig({
     lib: {
       name: 'vite-ts',
       entry: resolve(__dirname, './src/server.ts'),
-      // formats: ['cjs'],
+      formats: ['cjs'],
       fileName: module => {
         return 'server.js'
       },
