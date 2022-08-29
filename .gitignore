@@ -9,7 +9,8 @@ yarn.lock
 *.rar
 
 # production
-dist
+deploy/dist
+deploy/www
 
 # misc
 .DS_Store

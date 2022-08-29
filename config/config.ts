@@ -33,7 +33,7 @@ export default defineConfig({
     '~': path.resolve(__dirname, '../'),  // 跟目录
   },
   // hash: true,  // 文件hash
-  outputPath: '/deploy/dist',
+  outputPath: '/deploy/www',
   // devtool: 'eval-source-map',
   devServer: {
     port: 3000

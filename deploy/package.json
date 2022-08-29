@@ -7,11 +7,19 @@
     "axios": "^0.27.2",
     "koa": "^2.13.4",
     "koa-static": "^5.0.0",
-    "zlib": "^1.0.5"
+    "nodemon": "^2.0.19",
+    "path": "^0.12.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/koa": "^2.13.5",
+    "@types/koa-static": "^4.0.2",
+    "ts-node": "^10.9.1",
+    "vite": "^2.9.15"
+  },
   "scripts": {
-    "start": "node server.js"
+    "dev": "nodemon --watch src -e ts --exec ts-node src/server.ts",
+    "start": "node dist/server.js",
+    "build": "vite build"
   },
   "keywords": [],
   "author": "",
