@@ -2,9 +2,7 @@ import { staticExtList } from '../utils/file';
 import { Context, Next } from 'koa';
 import { extname } from 'path';
 import { getClientIP } from '../utils/network';
-import request from '../utils/request';
-
-let token = '';
+import request, { cache } from '../utils/request';
 
 export default async(ctx: Context, next: Next) => {
 
@@ -14,23 +12,20 @@ export default async(ctx: Context, next: Next) => {
     return;
   }
 
-  if (!token) {
-    const [ err, res ] = await signIn({
-      username: 'visitor',
-      password: '111111',
-    });
+  if (!cache.token) {
+    const [ err, res ] = await signIn();
     if (err) ctx.throw(400, err.msg);
-    token = res.data.token;
+    cache.token = res.data.token;
   }
 
-  const [ err, res ] = await getBlacklist(token);
+  const [ err, res ] = await getBlacklist(cache.token);
   if (err) ctx.throw(400, err.msg);
 
   const ip = getClientIP(ctx);
   const blacklist = res.data;
   const index = blacklist.findIndex(val => val.ip === ip);
 
-  if (index >= 0) ctx.throw(403, `您已被禁止访问，IP: ${ip}`);
+  if (index >= 0) ctx.throw(401, `您已被禁止访问，IP: ${ip}`);
 
   await next();
 
@@ -40,11 +35,14 @@ export default async(ctx: Context, next: Next) => {
 /**
  * 登录获取 token
  */
-function signIn(data) {
+export function signIn() {
   return request({
     method: 'post',
     url: 'http://127.0.0.1:20010/api/user/signIn',
-    data,
+    data: {
+      username: 'visitor',
+      password: '111111',
+    },
   })
 }
 
