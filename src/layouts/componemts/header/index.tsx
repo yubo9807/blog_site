@@ -1,10 +1,20 @@
-import { joinClass } from '@/utils/array';
-import { IRouteProps, NavLink } from 'umi';
 import style from './module.less';
-import Logo from './Logo';
-import Login from './Login';
+
+// umi
+import { IRouteProps, NavLink } from 'umi';
 import { useState } from 'react';
+
+// 组件
+import Logo from './components/logo';
+import Login from './components/login';
+import ControlledBtns from './components/controlled-btns';
+
+// stroe
 import { connect } from 'react-redux';
+
+// utils
+import { joinClass } from '@/utils/array';
+
 
 const navList = [
   { name: '首页', link: '/' },
@@ -33,6 +43,7 @@ const Header = (props: IRouteProps) => {
         </li>)
       }</ul>
       <Login />
+      <ControlledBtns />
     </div>
   </header>)
 }

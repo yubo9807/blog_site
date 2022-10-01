@@ -17,9 +17,9 @@ import { isType } from '@/utils/validate';
 import { getUserInfo } from '@/common/user';
 
 // component
-import Header from './Header';
-import Footer from './Footer';
-import FixedBtn from '@/components/FixedBtn';
+import Header from './componemts/header';
+import Footer from './componemts/footer';
+import FixedBtn from '@/layouts/componemts/fixed-btns';
 
 
 let unlisten = null;

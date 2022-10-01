@@ -7,7 +7,8 @@ import { IRouteProps, history } from 'umi';
 
 // redux
 import { connect } from 'react-redux';
-import { actions } from '@/store/fixed-btns';
+import store from '@/store';
+import { actions as actionsFixedBtns } from '@/store/fixed-btns';
 
 // api
 import { api_getFileContentOrChildDirectory } from '@/api/file';
@@ -17,10 +18,11 @@ import { isType } from '@/utils/validate';
 import { joinClass } from '@/utils/array';
 import { dateFormater } from '@/utils/date';
 import { scrollTo } from '@/utils/browser';
+import { createColor } from '@/utils/string';
 
 // component
 import Breadcrumb from './components/Breadcrumb';
-import FileDirectory from './components/FileDirectory';
+import FileDirectory from './components/file-directory';
 import Search from './components/Search';
 import Helmet from './components/Helmet';
 import Markdown from '@/components/Markdown/async';
@@ -28,7 +30,7 @@ import Markdown from '@/components/Markdown/async';
 
 
 const NotePage = (props: IRouteProps) => {
-  const { data, route } = props;
+  const { data } = props;
 
 
 
@@ -46,10 +48,11 @@ const NotePage = (props: IRouteProps) => {
 
   useEffect(() => {
     const key = 'note_search';
-    props.onAddFixedBtn(key, <i className='iconfont' onClick={() => setSearchVisible(true)}>&#xe64d;</i>, 7);
-    
+    const el = <i className='iconfont' onClick={() => setSearchVisible(true)}>&#xe64d;</i>;
+    store.dispatch(actionsFixedBtns.addFixedBtn(key, el, 1));
+
     return () => {
-      props.onDelFixedBtn(key);
+      store.dispatch(actionsFixedBtns.delFixedBtn(key));
     }
   }, [])
   // #endregion
@@ -59,16 +62,20 @@ const NotePage = (props: IRouteProps) => {
   // #region 手机端菜单按钮控制
   const [ phoneMenuVisible, setPhoneMenuVisible ] = useState(false);
   useEffect(() => {
-    const listKey = 'note_fileList';
-    data && data.fileAttr.content && props.clientWidth < 768 && props.onAddFixedBtn(listKey, <i
+    const key = 'note_fileList';
+    const el = <i
       className='iconfont'
       onClick={() => setPhoneMenuVisible(!phoneMenuVisible)}
-    >&#xe603;</i>, 6);
+    >&#xe603;</i>;
+
+    if (data && data.fileAttr.content && store.getState().viewport.clientWidth < 768) {
+      store.dispatch(actionsFixedBtns.addFixedBtn(key, el, 6))
+    }
 
     return () => {
-      props.onDelFixedBtn(listKey);
+      store.dispatch(actionsFixedBtns.delFixedBtn(key));
     }
-  }, [phoneMenuVisible, props.clientWidth, data])
+  }, [phoneMenuVisible, store.getState().viewport.clientWidth, data])
   // #endregion
 
 
@@ -97,7 +104,7 @@ const NotePage = (props: IRouteProps) => {
     }
   }, [])
   // #endregion
-  
+
 
 
   // #region jsx
@@ -108,7 +115,7 @@ const NotePage = (props: IRouteProps) => {
 
       {/* 面包屑 */}
       <div className={style.breadCrumb}>
-        <Breadcrumb filename={data.filename} route={route} />
+        <Breadcrumb filename={data.filename} />
       </div>
 
       {/* 文件目录 */}
@@ -186,8 +193,9 @@ async function getFileChildDirectoryAndContent(filename: string = '', path: stri
   if (isType(data) === 'array') {
     const folderList = [], fileList = [];
     data.forEach(val => {
-      val.path = val.path.replace('/note', path)
-      val.isFile ? fileList.push(val) : folderList.push(val)
+      val.path = val.path.replace('/note', path);
+      val.color = createColor('888888', 'aaaaaa') + 'aa';
+      val.isFile ? fileList.push(val) : folderList.push(val);
     });
     fileDirectory = [].concat(folderList, fileList);
 
@@ -211,8 +219,9 @@ async function getFileChildDirectoryAndContent(filename: string = '', path: stri
 
       const folderList = [], fileList = [];
       data.forEach(val => {
-        val.path = val.path.replace('/note', path)
-        val.isFile ? fileList.push(val) : folderList.push(val)
+        val.path = val.path.replace('/note', path);
+        val.color = createColor('888888', 'aaaaaa') + 'aa';
+        val.isFile ? fileList.push(val) : folderList.push(val);
       });
       fileDirectory = [].concat(folderList, fileList);
     }
@@ -229,31 +238,7 @@ async function getFileChildDirectoryAndContent(filename: string = '', path: stri
 
 
 
-// #region store 绑定
-function mapStateToProps(state: any, ownProps: any) {
-  return {
-    scrollY: state.viewport.scrollY,
-    clientWidth: state.viewport.clientWidth,
-    btns: state.fixedBtns,
-  }
-}
-
-function mapDispatchToProps(dispatch: any) {
-  return {
-    onAddFixedBtn(key, element, count) {
-      dispatch(actions.addFixedBtn(key, element, count));
-    },
-    onDelFixedBtn(key) {
-      dispatch(actions.delFixedBtn(key));
-    }
-  }
-}
-
-const hoc = connect(mapStateToProps, mapDispatchToProps);
-// #endregion
-
-
-
+const hoc = connect(() => store.getState());
 export default hoc(NotePage);
 
 

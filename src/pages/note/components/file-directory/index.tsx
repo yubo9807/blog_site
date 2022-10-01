@@ -44,7 +44,7 @@ function FileDirectory({ fileDirectory }) {
       <Link to={val.path}>
         {val.isFile
           ? <i className='iconfont'>&#xe610;</i>
-          : <i className='iconfont' style={{ color: isClient && createColor('888888', 'aaaaaa') + 'aa' }}>&#xe67c;</i>}
+          : <i className='iconfont' style={{ color: val.color }}>&#xe67c;</i>}
         <span className={style.content}>
           {val.isFile ? val.name : val.name.match(/\s.+/)[0].slice(1)}
         </span>

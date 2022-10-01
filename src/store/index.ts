@@ -4,6 +4,7 @@ import viewport from './viewport';
 import user from './user';
 import route from './route';
 import fixedBtns from './fixed-btns';
+import controlledBtns from './controlled-btns';
 
 // function reducer (state: any, action: any) {
 //   return {
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   user,
   route,
   fixedBtns,
+  controlledBtns,
 })
 
 // 中间件
