@@ -21,10 +21,10 @@ import { scrollTo } from '@/utils/browser';
 import { createColor } from '@/utils/string';
 
 // component
-import Breadcrumb from './components/Breadcrumb';
+import Breadcrumb from './components/breadcrumb';
 import FileDirectory from './components/file-directory';
-import Search from './components/Search';
-import Helmet from './components/Helmet';
+import Search from './components/search';
+import Helmet from './components/helmet';
 import Markdown from '@/components/Markdown/async';
 
 
