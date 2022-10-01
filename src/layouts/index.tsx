@@ -89,10 +89,11 @@ const Layouts = ({ children, routes, route, location }) => {
   function routeIntercept(pathname: string, routes: any[], role: string) {
     const nowRoute = routes.find(val => {
       const { exact, path } = val;
-      if (exact) return path === pathname;
-      else return pathname.startsWith(path + '/');
+      if (!exact) {
+        return path === pathname ? true : pathname.startsWith(path + '/');
+      } else return path === pathname;
     });
-    store.dispatch(routeActions.setNowRouteAction(nowRoute));  // 将当前路由信息存入 store
+    store.dispatch(routeActions.setNowRouteAction(Object.assign({}, nowRoute, { pathname })));  // 将当前路由信息存入 store
 
     if (!nowRoute || !nowRoute.state || !nowRoute.state.roles) return;
 

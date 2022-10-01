@@ -10,3 +10,11 @@ export function createRandomString() {
   const str = (BigInt(time * num) + BigInt(random)).toString(32);
   return str.split('').sort(() => Math.random() - .5).join('');
 }
+
+/**
+ * 生成随机颜色
+ */
+export function createColor(min = '000000', max = 'ffffff') {
+  const minNumber = parseInt(min, 16), maxNumber = parseInt(max, 16);
+  return '#' + randomNum(maxNumber, minNumber).toString(16);
+}

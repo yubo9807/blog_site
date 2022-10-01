@@ -53,7 +53,7 @@ const AboutPage = () => {
           </li>
           <li>
             后端服务：
-            <Link href='/api'>http://hpyyb.cn/api</Link>
+            <Link href='/api'>http://hicky.hpyyb.cn/api</Link>
             <Link href='https://github.com/yubo9807/blog_server' target="_blank">代码地址</Link>
             <ul>
               <li>

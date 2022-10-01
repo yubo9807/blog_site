@@ -6,6 +6,7 @@ import { Link, history } from 'umi';
 
 // utils
 import { dateFormater } from '@/utils/date';
+import { createColor } from '@/utils/string';
 
 
 
@@ -30,17 +31,25 @@ function FileDirectory({ fileDirectory }) {
 
 
 
+  const [ isClient, useIsClient ] = useState(false);
+  useEffect(() => {
+    useIsClient(true);
+  }, [])
+
+
+
   // #region jsx
   return (<ul className={style.wrap}>{fileDirectory.map((val, index: number) => 
     <li key={index} className={val.isFile && active === val.name ? style.active : ''} onClick={() => setActive(val.name)}>
       <Link to={val.path}>
-        {val.isFile ? <i className='iconfont'>&#xe610;</i> : <i className='iconfont'>&#xe67c;</i>}
+        {val.isFile
+          ? <i className='iconfont'>&#xe610;</i>
+          : <i className='iconfont' style={{ color: isClient && createColor('888888', 'aaaaaa') + 'aa' }}>&#xe67c;</i>}
         <span className={style.content}>
           {val.isFile ? val.name : val.name.match(/\s.+/)[0].slice(1)}
         </span>
         {val.isFile ? null : <p className={style.otherInfo}>
           {dateFormater('YYYY/MM/DD', val.createTime * 1000)}
-          &nbsp;{val.size}byte
         </p>}
       </Link>
     </li>
