@@ -51,6 +51,13 @@ export default (config) => {
             },
             priority: 8,
           },
+          utils: {
+            name: 'utils',
+            test({ resource }) {
+              return /utils\//.test(resource);
+            },
+            priority: 6,
+          },
           vendor: {
             name: 'vendors',
             test({ resource }) {

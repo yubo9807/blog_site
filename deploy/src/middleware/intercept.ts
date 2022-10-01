@@ -22,6 +22,11 @@ export default async(ctx: Context, next: Next) => {
   if (err) ctx.throw(400, err.msg);
 
   const ip = getClientIP(ctx);
+
+  if (res.code === 508) {
+    addBlacklist(cache.token, ip);
+  }
+
   const blacklist = res.data;
   const index = blacklist.findIndex(val => val.ip === ip);
 
@@ -40,8 +45,8 @@ export function signIn() {
     method: 'post',
     url: 'http://127.0.0.1:20010/api/user/signIn',
     data: {
-      username: 'visitor',
-      password: '111111',
+      username: 'admin',
+      password: '123456',
     },
   })
 }
@@ -55,6 +60,22 @@ function getBlacklist(token: string) {
     url: 'http://127.0.0.1:20010/api/blacklist',
     headers: {
       'Authorization': token,
+    }
+  })
+}
+
+/**
+ * 添加到黑名单
+ */
+function addBlacklist(token: string, ip: string) {
+  return request({
+    method: 'post',
+    url: 'http://127.0.0.1:20010/api/blacklist',
+    headers: {
+      'Authorization': token,
+    },
+    data: {
+      ip,
     }
   })
 }
