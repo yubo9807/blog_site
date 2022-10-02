@@ -74,11 +74,10 @@ const Setings = (props: IRouteProps) => {
 
     if (errorArr.length > 0) message.warn(errorArr[0]);
     else {
-      const response = await api_uploadPortrait(file);
-      if (response.code === 200) {
-        getUserInfo();
-        message.success('上传成功');
-      }
+      const [ err ] = await api_uploadPortrait(file);
+      if (err) return;
+      getUserInfo();
+      message.success('上传成功');
     }
   }
   // #endregion

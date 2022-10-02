@@ -1,10 +1,10 @@
-import axios, { AxiosStatic, AxiosRequestConfig } from 'axios';
+import axios, { AxiosStatic, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { message, notification } from 'antd';
 import Toast from '@/components/custom-toast';
 
 import env from '~/config/env';
 import { getCookie, isClient } from '@/utils/browser';
-import axiosRetry from './axios-retry';
+import { asyncto, axiosRetry } from '../utils/network';
 
 const client = isClient();
 
@@ -25,7 +25,7 @@ axiosRetry(instance, {
 });
 
 // 响应拦截器
-instance.interceptors.response.use((response: any) => {
+instance.interceptors.response.use((response) => {
 
   if (response.headers && response.headers['content-type'].includes('text/html;')) {
     Toast('请求地址错误');
@@ -36,14 +36,16 @@ instance.interceptors.response.use((response: any) => {
     const { data, config } = response;
 
     // 与后端协商 code 码
-    if (data.code >= 400) {
+    if (data.code === 200) {
+      return Promise.resolve(data);
+    } else {
       client && console.error(Object.assign(data, { url: config.url }));
-      client && message.error(data.msg);
+      client && !(config as SateConfig).noTips && message.error(data.msg);
+      return Promise.reject(data);
     }
 
-    return data;
   } else {  // 状态码异常
-    return response;
+    return Promise.reject(response);
   }
 }, error => {
   // console.log('error', error)
@@ -79,4 +81,6 @@ interface SateAxios extends AxiosStatic {
   (config?: SateConfig)
 }
 
-export default (instance as SateAxios);
+export default function(option: SateConfig) {
+  return asyncto(instance(option));
+}

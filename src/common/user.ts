@@ -9,11 +9,11 @@ import { actions } from '@/store/user';
 export async function getUserInfo() {
   const token = await getCookie('token');
   if (token) {
-    const response: any = await api_getUserInfo({ token });
-    if (response.code === 200) {
-      // 用户验证成功
-      store.dispatch(actions.signInAction());
-      store.dispatch(actions.setUserinfoAction(response.data));
-    }
+    const [ err, res ] = await api_getUserInfo();
+    if (err) return;
+
+    // 用户验证成功
+    store.dispatch(actions.signInAction());
+    store.dispatch(actions.setUserinfoAction(res.data));
   }
 }

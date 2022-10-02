@@ -33,10 +33,9 @@ export function api_userSginIn(data: SignIn) {
 }
 
 // 获取用户信息
-export function api_getUserInfo(params: any) {
+export function api_getUserInfo() {
   return request({
     url: '/user/current',
     method: 'get',
-    params,
   });
 }

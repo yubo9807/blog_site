@@ -39,13 +39,13 @@ export default ({ visible, onCancel = () => {} }) => {
    */
   async function search() {
     if (searchValue === '') return;
-    const response = await api_fileContentSearch('/note', searchValue);
-    if (response.code === 200) {
-      setEmptyPrompt(false);
-      const { data } = response;
-      data.length === 0 && setEmptyPrompt(true);
-      setList(response.data);
-    }
+    const [ err, res ] = await api_fileContentSearch('/note', searchValue);
+    if (err) return;
+
+    setEmptyPrompt(false);
+    const { data } = res;
+    data.length === 0 && setEmptyPrompt(true);
+    setList(res.data);
   }
 
   /**

@@ -16,7 +16,7 @@ const defaultOption = {
  * @param axios
  * @param option 配置项
  */
-export default (axios: AxiosInstance, option: Option) => {
+export function axiosRetry(axios: AxiosInstance, option: Option) {
 
   option = Object.assign(defaultOption, option);
 
@@ -45,4 +45,23 @@ export default (axios: AxiosInstance, option: Option) => {
     })
   });
 
+}
+
+
+/**
+ * 请求函数封装
+ * @param promise 请求函数
+ * @param errorExt 
+ * @returns 
+ */
+export function asyncto(promise: Promise<any>, errorExt: string = '') {
+  return promise
+    .then(data => [ null, data ])
+    .catch(err => {
+      if (errorExt) {
+        const parsedError = Object.assign({}, err, errorExt);
+        return [ parsedError, null ];
+      }
+      return [ err, null ];
+    })
 }

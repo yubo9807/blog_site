@@ -37,12 +37,15 @@ export default () => {
     if (error) message.warning(error);
     else {
       setLoading(true);
-      const response: any = await api_userSginIn(signIn);
-      if (response.code === 200) {
-        setCookie({ name: 'token', value: response.data.token, path: '/' });
-        message.success('登录成功');
-        history.length > 2 ? history.goBack() : history.push('/');
+      const [ err, res ] = await api_userSginIn(signIn);
+      if (err) {
+        setLoading(false);
+        return;
       }
+
+      setCookie({ name: 'token', value: res.data.token, path: '/' });
+      message.success('登录成功');
+      history.length > 2 ? history.goBack() : history.push('/');
       setLoading(false);
     }
   }

@@ -159,7 +159,7 @@ NotePage.getInitialProps = async({ history, path }) => {
   const { pathname } = history.location;
   const piecewise = pathname.split('/');
   const filename = (pathname.startsWith('http') ? piecewise.slice(4) : piecewise.slice(2)).join('/');
-  
+
   const { fileDirectory, fileAttr } = await getFileChildDirectoryAndContent(encodeURI(filename), path);
 
   return {
@@ -179,15 +179,16 @@ NotePage.getInitialProps = async({ history, path }) => {
 async function getFileChildDirectoryAndContent(filename: string = '', path: string) {
   let fileDirectory = [], fileAttr: any = {};
 
-  const response = await api_getFileContentOrChildDirectory(`/note/${filename}`);
-  if (response.code !== 200) {
-    fileAttr.content = response.msg;
+  const [ err, res ] = await api_getFileContentOrChildDirectory(`/note/${filename}`);
+  if (err) {
+    fileAttr.content = err.msg;
     return {
       fileDirectory,
       fileAttr,
     }
   }
-  const { data } = response;
+
+  const { data } = res;
   
   // 如果是文件目录
   if (isType(data) === 'array') {
@@ -204,27 +205,32 @@ async function getFileChildDirectoryAndContent(filename: string = '', path: stri
     }
 
     // 获取子目录下第一个文件的内容
-    const response = await api_getFileContentOrChildDirectory(`/note/${filename}/${fileList[0].name}`);
-    if (response.code === 200) fileAttr = response.data;
-    else fileAttr.content = response.msg;
+    const [ err, res ] = await api_getFileContentOrChildDirectory(`/note/${filename}/${fileList[0].name}`);
+    if (err) {
+      fileAttr.content = err.msg;
+      return {
+        fileDirectory,
+        fileAttr,
+      }
+    }
+
+    fileAttr = res.data;
   } else if (isType(data) === 'object') {  // 如果是文件内容
     fileAttr = data;
 
     // 获取上一级文件目录
     const piecewise = filename.split('/');
     const foldername = piecewise.slice(0, piecewise.length - 1).join('/');
-    const response = await api_getFileContentOrChildDirectory(`/note/${foldername}`);
-    if (response.code === 200) {
-      const { data } = response;
+    const [ err, res ] = await api_getFileContentOrChildDirectory(`/note/${foldername}`);
+    if (err) return;
 
-      const folderList = [], fileList = [];
-      data.forEach(val => {
-        val.path = val.path.replace('/note', path);
-        val.color = createColor('888888', 'aaaaaa') + 'aa';
-        val.isFile ? fileList.push(val) : folderList.push(val);
-      });
-      fileDirectory = [].concat(folderList, fileList);
-    }
+    const folderList = [], fileList = [];
+    res.data.forEach(val => {
+      val.path = val.path.replace('/note', path);
+      val.color = createColor('888888', 'aaaaaa') + 'aa';
+      val.isFile ? fileList.push(val) : folderList.push(val);
+    });
+    fileDirectory = [].concat(folderList, fileList);
     
   }
 

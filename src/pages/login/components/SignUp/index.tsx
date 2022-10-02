@@ -51,8 +51,9 @@ export default () => {
    */
   async function getMailCode(mail: string) {
     if (!verify()) return;
-    const response: any = await api_getMailCode({ mail });
-    if (response.code === 200) message.success('验证码已发送，请注意查收');
+    const [ err ] = await api_getMailCode({ mail });
+    if (err) return;
+    message.success('验证码已发送，请注意查收');
   }
   
   /**
@@ -65,11 +66,11 @@ export default () => {
     const { newPassword, ...args } = signUp;
     const params = removeUseLessKey(args);
     
-    const response: any = await api_userSignUp(params);
-    if (response.code === 200) {
-      message.success('注册成功, 请登录');
-      history.replace('/login?type=signIn');
-    }
+    const [ err ] = await api_userSignUp(params);
+    if (err) return;
+
+    message.success('注册成功, 请登录');
+    history.replace('/login?type=signIn');
     setLoading(false);
   }
   // #endregion

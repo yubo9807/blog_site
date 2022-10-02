@@ -1,8 +1,6 @@
 import { api_getFriendLinkList } from '@/api/home';
 import TitleLevel from './components/TitleLevel';
 import FriendLink from './components/FriendLink';
-import SkillShare from './components/SkillShare';
-import * as staticData from './static-data';
 
 function HomePage({ data }) {
   return (
@@ -22,22 +20,14 @@ function HomePage({ data }) {
 }
 
 HomePage.getInitialProps = async function() {
-  const friendLinkList = await getFriendLinkList();
+  const [ err, res ] = await api_getFriendLinkList();
+  if (err) return;
 
   return {
     data: {
-      friendLinkList
+      friendLinkList: res.data
     }
   }
-
 }
 
 export default HomePage;
-
-// 获取友情链接
-async function getFriendLinkList() {
-  const response: any = await api_getFriendLinkList();
-  if (response.code === 200) {
-    return response.data;
-  }
-}
