@@ -15,7 +15,7 @@ export default defineConfig({
   },
   // 动态加载
   dynamicImport: {
-    loading: '@/components/Loading',
+    loading: '@/components/custom-loading',
   },
   base: env.BASE_ROUTE_URL,
   // 编译加速
