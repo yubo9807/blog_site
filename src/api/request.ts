@@ -1,6 +1,6 @@
 import axios, { AxiosStatic, AxiosRequestConfig } from 'axios';
 import { message, notification } from 'antd';
-import Toast from '@/components/Toast';
+import Toast from '@/components/custom-toast';
 
 import env from '~/config/env';
 import { getCookie, isClient } from '@/utils/browser';

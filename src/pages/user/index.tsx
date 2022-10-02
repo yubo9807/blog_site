@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { history } from 'umi';
 
 // component
-import Setings from "./components/Setings";
+import Setings from "./components/setings";
 
 
 

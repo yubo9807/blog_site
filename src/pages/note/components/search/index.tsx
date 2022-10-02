@@ -6,7 +6,7 @@ import { Modal } from 'antd';
 import { Link } from 'umi';
 
 // component
-import Input from '@/components/Input';
+import Input from '@/components/custom-input';
 
 // api
 import { api_fileContentSearch } from '@/api/file';

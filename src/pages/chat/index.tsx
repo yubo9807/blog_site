@@ -11,9 +11,9 @@ import { io } from 'socket.io-client';
 import { connect } from 'react-redux';
 
 // component
-import CreateRoom from './CreateRoom';
-import Record from './Record';
-import Protective from '@/components/Protective';
+import CreateRoom from './components/create-room';
+import Record from './components/record';
+import Protective from '@/components/custom-protective';
 
 // utils
 import { joinClass } from '@/utils/array';

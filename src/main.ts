@@ -1,6 +1,6 @@
 import '@/styles';
 import { isClient } from '@/utils/browser';
-import Toast from '@/components/Toast';
+import Toast from '@/components/custom-toast';
 
 if (isClient()) {
   window.addEventListener('online' , () => {

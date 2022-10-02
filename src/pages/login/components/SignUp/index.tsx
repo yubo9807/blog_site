@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Button, message } from 'antd';
 
 // 组件
-import Input from '@/components/Input';
+import Input from '@/components/custom-input';
 
 // 接口
 import { api_getMailCode, api_userSignUp } from '@/api/login';
