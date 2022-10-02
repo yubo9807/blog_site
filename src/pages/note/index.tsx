@@ -61,6 +61,20 @@ const NotePage = (props: IRouteProps) => {
 
   // #region 手机端菜单按钮控制
   const [ phoneMenuVisible, setPhoneMenuVisible ] = useState(false);
+
+  useEffect(() => {
+    const onWheel = (e) => e.preventDefault();
+    if (phoneMenuVisible) {
+      // window.addEventListener('wheel', onWheel, { passive: false });
+      document.body.style.overflowY = 'hidden';
+    } else {
+      // window.removeEventListener('wheel', onWheel);
+      setTimeout(() => {
+        document.body.style.overflowY = 'auto';
+      }, 300)
+    }
+  }, [phoneMenuVisible])
+
   useEffect(() => {
     const key = 'note_fileList';
     const el = <i
@@ -97,6 +111,7 @@ const NotePage = (props: IRouteProps) => {
   useEffect(() => {
     const unlisten = history.listen((location) => {
       scrollTo(0);
+      setPhoneMenuVisible(false);
     })
     
     return () => {
@@ -119,8 +134,13 @@ const NotePage = (props: IRouteProps) => {
       </div>
 
       {/* 文件目录 */}
-      <div className={joinClass(style.side, data.fileAttr.content ? '' : style.grid, phoneMenuVisible ? style.active : '' )}
-        onClick={() => setPhoneMenuVisible(false)}
+      <div className={style.slideBg} style={{ display: phoneMenuVisible ? 'block' : 'none' }} onClick={() => setPhoneMenuVisible(false)}></div>
+      <div
+        className={joinClass(
+          style.side,
+          data.fileAttr.content ? '' : style.grid,
+          phoneMenuVisible ? style.active : '',
+        )}
       >
         <FileDirectory fileDirectory={data.fileDirectory} />
       </div>
