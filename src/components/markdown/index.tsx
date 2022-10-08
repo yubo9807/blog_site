@@ -78,11 +78,11 @@ const Markdown = ({ html, skewing = 0, getLinkList = (arg) => {} }) => {
 
 
   // #region jsx
-  return (<div
+  return (<section
     ref={refMd}
     className={style.markdown}
     dangerouslySetInnerHTML={{ __html: html }}
-  ></div>);
+  ></section>);
   // #endregion
 
 };

@@ -11,7 +11,7 @@ function HomePage({ data }) {
         <div className={joinClass('leayer', style.boundary)}>
           <div className={style.content}>
             <strong className={style.title}>Personal Technology Blog</strong>
-            <p>再长的绿灯，也等不来一个不想过马路的人</p>
+            <p>纵使绿灯再长，也等不来一个不想过马路的人</p>
           </div>
         </div>
       </div>

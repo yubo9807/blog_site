@@ -120,7 +120,7 @@ const Layouts = ({ children, routes, route, location }) => {
       <Header />
 
       {/* 主体内容 */}
-      <section className={style.section}>{children}</section>
+      <main className={style.main}>{children}</main>
 
       {/* 版权 */}
       <Footer />

@@ -123,19 +123,19 @@ const NotePage = (props: IRouteProps) => {
 
 
   // #region jsx
-  return (<div className={joinClass(style.container, 'leayer clearfix')}>
+  return (<article className={joinClass(style.container, 'leayer clearfix')}>
     {data && <>
 
       <Helmet html={data.fileAttr.content} />
 
       {/* 面包屑 */}
-      <div className={style.breadCrumb}>
+      <nav className={style.breadCrumb}>
         <Breadcrumb filename={data.filename} />
-      </div>
+      </nav>
 
       {/* 文件目录 */}
       <div className={style.slideBg} style={{ display: phoneMenuVisible ? 'block' : 'none' }} onClick={() => setPhoneMenuVisible(false)}></div>
-      <div
+      <aside
         className={joinClass(
           style.side,
           data.fileAttr.content ? '' : style.grid,
@@ -143,7 +143,7 @@ const NotePage = (props: IRouteProps) => {
         )}
       >
         <FileDirectory fileDirectory={data.fileDirectory} />
-      </div>
+      </aside>
       
 
       {/* 内容 */}
@@ -158,7 +158,7 @@ const NotePage = (props: IRouteProps) => {
         {/* 文件内容 */}
         {isRender
           ? <Markdown html={data.fileAttr.content} skewing={90}/>
-          : <div dangerouslySetInnerHTML={{ __html: data.fileAttr.content }} ></div>
+          : <section dangerouslySetInnerHTML={{ __html: data.fileAttr.content }} ></section>
         }
 
       </div>}
@@ -167,7 +167,7 @@ const NotePage = (props: IRouteProps) => {
       <Search visible={searchVisible} onCancel={() => setSearchVisible(false)} />
 
     </>}
-  </div>)
+  </article>)
   // #endregion
 
 }
