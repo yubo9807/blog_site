@@ -1,13 +1,12 @@
 import { api_getUserInfo } from '@/api/login';
 import store from '@/store';
-import { getCookie } from '@/utils/browser';
-import { actions } from '@/store/user';
+import { actions, getToken } from '@/store/user';
 
 /**
  * 获取用户信息
  */
 export async function getUserInfo() {
-  const token = await getCookie('token');
+  const token = getToken();
   if (token) {
     const [ err, res ] = await api_getUserInfo();
     if (err) return;

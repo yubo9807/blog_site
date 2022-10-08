@@ -18,3 +18,11 @@ export function createColor(min = '000000', max = 'ffffff') {
   const minNumber = parseInt(min, 16), maxNumber = parseInt(max, 16);
   return '#' + randomNum(maxNumber, minNumber).toString(16);
 }
+
+/**
+ * 逐个文字展现
+ */
+export function stringGraduallyShow(str: string) {
+  // const rowNum = str.trim().search(/\n/);
+  
+}

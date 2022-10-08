@@ -1,0 +1,54 @@
+.yu-custom-code-highlight{
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  &::before{
+    content: '';
+    display: block;
+    height: 20px;
+    background: #000;
+  }
+  &::after{
+    position: absolute;
+    top: 5px; left: 10px;
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ec6a5e;
+    box-shadow: 18px 0 #f4be4f, 36px 0 #61c554;
+  }
+  > pre{
+    margin: 0;
+    background: #002635;
+    padding: 1em;
+  }
+
+  .code-container{
+    color: #a1a19a;
+    .block-comment, .line-comment{
+      color: #6c8b91;
+    }
+    
+    .string{
+      color: #7fc06e;
+    }
+    
+    .keyword{
+      color: #9a70a4;
+    }
+    
+    .methods{
+      color: #ff5a67;
+    }
+    
+    .number{
+      color: #0086b3;
+    }
+    
+    .object{
+      color: #5dd7b9;
+    }
+  }
+
+}

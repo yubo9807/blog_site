@@ -1,10 +1,17 @@
-import axios, { AxiosStatic, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { message, notification } from 'antd';
 import Toast from '@/components/custom-toast';
 
 import env from '~/config/env';
-import { getCookie, isClient } from '@/utils/browser';
+import { isClient } from '@/utils/browser';
 import { asyncto, axiosRetry } from '../utils/network';
+import store from '@/store';
+import { actions, getToken } from '@/store/user';
+
+interface SateConfig extends AxiosRequestConfig {
+  noTips?: boolean
+}
+
 
 const client = isClient();
 
@@ -34,6 +41,11 @@ instance.interceptors.response.use((response) => {
 
   if (response.status === 200) {
     const { data, config } = response;
+
+    if (data.code === 403) {
+      store.dispatch(actions.signOutAction());
+      return;
+    }
 
     // 与后端协商 code 码
     if (data.code === 200) {
@@ -65,21 +77,14 @@ instance.interceptors.response.use((response) => {
 });
 
 // 请求拦截器
-instance.interceptors.request.use(async(config) => {
+instance.interceptors.request.use(config => {
   // 有 token 的话将其放在 headers 中
-  const authorization = client && await getCookie('token');
+  const authorization = client && getToken();
   if (authorization) {
     config.headers.Authorization = authorization;
   }
   return config;
 })
-
-interface SateConfig extends AxiosRequestConfig {
-  noTips?: boolean
-}
-interface SateAxios extends AxiosStatic {
-  (config?: SateConfig)
-}
 
 export default function(option: SateConfig) {
   return asyncto(instance(option));

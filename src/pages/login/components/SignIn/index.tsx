@@ -3,7 +3,7 @@ import style from '../../module.less';
 // npm
 import { history, Link } from 'umi';
 import { Button, message } from 'antd';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // 组件
 import Input from '@/components/custom-input';
@@ -11,16 +11,14 @@ import Input from '@/components/custom-input';
 // 请求
 import { api_userSginIn } from '@/api/login';
 
-// 公共函数
-import { setCookie } from '@/utils/browser';
-
 // 数据校验
 import check from './check';
+import { setToken } from '@/store/user';
 
 
 
 export default () => {
-  
+
 
 
   // #region 登入
@@ -43,7 +41,7 @@ export default () => {
         return;
       }
 
-      setCookie({ name: 'token', value: res.data.token, path: '/' });
+      setToken(res.data.token);
       message.success('登录成功');
       history.length > 2 ? history.goBack() : history.push('/');
       setLoading(false);

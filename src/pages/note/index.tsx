@@ -25,7 +25,7 @@ import Breadcrumb from './components/breadcrumb';
 import FileDirectory from './components/file-directory';
 import Search from './components/search';
 import Helmet from './components/helmet';
-import Markdown from '@/components/custom-markdown/async';
+import Markdown from '@/components/markdown/async';
 
 
 

@@ -1,3 +1,5 @@
+import 'antd/dist/antd.css'
+import './antd-reset.less';
 import './reset.less';
 import './common.less';
 
@@ -12,5 +14,3 @@ import './common.less';
 // import 'antd/es/input/style/index.css';
 // import 'antd/es/modal/style/index.css';
 
-import 'antd/dist/antd.css'
-import './antd-reset.less';

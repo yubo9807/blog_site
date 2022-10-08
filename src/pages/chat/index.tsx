@@ -17,10 +17,10 @@ import Protective from '@/components/custom-protective';
 
 // utils
 import { joinClass } from '@/utils/array';
-import { getCookie } from "@/utils/browser";
 
 // env
 import env from '~/config/env';
+import { getToken } from '@/store/user';
 
 
 
@@ -46,7 +46,7 @@ function ChatPage(props: IRouteProps) {
     socket = io(env.VISIT_ORIGIN.replace('http', 'ws'), {
       path: env.BASE_SOCKET + '/chat',
       extraHeaders: {
-        Authorization: getCookie('token'),
+        Authorization: getToken(),
       },
     });
 

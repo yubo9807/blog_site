@@ -1,4 +1,11 @@
-import { getCookie } from "@/utils/browser";
+
+const TOKEN = 'token';
+export function getToken() {
+  return localStorage.getItem(TOKEN);
+}
+export function setToken(token: string) {
+  localStorage.setItem(TOKEN, token);
+}
 
 const SIGNIN = Symbol('signIn');
 const SIGNOUT = Symbol('signOut');
@@ -38,6 +45,7 @@ export const actions = {
   },
   // 登出
   signOutAction() {
+    setToken('');
     return {
       type: SIGNOUT,
       payload: 2

@@ -2,10 +2,12 @@
 import { useEffect, useRef } from "react";
 
 
+/**
+ * 将元素放在 body 中
+ * @returns 
+ */
+export default function({ children }) {
 
-const InBody = ({ children }) => {
-
-  // #region 将元素添加到 body 中
   const inBodyRef = useRef();
   useEffect(() => {
     const ele: HTMLElement = inBodyRef.current;
@@ -15,16 +17,10 @@ const InBody = ({ children }) => {
       return ele.remove();
     }
   }, [])
-  // #endregion
 
 
-
-  // #region jsx
   return (<div ref={inBodyRef} className='yu-in-body'>
     { children }
   </div>)
-  // #endregion
 
 }
-
-export default InBody;
