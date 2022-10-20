@@ -36,7 +36,7 @@ export function axiosRetry(axios: AxiosInstance, option: Option) {
 
     return new Promise((resolve, reject) => {
       setTimeout(async() => {
-        if (config.retryCount >= option.retries) return reject(config);
+        if (config.retryCount >= option.retries) return reject(error);
         else {
           option.retryTips && option.retryTips();  // 再次请求时你可以给用户些提示
           return resolve(await axios(config));  // 再次请求

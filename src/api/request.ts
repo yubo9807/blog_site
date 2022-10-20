@@ -23,7 +23,7 @@ const config: AxiosRequestConfig = {
 
 const instance = axios.create(config);
 
-axiosRetry(instance, {
+client && axiosRetry(instance, {
   retries: 3,
   retryDelay: 3000,
   retryTips: () => {
@@ -61,15 +61,16 @@ instance.interceptors.response.use((response) => {
   }
 }, error => {
   // console.log('error', error)
+  const { baseURL, url } = error.config;
   // 响应出现错误（连接超时/网络断开/服务器忙没响应）
-  client && notification.open({
+  client ? notification.open({
     message: '网络可能存在一些问题',
     description: error.message || '错误原因：网络断开/无法连接/网络差/连接超时/服务器忙，请尝试重新操作或刷新页面',
     duration: null,
-  })
+  }) : console.log('接口请求错误', baseURL + url);
   
   // 返回统一数据格式，不会导致代码取不到 code 而报错
-  return Promise.resolve({
+  return Promise.reject({
     code: 500,
     msg: error.message || 'network error',
   });
