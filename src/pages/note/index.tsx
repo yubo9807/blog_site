@@ -180,7 +180,7 @@ NotePage.getInitialProps = async({ history, path }) => {
   const piecewise = pathname.split('/');
   const filename = (pathname.startsWith('http') ? piecewise.slice(4) : piecewise.slice(2)).join('/');
 
-  const { fileDirectory, fileAttr } = await getFileChildDirectoryAndContent(encodeURI(filename), path);
+  const { fileDirectory, fileAttr } = await getFileChildDirectoryAndContent(decodeURI(filename), path);
 
   return {
     data: {
@@ -202,10 +202,10 @@ async function getFileChildDirectoryAndContent(filename: string = '', path: stri
   const [ err, res ] = await api_getFileContentOrChildDirectory(`/note/${filename}`);
   if (err) {
     fileAttr.content = err.msg;
-    return {
+    return Promise.reject({
       fileDirectory,
       fileAttr,
-    }
+    })
   }
 
   const { data } = res;
@@ -221,17 +221,17 @@ async function getFileChildDirectoryAndContent(filename: string = '', path: stri
     fileDirectory = [].concat(folderList, fileList);
 
     if (fileList.length === 0) {
-      return { fileDirectory, fileAttr };
+      return Promise.resolve({ fileDirectory, fileAttr });
     }
 
     // 获取子目录下第一个文件的内容
     const [ err, res ] = await api_getFileContentOrChildDirectory(`/note/${filename}/${fileList[0].name}`);
     if (err) {
       fileAttr.content = err.msg;
-      return {
+      return Promise.reject({
         fileDirectory,
         fileAttr,
-      }
+      })
     }
 
     fileAttr = res.data;
@@ -254,10 +254,10 @@ async function getFileChildDirectoryAndContent(filename: string = '', path: stri
     
   }
 
-  return {
+  return Promise.resolve({
     fileDirectory,
     fileAttr,
-  }
+  })
 
 }
 // #endregion

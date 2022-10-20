@@ -46,7 +46,19 @@
 
 .skill{
   margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
   flex-wrap: wrap;
+  justify-content: space-between;
+  grid-template-columns: repeat(auto-fill, calc(100% / 3 - 20px * 2));
+  grid-gap: 20px;
+}
+@media (max-width: 996px) {
+  .skill{
+    grid-template-columns: repeat(auto-fill, calc(50% - 20px));
+  }
+}
+@media (max-width: 600px) {
+  .skill{
+    display: block;
+  }
 }

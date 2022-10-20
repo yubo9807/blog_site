@@ -23,13 +23,28 @@ function HomePage({ data }) {
             link='https://github.com/yubo9807/runing-redis'
           />
           <SkillItem
-            title='Go 版 Koa 中间件'
+            title='Go 版 koa.js 中间件'
             introduce='模仿 NodeJS Koa 框架所写的 Go 语言服务器。'
             link='https://github.com/yubo9807/go_koa'
           />
           <SkillItem
             title='自定义语言代码高亮'
             introduce='一个不断对字符进行截断并匹配正则的函数，可以对一些自定义语言代码进行高亮。'
+            link=''
+          />
+          <SkillItem
+            title='重写 koa-router'
+            introduce='对 koa-router 进行重写，重点解决获取路由，企业级管理端不同角色配置菜单/接口的痛点。'
+            link=''
+          />
+          <SkillItem
+            title='axios-retry'
+            introduce='Axios 请求拦截重试，解决网络慢、卡顿、上传数据丢失的问题。'
+            link='https://github.com/yubo9807/axios-retry'
+          />
+          <SkillItem
+            title='无规则毛玻璃实现'
+            introduce='使用 canvas 对图片做处理，将模糊后的图片嵌入到无规则边框内。'
             link=''
           />
         </div>
@@ -42,13 +57,17 @@ function HomePage({ data }) {
 
 HomePage.getInitialProps = async function() {
   const [ err, res ] = await api_getFriendLinkList();
-  if (err) return;
+  if (err) return Promise.reject({
+    data: {
+      friendLinkList: []
+    }
+  })
 
-  return {
+  return Promise.resolve({
     data: {
       friendLinkList: res.data
     }
-  }
+  })
 }
 
 export default HomePage;
