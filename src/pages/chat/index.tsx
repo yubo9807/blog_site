@@ -45,6 +45,7 @@ function ChatPage(props: IRouteProps) {
   useEffect(() => {
     socket = io(env.VISIT_ORIGIN.replace('http', 'ws'), {
       path: env.BASE_SOCKET + '/chat',
+      // transports: ['websocket'],
       extraHeaders: {
         Authorization: getToken(),
       },
@@ -52,7 +53,7 @@ function ChatPage(props: IRouteProps) {
 
     // 验证身份
     socket.on('message', res => {
-      if (res.code === 405) setModalVisible(true);
+      if ([401, 405].includes(res.code)) setModalVisible(true);
       else message.error(res.msg);
     })
   }, [])
@@ -90,9 +91,8 @@ function ChatPage(props: IRouteProps) {
     // 上线提醒
     socket.on('online', res => message.success(res));
 
-    // 服务器断开连接
     socket.on('disconnect', () => {
-      console.log('断开连接');
+      // message.info('断开连接');
     })
 
     // 路由发生改变，断开 socket
@@ -115,7 +115,7 @@ function ChatPage(props: IRouteProps) {
    * 切换房间
    * @param row 
    */
-   function onChangeRoom(row) {
+  function onChangeRoom(row) {
     const { id: roomId } = row
     setPhoneShowRecord(true);
     setSelectRow(row);

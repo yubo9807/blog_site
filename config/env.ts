@@ -3,7 +3,7 @@ const base_api = '/api';
 const VISIT_ORIGIN = 'http://hicky.hpyyb.cn';
 
 // 生产环境
-const env: any = {
+const env = {
 
   APP_ENV: process.env.APP_ENV,
 
