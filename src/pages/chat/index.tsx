@@ -45,7 +45,7 @@ function ChatPage(props: IRouteProps) {
   useEffect(() => {
     socket = io(env.VISIT_ORIGIN.replace('http', 'ws'), {
       path: env.BASE_SOCKET + '/chat',
-      // transports: ['websocket'],
+      // transports: ['webscoket'],
       extraHeaders: {
         Authorization: getToken(),
       },

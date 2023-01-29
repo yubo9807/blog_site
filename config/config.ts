@@ -2,7 +2,7 @@ import { defineConfig } from 'umi';
 import path from 'path';
 import routes from './routes';
 import chainWebpack from './chainWebpack';
-import env from './env';
+import env, { PRODUCTION } from './env';
 
 export default defineConfig({
   define: {
@@ -10,7 +10,7 @@ export default defineConfig({
   },
   ssr: {
     // mode: 'stream',  // 流式渲染
-    forceInitial: false,  // 保证页面切换数据更新
+    forceInitial: env.APP_ENV === PRODUCTION ? true : false,  // 保证页面切换数据更新
     devServerRender: true,  // 开启服务端渲染
   },
   // 动态加载

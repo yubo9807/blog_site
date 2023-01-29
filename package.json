@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "cross-env APP_ENV=development umi dev",
     "build": "cross-env APP_ENV=production HTML=none umi build",
-    "deploy": "npm run build && cd deploy && npm run start"
+    "preview": "cd deploy && npm run start"
   },
   "dependencies": {
     "@ant-design/pro-layout": "^6.34.1",

@@ -2,6 +2,9 @@
 const base_api = '/api';
 const VISIT_ORIGIN = 'http://hicky.hpyyb.cn';
 
+export const DEVELOPMENT = 'development';
+export const PRODUCTION = 'production';
+
 // 生产环境
 const env = {
 
