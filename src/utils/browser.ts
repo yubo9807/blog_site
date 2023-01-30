@@ -120,3 +120,18 @@ export function getLabelTextList(str: string, label: string) {
   })
   return arr;
 }
+
+/**
+ * 获取当前系统环境
+ */
+export function getSystemEnvironment() {
+  if (navigator.platform.indexOf("Win") != -1) {
+    return 'windows'
+  } else if (navigator.platform.indexOf("Mac") != -1) {
+    return 'darwin';
+  } else if (navigator.platform.indexOf("Linux") != -1) {
+    return 'linux';
+  } else {
+    return 'unknown';
+  }
+}

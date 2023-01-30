@@ -1,0 +1,49 @@
+.tools-item{
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.1);
+  padding-bottom: 44px;
+  margin-bottom: 20px;
+  position: relative;
+  .title{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .btns{
+    position: absolute;
+    right: 20px;
+    bottom: 16px;
+    > .btn{
+      background: var(--main-link-color);
+      color: white;
+      padding: 2px 5px;
+      border-radius: 4px;
+      cursor: pointer;
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+      a:hover{
+        color: white;
+      }
+      .more{
+        margin-left: 6px;
+      }
+    }
+  }
+  p{
+    color: #999;
+  }
+
+}
+
+.dropdown-wrap{
+  padding: 4px 10px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 0 4px 4px rgba(0,0,0,.05);
+  font-size: 12px;
+  > li{
+    cursor: pointer;
+  }
+}
