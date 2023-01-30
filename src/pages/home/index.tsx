@@ -1,26 +1,33 @@
+// styles
+import style from './module.less';
+
+// api
 import { api_getFriendLinkList } from '@/api/home';
+
+// component
+import Header from './components/header';
 import SkillItem from './components/skill-item';
 import ToolsItem from './components/tools-item';
-import style from './module.less';
-import { joinClass } from '@/utils/array';
 import TitleLevel from './components/title-level';
 import FriendLink from './components/friend-link';
+
+// utils
+import { joinClass } from '@/utils/array';
+
+// env
+import env from '~/config/env';
+
+
 
 function HomePage({ data }) {
   return (
     <div className={joinClass(style.homePage, 'clearfix')}>
-      <div className={style.header}>
-        <div className={joinClass('leayer', style.boundary)}>
-          <div className={style.content}>
-            <strong className={style.title}>Personal Technology Blog</strong>
-            <p>纵使绿灯再长，也等不来一个不想过马路的人</p>
-          </div>
-        </div>
-      </div>
-      <div className='leayer'>
 
+      <Header />
+
+      <div className='leayer'>
         <TitleLevel text='技术分享' />
-        <div className={style.skill}>
+        <div className={style.grid}>
           <SkillItem
             title='运行中的 Redis'
             introduce='一个运行在 JavaScript 中的缓存数据方式，他包含了一些关于著名的 Redis 的特点：数据存储、获取、缓存时间、数据覆盖...'
@@ -54,25 +61,32 @@ function HomePage({ data }) {
         </div>
 
         <TitleLevel text='Golang 小工具' />
-        <div className={style.skill}>
+        <div className={style.grid}>
           <ToolsItem
             title='静态资源服务器'
             introduce='更好的兼容了前端框架打包项目，并支持多页面应用配置。可复现部署包生产环境问题'
             filename='static'
+            size='6.9MB'
+            preview={<video src={env.BASE_RESOURCE_URL+'/video/static.mp4'} controls></video>}
           />
           <ToolsItem
             title='反向代理'
             introduce='启动一个反向代理服务器，并支持 https 配置。'
             filename='proxy'
+            size='7.7MB'
+            preview={<video src={env.BASE_RESOURCE_URL+'/video/static.mp4'} controls></video>}
           />
           <ToolsItem
             title='打卡时间提醒'
             introduce='什么时间做什么事，不要过度劳累，从此生活机械化。'
             filename='notify'
+            size='2.3MB'
+            preview={<img src={env.BASE_RESOURCE_URL+'/imgs/notify.jpg'}></img>}
           />
           <ToolsItem
             title='获取 IP 地址'
             introduce='自己设置下环境变量，获取 IP 更加方便'
+            size='2.3MB'
             filename='ip'
           />
         </div>

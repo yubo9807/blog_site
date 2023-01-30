@@ -13,7 +13,8 @@ function roll2scrollY(id: string) {
 export default ({ text }) => {
 
   useEffect(() => {
-    roll2scrollY(decodeURI(history.location.hash.slice(1)));
+    const id = history.location.hash.slice(1);
+    id && roll2scrollY(decodeURI(id));
   }, [])
 
   return <div className='yu-title-level'>

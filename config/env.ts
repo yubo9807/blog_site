@@ -16,7 +16,7 @@ const env = {
 
   BASE_SOCKET: base_api  + '/socket',
   
-  BASE_IMAGE_URL: 'http://assets.hpyyb.cn',
+  BASE_RESOURCE_URL: 'http://assets.hpyyb.cn',
 
   VISIT_ORIGIN,
 
@@ -34,7 +34,7 @@ if (process.env.APP_ENV === 'development') {
 
     BASE_API: VISIT_ORIGIN + base_api,
 
-    BASE_IMAGE_URL: VISIT_ORIGIN,
+    BASE_RESOURCE_URL: VISIT_ORIGIN,
 
   })
 
