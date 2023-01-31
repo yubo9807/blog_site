@@ -61,9 +61,22 @@ function ToolsItem(props: Props) {
         </Dropdown>
       </span>
     </div>
-    <Modal className={style.videoModal} visible={modalVisible} closable={false} footer={null} width="75vw" onCancel={() => useModalVisible(false)}>
+
+    <Modal
+      className={style.videoModal}
+      visible={modalVisible}
+      closable={false}
+      footer={null}
+      width='80vw'
+      style={{
+        maxWidth: '1000px',
+        maxHeight: '90vh',
+      }}
+      onCancel={() => useModalVisible(false)}
+    >
       {props.preview}
     </Modal>
+
   </div>)
 }
 
