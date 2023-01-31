@@ -67,27 +67,28 @@ function HomePage({ data }) {
             introduce='更好的兼容了前端框架打包项目，并支持多页面应用配置。可复现部署包生产环境问题'
             filename='static'
             size='6.9MB'
-            preview={<video src={env.BASE_RESOURCE_URL+'/video/static.mp4'} controls></video>}
+            preview={<video className={style.preview} src={env.BASE_RESOURCE_URL+'/video/static.mp4'} controls></video>}
           />
           <ToolsItem
             title='反向代理'
             introduce='启动一个反向代理服务器，并支持 https 配置。'
             filename='proxy'
             size='7.7MB'
-            preview={<video src={env.BASE_RESOURCE_URL+'/video/static.mp4'} controls></video>}
+            preview={<video className={style.preview} src={env.BASE_RESOURCE_URL+'/video/static.mp4'} controls></video>}
           />
           <ToolsItem
             title='打卡时间提醒'
             introduce='什么时间做什么事，不要过度劳累，从此生活机械化。'
             filename='notify'
             size='2.3MB'
-            preview={<img src={env.BASE_RESOURCE_URL+'/imgs/notify.jpg'}></img>}
+            preview={<img className={style.preview} src={env.BASE_RESOURCE_URL+'/imgs/notify.jpg'}></img>}
           />
           <ToolsItem
             title='获取 IP 地址'
             introduce='自己设置下环境变量，获取 IP 更加方便'
             size='2.3MB'
             filename='ip'
+            preview={<video className={style.preview} src={env.BASE_RESOURCE_URL+'/video/ip.mp4'} controls></video>}
           />
         </div>
 
