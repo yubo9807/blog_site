@@ -1,18 +1,21 @@
-.yu-title-level{
+.title-level{
   h2{
     display: inline-block;
     margin-top: 12px;
     margin-bottom: 12px;
     color: #6273fa;
-    >a{
+  }
+  .icon{
+    font-size: 18px;
+    margin-left: 6px;
+    cursor: pointer;
+    &.link{
       opacity: 0;
       color: #999;
-      margin-left: 8px;
-    }
-    &:hover{
-      >a{
-        opacity: 1;
-      }
     }
   }
+  &:hover .icon.link{
+    opacity: 1;
+  }
+  
 }

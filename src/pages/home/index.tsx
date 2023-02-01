@@ -60,11 +60,16 @@ function HomePage({ data }) {
           />
         </div>
 
-        <TitleLevel text='Golang 小工具' />
+        <TitleLevel text='Golang 小工具' overlay={<div className={style.titleTips}>
+          <p>一些二进制文件工具，不依赖于任何环境，可直接执行。</p>
+          <p>源码地址：
+            <a href="https://github.com/yubo9807/go_tools" target='_blank'>GitHub</a>
+          </p>
+        </div>} />
         <div className={style.grid}>
           <ToolsItem
             title='静态资源服务器'
-            introduce='更好的兼容了前端框架打包项目，并支持多页面应用配置。可复现部署包生产环境问题'
+            introduce='更好的兼容了前端框架打包项目，并支持多页面应用配置。可复现部署包生产环境问题。'
             filename='static'
             size='6.9MB'
             preview={<video className={style.preview} src={env.BASE_RESOURCE_URL+'/video/static.mp4'} autoPlay controls></video>}
@@ -85,7 +90,7 @@ function HomePage({ data }) {
           />
           <ToolsItem
             title='获取 IP 地址'
-            introduce='自己设置下环境变量，获取 IP 更加方便'
+            introduce='获取 IPv4 及公网 IP 地址。'
             size='2.3MB'
             filename='ip'
             preview={<video className={style.preview} src={env.BASE_RESOURCE_URL+'/video/ip.mp4'} autoPlay controls></video>}
