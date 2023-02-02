@@ -1,0 +1,39 @@
+.scheme-item{
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.1);
+  margin-bottom: 20px;
+  padding-bottom: 44px;
+  position: relative;
+  .title{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  p{
+    color: #999;
+  }
+  .links{
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    .link{
+      padding-bottom: 4px;
+      border-bottom: 1px solid;
+      color: var(--main-link-color);
+      cursor: pointer;
+      &:not(:last-child){
+        margin-right: 10px;
+      }
+      &.example{
+        color: orange;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .scheme-item{
+    margin-bottom: 16px;
+  }
+}
