@@ -7,7 +7,7 @@ import { useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import hljs from 'highlight.js/lib/common';
 import PropTypes from 'prop-types';
-import React from 'react';
+import { createElement } from 'react';
 import { history } from 'umi';
 
 // utils
@@ -37,11 +37,9 @@ const Markdown = ({ html, skewing = 0, getLinkList = (arg) => {} }) => {
     ele.children.forEach((val: HTMLElement) => {
       if (['H2', 'H3', 'H4'].includes(val.tagName)) {
 
-        const I = () => <i className='iconfont' onClick={() => 
-          roll2scrollY(val.id)
-        }>&#xe617;</i>;
+        const I = () => <i className='iconfont' onClick={() => roll2scrollY(val.id)}>&#xe617;</i>;
         const span = document.createElement('span');
-        ReactDOM.render(React.createElement(I), span);
+        ReactDOM.render(createElement(I), span);
         val.appendChild(span);
         arr.push({ tag: val.tagName, text: val.innerText, id: val.id });
       }

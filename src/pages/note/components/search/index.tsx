@@ -76,7 +76,7 @@ export default ({ visible, onCancel = () => {} }) => {
     />
     <ul className={style.list} onClick={onCancel}>
       {list.map((val, index) => <li key={index}>
-        <Link to={val.path}>
+        <Link to={val.path+`?search=${searchValue}`}>
           <strong className={style.title}>{formatPath(val.path)}</strong>
           <p className={style.content}>{val.content}</p>
           <p className={style.mark}>

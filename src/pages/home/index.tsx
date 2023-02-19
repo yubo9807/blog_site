@@ -33,7 +33,7 @@ function HomePage({ data }) {
             title='权限分配'
             introduce='给不同的角色绑定不通的页面/接口/DOM元素，并且管理员可进行配置。权限功能与业务功能其实毫无关系，在 n 个系统下拆分出来方便维护。'
             codeLink='https://github.com/yubo9807/permissions_server'
-            example='http://power.hpyyb.cn/wide/permissions/'
+            example='http://hpyyb.cn/wide/permissions/'
           />
           <SchemeItem
             title='重写 koa-router'
@@ -86,6 +86,11 @@ function HomePage({ data }) {
 
         <TitleLevel text='技术分享' />
         <div className={style.grid}>
+          <SkillItem
+            title='手撕 Vue 响应式源码'
+            introduce='Vue 响应式数据实现。reactive、ref、customRef、computed、数据挂载、watch 等 API。'
+            link='https://github.com/yubo9807/mvvm_vue3'
+          />
           <SkillItem
             title='运行中的 Redis'
             introduce='一个运行在 JavaScript 中的缓存数据方式，他包含了一些关于著名的 Redis 的特点：数据存储、获取、缓存时间、数据覆盖...'

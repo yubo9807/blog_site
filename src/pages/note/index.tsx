@@ -34,7 +34,7 @@ const NotePage = (props: IRouteProps) => {
 
 
 
-  // #region dom 渲染完成后做一些事情
+  // #region dom 渲染完成后渲染一些东西
   const [ isRender, setIsRender ] = useState(false);
   useEffect(() => {
     setIsRender(true);
@@ -113,7 +113,7 @@ const NotePage = (props: IRouteProps) => {
       scrollTo(0);
       setPhoneMenuVisible(false);
     })
-    
+
     return () => {
       unlisten();
     }
@@ -157,7 +157,7 @@ const NotePage = (props: IRouteProps) => {
 
         {/* 文件内容 */}
         {isRender
-          ? <Markdown html={data.fileAttr.content} skewing={90}/>
+          ? <Markdown html={data.fileAttr.content} skewing={90} />
           : <section dangerouslySetInnerHTML={{ __html: data.fileAttr.content }} ></section>
         }
 

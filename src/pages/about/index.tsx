@@ -40,8 +40,8 @@ const AboutPage = () => {
           </li>
           <li>
             后台管理：
-            <Link href='/vise'>http://hpyyb.cn/vise</Link>
-            <Link href='https://github.com/yubo9807/blog_vise' target="_blank">代码地址</Link>
+            <Link href='/wide'>http://hpyyb.cn/wide</Link>
+            <Link href='https://github.com/yubo9807/wide' target="_blank">代码地址</Link>
             <ul>
               <li>
                 <Text code>Vue3</Text>，

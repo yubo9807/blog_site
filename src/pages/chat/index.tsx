@@ -157,7 +157,7 @@ function ChatPage(props: IRouteProps) {
    * 删除房间
    * @param e 
    */
-   function onDeleteRoom(e) {
+  function onDeleteRoom(e) {
     const { id: roomId, admin } = selectRow;
     socket.emit('delRoom', { roomId, admin });
     setRoomMenuVisible(false);

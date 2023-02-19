@@ -32,7 +32,7 @@ const Record = ({ recordList = [], userInfo }) => {
     {recordList.length ? <ul>
       {recordList.map((val, index) => <li key={index} className={val.userName === userInfo.name ? style.oneself : ''}>
         <div className={style.portrait}>
-          <img src={env.VISIT_ORIGIN + val.portrait} />
+          <img src={env.BASE_RESOURCE_URL + val.portrait} />
         </div>
         <div className={style.chat}>
           <p className={style.userName}>{val.userName}</p>

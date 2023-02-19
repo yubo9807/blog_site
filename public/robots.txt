@@ -1,5 +1,5 @@
 
-Disallow: /vise
+Disallow: /wide
 Disallow: /api
 
 User-agent: *
