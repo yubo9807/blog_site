@@ -49,7 +49,7 @@ function FileDirectory({ fileDirectory }) {
           {val.isFile ? val.name : val.name.match(/\s.+/)[0].slice(1)}
         </span>
         {val.isFile ? null : <p className={style.otherInfo}>
-          {dateFormater('YYYY/MM/DD', val.createTime * 1000)}
+          {dateFormater(val.createTime * 1000, 'YYYY/MM/DD')}
         </p>}
       </Link>
     </li>

@@ -1,5 +1,61 @@
 .about-page{
-  :global(a.ant-typography){
-    margin-right: 20px;
+  display: flex;
+  padding-top: 10px;
+}
+.wrap{
+  width: 50%;
+  padding: 0 10px;
+  position: relative;
+  a{
+    color: var(--main-link-color);
+  }
+  .title{
+    line-height: 2.4;
+    margin-bottom: 10px;
+    &::after{
+      content: '';
+      display: block;
+      height: 1px;
+      background: linear-gradient(to left, transparent 0%, transparent 50%, #ccc 50%, #ccc 100%);
+      background-size: 14px 1px;
+      background-repeat: repeat-x;
+    }
+  }
+  &:not(:first-child)::before{
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(to top, transparent 0%, transparent 50%, #aaa 50%, #aaa 100%);;
+    background-size: 1px 24px;
+    background-repeat: repeat-y;
+  }
+  ul ul{
+    margin-left: 16px;
+    li{
+      list-style: circle;
+    }
+  }
+  strong{
+    display: inline-block;
+    width: 80px;
+    text-align-last: justify;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-page{
+    display: block;
+  }
+  .wrap{
+    width: 100%;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    margin-bottom: 10px;
+    padding: 10px;
+    &:not(:first-child)::before{
+      display: none;
+    }
   }
 }

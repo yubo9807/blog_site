@@ -151,7 +151,7 @@ const NotePage = (props: IRouteProps) => {
 
         {/* 文件信息 */}
         <p className={style.fileInfo}>
-          <span>{dateFormater('YYYY/MM/DD', data.fileAttr.createTime * 1000)}</span>
+          <span>{dateFormater(data.fileAttr.createTime * 1000, 'YYYY/MM/DD')}</span>
           <span>{data.fileAttr.size}字符</span>
         </p>
 
