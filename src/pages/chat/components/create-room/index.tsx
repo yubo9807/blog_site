@@ -61,7 +61,7 @@ const CreateRoom = ({ users, visible = false, onCancel = () => {}, onJoinRoom = 
   }
 
 
-  return (<Modal className={style.modal} visible={visible} width='400px' footer={null} onCancel={onCancel}>
+  return (<Modal className={style.modal} open={visible} width='400px' footer={null} onCancel={onCancel}>
 
       {/* 筛选后的用户 */}
       <div className={style.header}>

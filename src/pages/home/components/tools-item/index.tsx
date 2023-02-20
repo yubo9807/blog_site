@@ -34,6 +34,11 @@ function ToolsItem(props: Props) {
 
   const [ modalVisible, useModalVisible ] = useState(false);
 
+  const items = [
+    { key: '1', label: <a href={env.BASE_RESOURCE_URL+'/download/darwin/'+props.filename}>MacOS</a> },
+    { key: '2', label: <a href={env.BASE_RESOURCE_URL+'/download/linux/'+props.filename}>Linux</a> },
+    { key: '3', label: <a href={env.BASE_RESOURCE_URL+'/download/windows/'+props.filename}>Windows</a> },
+  ];
 
   return (<div className={style.toolsItem}>
     <h2 className={style.title}>{props.title}</h2>
@@ -46,17 +51,7 @@ function ToolsItem(props: Props) {
       }
       <span className={joinClass(style.btn, style.download)}>
         <a href={'/download/'+system+'/'+props.filename} download>下载</a>
-        <Dropdown overlay={<ul className={style.dropdownWrap}>
-          <li>
-            <a href={env.BASE_RESOURCE_URL+'/download/darwin/'+props.filename}>MacOS</a>
-          </li>
-          <li>
-            <a href={env.BASE_RESOURCE_URL+'/download/linux/'+props.filename}>Linux</a>
-          </li>
-          <li>
-            <a href={env.BASE_RESOURCE_URL+'/download/windows/'+props.filename}>Windows</a>
-          </li>
-        </ul>}>
+        <Dropdown overlayClassName={style.overlay} menu={{ items }}>
           <span className={joinClass('iconfont', style.more)}>&#xe6b9;</span>
         </Dropdown>
       </span>
@@ -64,7 +59,7 @@ function ToolsItem(props: Props) {
 
     <Modal
       className={style.videoModal}
-      visible={modalVisible}
+      open={modalVisible}
       closable={false}
       footer={null}
       width='80vw'

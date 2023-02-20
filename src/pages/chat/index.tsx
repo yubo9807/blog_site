@@ -60,7 +60,7 @@ function ChatPage(props: IRouteProps) {
 
   // jsx 登录提示
   const JSX_LoginPrompt = <Modal
-    visible={modalVisible}
+    open={modalVisible}
     onOk={() => history.push('/login')}
     onCancel={() => setModalVisible(false)}
     centered
@@ -199,7 +199,7 @@ function ChatPage(props: IRouteProps) {
   }
   
   const JSX_FixRoomName = <Modal
-    visible={fixRoomNameVisible}
+    open={fixRoomNameVisible}
     closable={false}
     okText='确认'
     cancelText='取消'

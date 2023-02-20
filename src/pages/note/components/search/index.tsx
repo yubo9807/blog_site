@@ -68,7 +68,7 @@ export default ({ visible, onCancel = () => {} }) => {
     return str;
   }
 
-  return (<Modal className={style.searchModal} visible={visible} closable={false} footer={null} onCancel={onCancel}>
+  return (<Modal className={style.searchModal} open={visible} closable={false} footer={null} onCancel={onCancel}>
     <Input focus={focus} value={searchValue}
       onChange={e => setSearchValue(e.target.value)}
       onEnter={search}

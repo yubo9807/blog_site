@@ -40,6 +40,7 @@
       }
       .more{
         margin-left: 6px;
+        font-size: 12px;
       }
     }
   }
@@ -52,13 +53,10 @@
   padding: 0;
   font-size: 0;
 }
-.dropdown-wrap{
-  padding: 4px 10px;
-  background: white;
-  border-radius: 4px;
-  box-shadow: 0 0 4px 4px rgba(0,0,0,.05);
-  font-size: 12px;
-  > li{
-    cursor: pointer;
+
+.overlay{
+  :global(.ant-dropdown-menu-item){
+    font-size: 12px;
+    line-height: 1.4;
   }
 }

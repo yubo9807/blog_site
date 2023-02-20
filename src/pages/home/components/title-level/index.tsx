@@ -24,11 +24,13 @@ export default (props: Props) => {
     id && roll2scrollY(decodeURI(id));
   }, [])
 
+  const items = [{ label: props.overlay, key: props.text }];
+
   return <div className={style.titleLevel}>
     <h2 id={props.text}>
       {props.text}
     </h2>
-    {props.overlay && <Dropdown overlay={props.overlay}>
+    {props.overlay && <Dropdown overlayClassName={style.overlay} menu={{ items }}>
       <i className={joinClass('iconfont', style.icon)}>&#xe626;</i>
     </Dropdown>}
     <i className={joinClass('iconfont', style.icon, style.link)} onClick={() => roll2scrollY(props.text)}>&#xe617;</i>

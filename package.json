@@ -6,25 +6,25 @@
     "preview": "cd deploy && npm run start"
   },
   "dependencies": {
-    "@ant-design/pro-layout": "^6.34.1",
-    "antd": "^4.19.1",
+    "@ant-design/pro-layout": "^6.38.22",
+    "antd": "^4.24.8",
     "axios": "^0.24.0",
-    "highlight.js": "^11.4.0",
+    "highlight.js": "^11.7.0",
     "react": "17.x",
     "react-dom": "17.x",
-    "react-redux": "^7.2.6",
-    "redux": "^4.1.2",
-    "socket.io-client": "^4.4.1",
-    "umi": "^3.5.20",
+    "react-redux": "^7.2.9",
+    "redux": "^4.2.1",
+    "socket.io-client": "^4.6.0",
+    "umi": "^3.5.37",
     "umi-plugin-keep-alive": "0.0.1-beta.30"
   },
   "devDependencies": {
-    "@types/react": "^17.0.39",
-    "@types/react-dom": "^17.0.13",
-    "@umijs/preset-react": "1.x",
+    "@types/react": "^17.0.53",
+    "@types/react-dom": "^17.0.19",
+    "@umijs/preset-react": "^1.8.31",
     "compression-webpack-plugin": "^5.0.2",
     "cross-env": "^7.0.3",
-    "tslib": "^2.4.0",
-    "typescript": "^4.5.5"
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5"
   }
 }
